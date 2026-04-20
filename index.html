@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --bg:#f0eff6;
+  --surface:rgba(255,255,255,0.72);
+  --surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+  --grain:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  line-height:1.6;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:var(--grain);
+  pointer-events:none;z-index:0;
+}
+
+/* ── Nav ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;
+  height:62px;
+  background:rgba(240,239,246,0.85);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border2);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  text-decoration:none;
+}
+.nav-wordmark{
+  font-size:17px;font-weight:600;letter-spacing:-0.4px;color:var(--text);
+}
+.nav-wordmark span{font-weight:300;color:var(--text2);}
+.nav-links{
+  display:flex;align-items:center;gap:2px;
+}
+.nav-links a{
+  font-size:13px;font-weight:400;color:var(--text2);
+  text-decoration:none;padding:6px 12px;border-radius:8px;
+  transition:background 0.15s,color 0.15s;
+}
+.nav-links a:hover{background:var(--primary-light);color:var(--primary);}
+.nav-links a.active{color:var(--primary);font-weight:500;}
+.nav-cta{
+  font-size:13px;font-weight:500;
+  padding:7px 16px;border-radius:9px;
+  background:var(--primary);color:#fff;
+  text-decoration:none;
+  box-shadow:0 2px 10px rgba(108,92,231,0.3);
+  transition:all 0.18s;
+}
+.nav-cta:hover{background:#5849d4;box-shadow:0 4px 16px rgba(108,92,231,0.4);transform:translateY(-1px);}
+
+/* ── Layout ── */
+.page{position:relative;z-index:1;}
+
+/* ── Hero ── */
+.hero{
+  padding:5rem 2.5rem 4rem;
+  max-width:860px;margin:0 auto;
+  text-align:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--primary);
+  background:var(--primary-light);
+  border:1px solid rgba(108,92,231,0.2);
+  border-radius:20px;padding:4px 14px;
+  margin-bottom:1.5rem;
+}
+.hero-eyebrow::before{content:'◈';font-size:10px;}
+.hero h1{
+  font-size:clamp(36px,6vw,58px);
+  font-weight:600;letter-spacing:-2px;
+  line-height:1.1;
+  color:var(--text);
+  margin-bottom:1.25rem;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.hero-sub{
+  font-size:17px;font-weight:300;color:var(--text2);
+  max-width:520px;margin:0 auto 2.5rem;line-height:1.7;
+}
+.hero-stats{
+  display:flex;align-items:center;justify-content:center;gap:2rem;flex-wrap:wrap;
+  margin-top:2.5rem;
+  padding-top:2.5rem;
+  border-top:1px solid var(--border2);
+}
+.stat{text-align:center;}
+.stat-num{
+  font-size:28px;font-weight:600;letter-spacing:-1px;
+  background:linear-gradient(135deg,#6c5ce7,#c026d3);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  display:block;
+}
+.stat-label{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.04em;text-transform:uppercase;}
+
+/* ── Section wrapper ── */
+.section{
+  padding:3.5rem 2.5rem;
+  max-width:1100px;margin:0 auto;
+}
+.section-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:1.5rem;gap:1rem;flex-wrap:wrap;
+}
+.section-label{
+  font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--primary);margin-bottom:4px;
+}
+.section-title{
+  font-size:24px;font-weight:600;letter-spacing:-0.6px;color:var(--text);
+}
+.section-sub{
+  font-size:13px;color:var(--text2);font-weight:400;max-width:420px;line-height:1.5;
+  margin-top:4px;
+}
+.see-all{
+  font-size:12px;font-weight:500;color:var(--primary);
+  text-decoration:none;white-space:nowrap;
+  padding:6px 12px;border-radius:8px;border:1px solid rgba(108,92,231,0.25);
+  transition:all 0.15s;
+}
+.see-all:hover{background:var(--primary-light);}
+
+/* ── Tools grid ── */
+.tools-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+}
+.tool-card{
+  background:var(--surface);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:22px 22px 18px;
+  text-decoration:none;
+  display:flex;flex-direction:column;gap:12px;
+  box-shadow:var(--shadow);
+  transition:all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative;overflow:hidden;
+}
+.tool-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(108,92,231,0.04) 0%,transparent 60%);
+  opacity:0;transition:opacity 0.2s;
+}
+.tool-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lg),0 0 0 1px var(--primary);
+  border-color:var(--primary);
+}
+.tool-card:hover::before{opacity:1;}
+.tool-card.featured{
+  border-color:rgba(108,92,231,0.4);
+  background:rgba(255,255,255,0.85);
+}
+.tool-card.placeholder{
+  border-style:dashed;
+  opacity:0.6;cursor:default;
+}
+.tool-card.placeholder:hover{transform:none;box-shadow:var(--shadow);border-color:var(--border2);}
+.tool-icon{
+  width:42px;height:42px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--primary-light);
+  flex-shrink:0;
+}
+.tool-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
+.tool-badge{
+  font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:20px;
+  background:linear-gradient(135deg,#f97316,#c026d3);
+  color:#fff;white-space:nowrap;flex-shrink:0;margin-top:2px;
+}
+.tool-badge.soon{background:var(--border2);color:var(--text3);}
+.tool-name{
+  font-size:16px;font-weight:600;letter-spacing:-0.3px;color:var(--text);
+}
+.tool-desc{
+  font-size:13px;color:var(--text2);line-height:1.55;font-weight:400;
+}
+.tool-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
+.tag{
+  font-size:10px;font-weight:500;letter-spacing:0.03em;
+  padding:2px 8px;border-radius:20px;
+  background:var(--primary-light);color:var(--primary);
+  border:1px solid rgba(108,92,231,0.15);
+}
+.tool-arrow{
+  font-size:16px;color:var(--text3);margin-top:auto;
+  transition:transform 0.2s,color 0.2s;
+  align-self:flex-end;
+}
+.tool-card:hover .tool-arrow{transform:translate(3px,-3px);color:var(--primary);}
+
+/* ── Generic card grid ── */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:12px;
+}
+.card{
+  background:var(--surface);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:8px;
+  transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.card.placeholder{border-style:dashed;opacity:0.55;}
+.card-icon{font-size:22px;line-height:1;}
+.card-title{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
+.card-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+.card-link{
+  font-size:12px;font-weight:500;color:var(--primary);
+  text-decoration:none;margin-top:4px;display:inline-flex;align-items:center;gap:4px;
+}
+.card-link:hover{text-decoration:underline;}
+.card:not(.placeholder):hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+
+/* ── Divider ── */
+.divider{
+  height:1px;background:var(--border2);
+  max-width:1100px;margin:0 auto;
+}
+
+/* ── Coming soon banner ── */
+.coming-soon{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;color:var(--text3);
+  background:var(--surface);border:1px dashed var(--border2);
+  border-radius:8px;padding:4px 10px;
+}
+
+/* ── Footer ── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border2);
+  padding:2rem 2.5rem;
+  margin-top:4rem;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-logo{font-size:14px;font-weight:600;color:var(--text2);letter-spacing:-0.2px;}
+.footer-logo span{font-weight:300;}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{font-size:12px;color:var(--text3);text-decoration:none;}
+.footer-links a:hover{color:var(--primary);}
+.footer-copy{font-size:11px;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<!-- ── Nav ── -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ng1" x1="0" y1="36" x2="36" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#f97316"/>
+          <stop offset="55%" stop-color="#c026d3"/>
+          <stop offset="100%" stop-color="#6c5ce7"/>
+        </linearGradient>
+      </defs>
+      <path d="M18 33C18 33 5 25 5 14C5 8 10 4 14 5C12 8 13 12 18 15C23 12 24 8 22 5C26 4 31 8 31 14C31 25 18 33 18 33Z" fill="url(#ng1)"/>
+      <circle cx="18" cy="7" r="2" fill="white" opacity="0.9"/>
+    </svg>
+    <span class="nav-wordmark">Agile Resource <span>Center</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#tools" class="active">Tools</a>
+    <a href="#learning">Learning</a>
+    <a href="#resources">Resources</a>
+    <a href="#books">Books</a>
+    <a href="#links">Links</a>
+  </div>
+  <a href="agile_retro_board_v5.html" class="nav-cta">Open PhoenixRetro →</a>
+</nav>
+
+<div class="page">
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <div class="hero-eyebrow">Agile Resource Center</div>
+  <h1>Everything your team needs to <em>ship better</em></h1>
+  <p class="hero-sub">Tools, frameworks, books, and learning paths — curated for agile teams who want to reflect, improve, and move fast.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">9+</span><span class="stat-label">Retro templates</span></div>
+    <div class="stat"><span class="stat-num">1</span><span class="stat-label">Live tool</span></div>
+    <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Better sprints</span></div>
+  </div>
+</section>
+
+<!-- ── Tools ── -->
+<section class="section" id="tools">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Tools</div>
+      <div class="section-title">Interactive agile tools</div>
+      <div class="section-sub">Free, browser-based tools built for agile ceremonies and practices.</div>
+    </div>
+  </div>
+  <div class="tools-grid">
+
+    <!-- PhoenixRetro — live -->
+    <a href="agile_retro_board_v5.html" class="tool-card featured">
+      <div class="tool-top">
+        <div class="tool-icon">
+          <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="tg1" x1="0" y1="36" x2="36" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#f97316"/>
+                <stop offset="55%" stop-color="#c026d3"/>
+                <stop offset="100%" stop-color="#6c5ce7"/>
+              </linearGradient>
+            </defs>
+            <path d="M18 33C18 33 5 25 5 14C5 8 10 4 14 5C12 8 13 12 18 15C23 12 24 8 22 5C26 4 31 8 31 14C31 25 18 33 18 33Z" fill="url(#tg1)"/>
+            <circle cx="18" cy="7" r="2" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <span class="tool-badge">Live</span>
+      </div>
+      <div>
+        <div class="tool-name">PhoenixRetro</div>
+        <div class="tool-desc">A fully-featured retrospective board with 9 built-in templates, custom boards, voting limits, a session timer, PDF export, and shareable links.</div>
+      </div>
+      <div class="tool-tags">
+        <span class="tag">Retrospectives</span>
+        <span class="tag">Voting</span>
+        <span class="tag">Timer</span>
+        <span class="tag">PDF export</span>
+      </div>
+      <div class="tool-arrow">↗</div>
+    </a>
+
+    <!-- Placeholder tools -->
+    <div class="tool-card placeholder">
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#fff0d4;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" fill="#f97316" opacity="0.7"/><rect x="14" y="3" width="7" height="7" rx="1.5" fill="#f97316" opacity="0.4"/><rect x="3" y="14" width="7" height="7" rx="1.5" fill="#f97316" opacity="0.4"/><rect x="14" y="14" width="7" height="7" rx="1.5" fill="#f97316" opacity="0.2"/></svg>
+        </div>
+        <span class="tool-badge soon">Coming soon</span>
+      </div>
+      <div>
+        <div class="tool-name">Sprint Planner</div>
+        <div class="tool-desc">Estimate, prioritise and plan your sprint backlog collaboratively with your team.</div>
+      </div>
+      <div class="tool-tags"><span class="tag">Planning</span><span class="tag">Estimation</span></div>
+    </div>
+
+    <div class="tool-card placeholder">
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#d4f0e5;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#16a34a" stroke-width="1.5" opacity="0.5"/><path d="M12 4v4M12 16v4M4 12h4M16 12h4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/></svg>
+        </div>
+        <span class="tool-badge soon">Coming soon</span>
+      </div>
+      <div>
+        <div class="tool-name">Team Health Check</div>
+        <div class="tool-desc">Run Spotify-style team health checks to spot trends and celebrate wins.</div>
+      </div>
+      <div class="tool-tags"><span class="tag">Health</span><span class="tag">Metrics</span></div>
+    </div>
+
+    <div class="tool-card placeholder">
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#ffd5ec;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke="#c026d3" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/><path d="M9 12h6M9 16h4" stroke="#c026d3" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg>
+        </div>
+        <span class="tool-badge soon">Coming soon</span>
+      </div>
+      <div>
+        <div class="tool-name">Daily Standup Board</div>
+        <div class="tool-desc">Structure your daily standups with Yesterday / Today / Blockers boards.</div>
+      </div>
+      <div class="tool-tags"><span class="tag">Standup</span><span class="tag">Daily</span></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Learning Paths ── -->
+<section class="section" id="learning">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Learning Paths</div>
+      <div class="section-title">Structured agile learning</div>
+      <div class="section-sub">Curated paths for practitioners at every level — from Scrum basics to advanced coaching.</div>
+    </div>
+    <span class="coming-soon">✦ Content coming soon</span>
+  </div>
+  <div class="card-grid">
+    <div class="card placeholder">
+      <div class="card-icon">🌱</div>
+      <div class="card-title">Agile Foundations</div>
+      <div class="card-desc">The core values, principles, and mindsets behind the Agile Manifesto. Perfect starting point for new team members.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">🏃</div>
+      <div class="card-title">Scrum in Practice</div>
+      <div class="card-desc">Roles, ceremonies, and artefacts. Learn how to run effective sprints from planning to retrospective.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">Kanban Mastery</div>
+      <div class="card-desc">Visualise flow, limit WIP, and build a culture of continuous improvement with Kanban.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">Agile Coaching</div>
+      <div class="card-desc">Advanced facilitation, coaching stances, and techniques for Scrum Masters and agile coaches.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Resources ── -->
+<section class="section" id="resources">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Resources</div>
+      <div class="section-title">Guides, templates & downloads</div>
+      <div class="section-sub">Practical resources you can use in your next sprint or ceremony.</div>
+    </div>
+    <span class="coming-soon">✦ Content coming soon</span>
+  </div>
+  <div class="card-grid">
+    <div class="card placeholder">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Retrospective Facilitation Guide</div>
+      <div class="card-desc">A step-by-step guide to running retros that actually lead to change.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">📊</div>
+      <div class="card-title">Sprint Velocity Tracker</div>
+      <div class="card-desc">Spreadsheet template to track team velocity across sprints.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">🗺️</div>
+      <div class="card-title">User Story Mapping Template</div>
+      <div class="card-desc">Map user journeys and identify your MVP slice with this structured template.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">📝</div>
+      <div class="card-title">Definition of Done Checklist</div>
+      <div class="card-desc">A customisable DoD template to align your team on quality standards.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── Books ── -->
+<section class="section" id="books">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Books</div>
+      <div class="section-title">Essential agile reading</div>
+      <div class="section-sub">The books that have shaped modern agile thinking — handpicked for practitioners.</div>
+    </div>
+    <span class="coming-soon">✦ Reviews coming soon</span>
+  </div>
+  <div class="card-grid">
+    <div class="card placeholder">
+      <div class="card-icon">📗</div>
+      <div class="card-title">The Scrum Guide</div>
+      <div class="card-desc">Sutherland & Schwaber. The definitive guide to Scrum — free, concise, and essential.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">📘</div>
+      <div class="card-title">Accelerate</div>
+      <div class="card-desc">Forsgren, Humble & Kim. Research-backed insights into what makes high-performing software teams.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">📙</div>
+      <div class="card-title">The Phoenix Project</div>
+      <div class="card-desc">Kim, Behr & Spafford. A novel about DevOps and IT transformation — surprisingly unputdownable.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">📕</div>
+      <div class="card-title">Lean Startup</div>
+      <div class="card-desc">Eric Ries. Build-Measure-Learn and the principles behind rapid, validated product development.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── External Links ── -->
+<section class="section" id="links">
+  <div class="section-header">
+    <div>
+      <div class="section-label">External Links</div>
+      <div class="section-title">Curated agile communities & references</div>
+      <div class="section-sub">The best places on the web to deepen your agile knowledge.</div>
+    </div>
+    <span class="coming-soon">✦ Links being curated</span>
+  </div>
+  <div class="card-grid">
+    <div class="card placeholder">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Agile Alliance</div>
+      <div class="card-desc">agilealliance.org — Articles, events, and the home of the Agile Manifesto.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Scrum.org</div>
+      <div class="card-desc">Free learning resources, assessments, and the Professional Scrum certifications.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Liberating Structures</div>
+      <div class="card-desc">33 facilitation microstructures that replace conventional meeting formats.</div>
+    </div>
+    <div class="card placeholder">
+      <div class="card-icon">🌐</div>
+      <div class="card-title">Retromat</div>
+      <div class="card-desc">retromat.org — A generator for retrospective activities across all five phases.</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end .page -->
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="footer-logo">Agile Resource <span>Center</span></div>
+  <div class="footer-links">
+    <a href="#tools">Tools</a>
+    <a href="#learning">Learning</a>
+    <a href="#resources">Resources</a>
+    <a href="#books">Books</a>
+    <a href="#links">Links</a>
+  </div>
+  <div class="footer-copy">Built with PhoenixRetro · Open source friendly</div>
+</footer>
+
+<script>
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+// Active nav link on scroll
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      navLinks.forEach(l=>l.classList.remove('active'));
+      const active=document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+      if(active)active.classList.add('active');
+    }
+  });
+},{threshold:0.4});
+sections.forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
