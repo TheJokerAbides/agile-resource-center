@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Useful Agile Metrics — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;
+  --surface:rgba(255,255,255,0.82);
+  --surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.2);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --purple:#7c3aed;--purple-bg:#ede9ff;--purple-border:rgba(124,58,237,0.2);
+  --teal:#0d9488;--teal-bg:#d4f0ee;--teal-border:rgba(13,148,136,0.2);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(240,239,246,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+.page{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);border-radius:20px;padding:4px 14px;margin-bottom:1rem;}
+.page-hero{margin-bottom:2.5rem;}
+.page-hero h1{font-size:32px;font-weight:600;letter-spacing:-0.8px;color:var(--text);margin-bottom:0.5rem;line-height:1.2;}
+.page-hero h1 em{font-style:normal;background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:14px;color:var(--text2);font-weight:300;line-height:1.7;max-width:640px;}
+
+/* ── Filter tabs ── */
+.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem;}
+.filter-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);cursor:pointer;transition:all 0.15s;}
+.filter-btn:hover{border-color:var(--primary);color:var(--primary);}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+/* ── Metric cards ── */
+.metrics-grid{display:flex;flex-direction:column;gap:14px;}
+.metric-card{background:var(--surface);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s;}
+.metric-card:hover{box-shadow:var(--shadow-lg);}
+
+.metric-header{display:flex;align-items:center;gap:14px;padding:16px 20px 14px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;}
+.metric-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.metric-header-text{flex:1;}
+.metric-name{font-size:16px;font-weight:600;letter-spacing:-0.3px;color:var(--text);}
+.metric-formula{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;margin-top:2px;}
+.metric-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px;}
+.metric-toggle{font-size:18px;color:var(--text3);margin-left:auto;flex-shrink:0;transition:transform 0.2s;}
+.metric-card.open .metric-toggle{transform:rotate(180deg);}
+
+.metric-body{display:none;padding:18px 20px 20px;}
+.metric-card.open .metric-body{display:block;}
+
+.metric-what{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px;padding:12px 14px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--primary);}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:580px){.pros-cons{grid-template-columns:1fr;}}
+.pros,.cons{border-radius:10px;padding:12px 14px;}
+.pros{background:var(--green-bg);border:1px solid var(--green-border);}
+.cons{background:var(--red-bg);border:1px solid var(--red-border);}
+.pros-cons-title{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:4px;}
+.pros .pros-cons-title{color:var(--green);}
+.cons .pros-cons-title{color:var(--red);}
+.pros-cons-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.pros-cons-list li{font-size:12px;line-height:1.45;display:flex;align-items:flex-start;gap:6px;}
+.pros-cons-list li::before{flex-shrink:0;font-size:11px;margin-top:1px;}
+.pros .pros-cons-list li{color:#14532d;}
+.pros .pros-cons-list li::before{content:'✓';color:var(--green);}
+.cons .pros-cons-list li{color:#7f1d1d;}
+.cons .pros-cons-list li::before{content:'✕';color:var(--red);}
+
+.metric-verdict{background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--text);line-height:1.55;}
+.metric-verdict strong{color:var(--primary);}
+
+/* ── Badges ── */
+.badge{font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 8px;border-radius:20px;}
+.badge-flow{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.badge-quality{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.badge-delivery{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border);}
+.badge-team{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.badge-product{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-border);}
+.badge-caution{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+
+/* ── Comparison table ── */
+.comparison-section{margin-top:3.5rem;}
+.comparison-title{font-size:20px;font-weight:600;letter-spacing:-0.4px;margin-bottom:0.4rem;}
+.comparison-sub{font-size:13px;color:var(--text2);margin-bottom:1.5rem;}
+.table-wrap{overflow-x:auto;border:1px solid var(--border2);border-radius:var(--radius);box-shadow:var(--shadow);}
+table{width:100%;border-collapse:collapse;background:var(--surface);font-size:13px;min-width:700px;}
+thead tr{border-bottom:2px solid var(--border2);}
+thead th{padding:11px 14px;text-align:left;font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);background:var(--surface2);}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(108,92,231,0.03);}
+td{padding:10px 14px;vertical-align:middle;color:var(--text2);font-size:12px;}
+td:first-child{font-weight:600;color:var(--text);font-size:13px;}
+.cell-yes{color:var(--green);font-weight:600;}
+.cell-no{color:var(--red);}
+.cell-mid{color:var(--amber);font-weight:500;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">Useful Agile Metrics</span>
+  <div style="width:120px;"></div>
+</nav>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="page-eyebrow">📊 Resources</div>
+    <h1>Useful <em>Agile Metrics</em></h1>
+    <p>A practical guide to the most commonly used agile metrics — what they measure, how to calculate them, and the honest pros and cons of each. Metrics should inform conversations, not replace them.</p>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all">All metrics</button>
+    <button class="filter-btn" data-filter="flow">Flow</button>
+    <button class="filter-btn" data-filter="delivery">Delivery</button>
+    <button class="filter-btn" data-filter="quality">Quality</button>
+    <button class="filter-btn" data-filter="team">Team health</button>
+    <button class="filter-btn" data-filter="product">Product</button>
+  </div>
+
+  <div class="metrics-grid" id="metrics-grid">
+
+    <!-- Velocity -->
+    <div class="metric-card" data-type="flow">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--blue-bg);">⚡</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Velocity</div>
+          <div class="metric-formula">Story points completed per sprint</div>
+          <div class="metric-meta">
+            <span class="badge badge-flow">Flow</span>
+            <span class="badge badge-delivery">Delivery</span>
+          </div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">Velocity measures the average amount of work a team completes per sprint, expressed in story points. It is used to forecast how much work a team can take on in future sprints.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Simple to track and understand</li>
+            <li>Useful for sprint forecasting and release planning</li>
+            <li>Helps teams identify sustainable pace over time</li>
+            <li>Encourages consistent estimation practices</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Story points are not comparable across teams</li>
+            <li>Can incentivise inflating estimates to look productive</li>
+            <li>Doesn't reflect quality — only quantity</li>
+            <li>Misleading when team composition changes</li>
+            <li>Should never be used to compare teams</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Internal sprint planning and release forecasting within a stable team. Treat it as a planning tool, not a performance measure.</div>
+      </div>
+    </div>
+
+    <!-- Cycle Time -->
+    <div class="metric-card" data-type="flow">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--purple-bg);">🔄</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Cycle Time</div>
+          <div class="metric-formula">Time from work started → work delivered</div>
+          <div class="metric-meta"><span class="badge badge-flow">Flow</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">Cycle time measures how long it takes for a work item to move from the moment active work begins to the moment it is delivered to the customer. It is a key Kanban metric for understanding team throughput and predictability.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Objective — based on actual timestamps, not estimates</li>
+            <li>Highlights bottlenecks and blockers in the workflow</li>
+            <li>Great predictor of future delivery time</li>
+            <li>Improves with WIP limits and flow discipline</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Requires accurate tracking of when work truly starts</li>
+            <li>Outliers can skew averages significantly</li>
+            <li>Doesn't distinguish between item complexity</li>
+            <li>Can create pressure to rush at the expense of quality</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Kanban teams focused on flow efficiency. Use percentile ranges (e.g. 85th percentile) rather than averages to set realistic SLAs.</div>
+      </div>
+    </div>
+
+    <!-- Lead Time -->
+    <div class="metric-card" data-type="flow">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--teal-bg);">⏱️</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Lead Time</div>
+          <div class="metric-formula">Time from request created → work delivered</div>
+          <div class="metric-meta"><span class="badge badge-flow">Flow</span><span class="badge badge-product">Product</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">Lead time measures the total elapsed time from when a work item is requested (entered the backlog) to when it is delivered. Unlike cycle time, it includes queue and wait time — making it the metric customers care about most.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Reflects the customer's experience of responsiveness</li>
+            <li>Exposes time lost waiting in the backlog</li>
+            <li>Drives focus on reducing queue and approval delays</li>
+            <li>Useful for setting stakeholder expectations</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Longer than cycle time — can feel discouraging</li>
+            <li>Influenced heavily by backlog prioritisation, not just dev speed</li>
+            <li>Hard to improve without also improving upstream processes</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Understanding end-to-end responsiveness. Use alongside cycle time to diagnose where delays occur — in the queue or in active development.</div>
+      </div>
+    </div>
+
+    <!-- Sprint Burndown -->
+    <div class="metric-card" data-type="delivery">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--amber-bg);">📉</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Sprint Burndown</div>
+          <div class="metric-formula">Remaining work vs. ideal completion line over sprint</div>
+          <div class="metric-meta"><span class="badge badge-delivery">Delivery</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">A sprint burndown chart tracks how much work remains in a sprint over time, compared to the ideal linear reduction. It gives the team a daily visual on whether they are on track to meet their sprint goal.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Provides an early warning of sprint risk</li>
+            <li>Encourages daily transparency within the team</li>
+            <li>Simple and visual — easy for all stakeholders to read</li>
+            <li>Promotes conversation in daily standups</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Can create a false sense of progress if stories are not broken down well</li>
+            <li>Doesn't capture quality or technical debt</li>
+            <li>Teams may defer difficult tasks to look better on the chart</li>
+            <li>Scope changes mid-sprint distort the picture</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Daily sprint tracking and early risk detection. Most valuable when combined with a sprint goal rather than used as a task completion tracker.</div>
+      </div>
+    </div>
+
+    <!-- Throughput -->
+    <div class="metric-card" data-type="flow">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--green-bg);">📦</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Throughput</div>
+          <div class="metric-formula">Number of items completed per time period</div>
+          <div class="metric-meta"><span class="badge badge-flow">Flow</span><span class="badge badge-delivery">Delivery</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">Throughput counts the number of work items a team completes in a given time period (e.g. per week, per sprint). Unlike velocity, it doesn't rely on story point estimates — making it a more objective measure of output.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>No estimation required — based on completed items</li>
+            <li>Comparable across teams when item sizes are similar</li>
+            <li>Useful for Monte Carlo forecasting</li>
+            <li>Immune to estimation inflation</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Treats all items as equal regardless of complexity</li>
+            <li>Requires consistent story sizing discipline to be meaningful</li>
+            <li>Can incentivise splitting stories artificially to boost numbers</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Flow-based teams using Kanban or #NoEstimates approaches. Combine with cycle time for a complete picture of delivery performance.</div>
+      </div>
+    </div>
+
+    <!-- Defect Rate / Escaped Defects -->
+    <div class="metric-card" data-type="quality">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--red-bg);">🐛</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Escaped Defect Rate</div>
+          <div class="metric-formula">Bugs found in production ÷ total bugs found</div>
+          <div class="metric-meta"><span class="badge badge-quality">Quality</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">Escaped defects are bugs that make it past testing into production. The escaped defect rate measures the proportion of bugs found by real users rather than caught internally — a direct indicator of testing effectiveness and Definition of Done rigour.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Directly reflects customer-facing quality</li>
+            <li>Motivates investment in testing and automation</li>
+            <li>Reinforces the importance of a strong DoD</li>
+            <li>Easy to tie to business impact</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Requires reliable production monitoring to capture accurately</li>
+            <li>Can discourage teams from releasing frequently</li>
+            <li>Severity of bugs not always captured in the count</li>
+            <li>Definition of "defect" needs team agreement</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Teams looking to improve release quality and test coverage. Track alongside total defect count and severity to get a full picture.</div>
+      </div>
+    </div>
+
+    <!-- Sprint Goal Achievement -->
+    <div class="metric-card" data-type="delivery">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--green-bg);">🎯</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Sprint Goal Achievement Rate</div>
+          <div class="metric-formula">Sprints where goal was met ÷ total sprints</div>
+          <div class="metric-meta"><span class="badge badge-delivery">Delivery</span><span class="badge badge-team">Team health</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">Tracks how often a team successfully achieves the sprint goal they committed to at sprint planning. It shifts focus from task completion to outcome delivery — aligning the team around value rather than output.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Focuses the team on outcomes over output</li>
+            <li>Encourages meaningful sprint goal setting</li>
+            <li>Better indicator of value delivery than velocity</li>
+            <li>Useful for retrospective conversations</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Only as good as the quality of the sprint goal itself</li>
+            <li>Teams may set weak goals to guarantee success</li>
+            <li>Binary — doesn't capture partial achievement</li>
+            <li>Requires discipline in goal-setting to be meaningful</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Teams who write meaningful sprint goals and want to measure outcome-focused delivery. Discuss in retrospectives when the rate drops.</div>
+      </div>
+    </div>
+
+    <!-- Team Happiness / NPS -->
+    <div class="metric-card" data-type="team">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--amber-bg);">😊</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Team Happiness / Satisfaction</div>
+          <div class="metric-formula">Survey score (1–10) tracked over time</div>
+          <div class="metric-meta"><span class="badge badge-team">Team health</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">A simple periodic survey asking team members to rate how they feel about their work, team, and processes. Made popular by the Spotify squad model, it provides early signals of morale and engagement issues before they affect delivery.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Simple to run — even a single question provides signal</li>
+            <li>Surfaces morale issues early</li>
+            <li>Encourages psychological safety when done anonymously</li>
+            <li>Low effort, high value for Scrum Masters and coaches</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Subjective — hard to act on without follow-up</li>
+            <li>Can become noise if nothing changes after feedback</li>
+            <li>Social desirability bias in non-anonymous settings</li>
+            <li>Trend over time matters more than a single score</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Scrum Masters and agile coaches monitoring team wellbeing. Always pair with a follow-up question: "What's one thing that would improve your score?"</div>
+      </div>
+    </div>
+
+    <!-- DORA Metrics -->
+    <div class="metric-card" data-type="delivery">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--purple-bg);">🚀</div>
+        <div class="metric-header-text">
+          <div class="metric-name">DORA Metrics</div>
+          <div class="metric-formula">4 key DevOps / delivery performance indicators</div>
+          <div class="metric-meta"><span class="badge badge-delivery">Delivery</span><span class="badge badge-quality">Quality</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">Developed by the DevOps Research and Assessment team (as featured in Accelerate), the four DORA metrics are: Deployment Frequency, Lead Time for Changes, Change Failure Rate, and Time to Restore Service. Together they measure both delivery speed and stability.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Research-backed — proven to correlate with organisational performance</li>
+            <li>Balances speed (deployment frequency, lead time) with stability (failure rate, recovery)</li>
+            <li>Used by high-performing teams globally</li>
+            <li>Industry benchmarks available for comparison</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Requires mature CI/CD pipelines to measure accurately</li>
+            <li>Less relevant for teams not doing continuous deployment</li>
+            <li>Can be gamed if used for performance management</li>
+            <li>Four separate metrics — requires tooling to track well</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Engineering and platform teams with CI/CD pipelines. The gold standard for measuring DevOps performance — reference the Accelerate book for full context.</div>
+      </div>
+    </div>
+
+    <!-- Code Coverage -->
+    <div class="metric-card" data-type="quality">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--green-bg);">🧪</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Code Coverage</div>
+          <div class="metric-formula">Lines tested by unit tests ÷ total lines of code</div>
+          <div class="metric-meta"><span class="badge badge-quality">Quality</span><span class="badge badge-caution">Use with caution</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">Code coverage measures what percentage of production code is exercised by automated tests. It is often used as a proxy for test quality, though the relationship between coverage and actual quality is more nuanced than a percentage suggests.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Easy to measure with standard tooling</li>
+            <li>Identifies untested code paths</li>
+            <li>Useful as a baseline minimum threshold</li>
+            <li>Encourages test-driven development habits</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>High coverage doesn't equal good tests — assertions can be missing</li>
+            <li>Teams optimise for the number, not the value of tests</li>
+            <li>Easy to game with low-value tests</li>
+            <li>Can create false confidence in test suite quality</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Setting a floor, not a ceiling. A coverage threshold (e.g. 80%) is a useful safety net, but always review test quality alongside coverage numbers.</div>
+      </div>
+    </div>
+
+    <!-- Net Promoter Score (Product) -->
+    <div class="metric-card" data-type="product">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--teal-bg);">💬</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Net Promoter Score (NPS)</div>
+          <div class="metric-formula">% Promoters − % Detractors</div>
+          <div class="metric-meta"><span class="badge badge-product">Product</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">NPS measures customer loyalty by asking: "How likely are you to recommend this product to a friend or colleague?" on a 0–10 scale. Respondents are categorised as Promoters (9–10), Passives (7–8), or Detractors (0–6). NPS = % Promoters − % Detractors.</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Simple single-question survey with industry benchmarks</li>
+            <li>Strong predictor of customer retention and growth</li>
+            <li>Easy to track over time and across releases</li>
+            <li>Universally understood by business stakeholders</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>A single number rarely reveals why customers feel a certain way</li>
+            <li>Cultural differences affect scoring — less reliable across regions</li>
+            <li>Prone to survey timing bias (e.g. right after a good release)</li>
+            <li>Doesn't tell you what to fix</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Product and customer success teams tracking overall sentiment trends. Always follow up with open-ended questions to turn the score into actionable insights.</div>
+      </div>
+    </div>
+
+    <!-- WIP (Work in Progress) -->
+    <div class="metric-card" data-type="flow">
+      <div class="metric-header">
+        <div class="metric-icon" style="background:var(--blue-bg);">🗂️</div>
+        <div class="metric-header-text">
+          <div class="metric-name">Work in Progress (WIP)</div>
+          <div class="metric-formula">Number of items actively being worked on</div>
+          <div class="metric-meta"><span class="badge badge-flow">Flow</span><span class="badge badge-team">Team health</span></div>
+        </div>
+        <div class="metric-toggle">⌄</div>
+      </div>
+      <div class="metric-body">
+        <div class="metric-what">WIP measures how many work items are actively in progress at any given moment. Limiting WIP is a core principle of Kanban — reducing it improves flow, reduces context switching, and exposes process bottlenecks (Little's Law: Cycle Time = WIP ÷ Throughput).</div>
+        <div class="pros-cons">
+          <div class="pros"><div class="pros-cons-title">✓ Pros</div><ul class="pros-cons-list">
+            <li>Directly linked to cycle time via Little's Law</li>
+            <li>Reducing WIP improves flow without changing team capacity</li>
+            <li>Forces prioritisation — teams must finish before starting</li>
+            <li>Makes bottlenecks and blockers immediately visible</li>
+          </ul></div>
+          <div class="cons"><div class="pros-cons-title">✕ Cons</div><ul class="pros-cons-list">
+            <li>Teams often resist WIP limits as they feel constraining</li>
+            <li>Requires cultural change to enforce effectively</li>
+            <li>WIP limits alone don't fix root-cause bottlenecks</li>
+          </ul></div>
+        </div>
+        <div class="metric-verdict"><strong>Best used for:</strong> Kanban and flow-based teams. Start by measuring current WIP before setting limits — aim for approximately 1–1.5x the number of team members actively working.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Quick reference table ── -->
+  <div class="comparison-section">
+    <div class="comparison-title">Quick reference</div>
+    <div class="comparison-sub">At-a-glance summary of all metrics, their category, and key guidance.</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Category</th>
+            <th>Measures</th>
+            <th>Estimation needed?</th>
+            <th>Risk of gaming?</th>
+            <th>Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Velocity</td><td><span class="badge badge-flow">Flow</span></td><td>Sprint output in points</td><td class="cell-yes">Yes</td><td class="cell-no">High</td><td>Internal forecasting only</td></tr>
+          <tr><td>Cycle Time</td><td><span class="badge badge-flow">Flow</span></td><td>Active work duration</td><td class="cell-yes">No</td><td class="cell-mid">Low</td><td>Flow & predictability</td></tr>
+          <tr><td>Lead Time</td><td><span class="badge badge-flow">Flow</span></td><td>Total request-to-delivery</td><td class="cell-yes">No</td><td class="cell-mid">Low</td><td>Customer responsiveness</td></tr>
+          <tr><td>Sprint Burndown</td><td><span class="badge badge-delivery">Delivery</span></td><td>Remaining sprint work</td><td class="cell-yes">Yes</td><td class="cell-mid">Medium</td><td>Daily sprint tracking</td></tr>
+          <tr><td>Throughput</td><td><span class="badge badge-flow">Flow</span></td><td>Items completed per period</td><td class="cell-yes">No</td><td class="cell-mid">Medium</td><td>Flow-based forecasting</td></tr>
+          <tr><td>Escaped Defects</td><td><span class="badge badge-quality">Quality</span></td><td>Production bug rate</td><td class="cell-yes">No</td><td class="cell-mid">Low</td><td>Release quality</td></tr>
+          <tr><td>Sprint Goal Achievement</td><td><span class="badge badge-delivery">Delivery</span></td><td>Outcome delivery</td><td class="cell-yes">No</td><td class="cell-no">High</td><td>Outcome-focused teams</td></tr>
+          <tr><td>Team Happiness</td><td><span class="badge badge-team">Team health</span></td><td>Morale & engagement</td><td class="cell-yes">No</td><td class="cell-mid">Medium</td><td>Early morale warning</td></tr>
+          <tr><td>DORA Metrics</td><td><span class="badge badge-delivery">Delivery</span></td><td>DevOps performance</td><td class="cell-yes">No</td><td class="cell-mid">Medium</td><td>CI/CD teams</td></tr>
+          <tr><td>Code Coverage</td><td><span class="badge badge-quality">Quality</span></td><td>Test completeness</td><td class="cell-yes">No</td><td class="cell-no">High</td><td>Test baseline only</td></tr>
+          <tr><td>NPS</td><td><span class="badge badge-product">Product</span></td><td>Customer loyalty</td><td class="cell-yes">No</td><td class="cell-mid">Low</td><td>Product sentiment</td></tr>
+          <tr><td>WIP</td><td><span class="badge badge-flow">Flow</span></td><td>Active items in flight</td><td class="cell-yes">No</td><td class="cell-mid">Low</td><td>Kanban flow teams</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.metric-header').forEach(header=>{
+  header.addEventListener('click',()=>{
+    const card=header.closest('.metric-card');
+    const wasOpen=card.classList.contains('open');
+    document.querySelectorAll('.metric-card').forEach(c=>c.classList.remove('open'));
+    if(!wasOpen)card.classList.add('open');
+  });
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter=btn.dataset.filter;
+    document.querySelectorAll('.metric-card').forEach(card=>{
+      card.style.display=(filter==='all'||card.dataset.type===filter)?'':'none';
+    });
+  });
+});
+
+document.querySelector('.metric-card')?.classList.add('open');
+</script>
+</body>
+</html>
