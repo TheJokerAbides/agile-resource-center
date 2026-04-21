@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PhoenixPoker — Planning Poker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+.retro-light{
+  --bg:#f0eff6;
+  --glass:rgba(255,255,255,0.72);
+  --glass2:rgba(255,255,255,0.5);
+  --surface:rgba(255,255,255,0.85);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --primary-hover:#5849d4;
+  --danger:#e55353;
+  --danger-light:#fff0f0;
+  --danger-border:rgba(229,83,83,0.3);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.06);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.14),0 2px 8px rgba(80,60,160,0.08);
+  --card-back:#e8e5f8;
+  --card-back2:#d4cfee;
+}
+.retro-dark{
+  --bg:#0f0e17;
+  --glass:rgba(30,28,45,0.82);
+  --glass2:rgba(30,28,45,0.6);
+  --surface:rgba(30,28,45,0.9);
+  --border:rgba(140,130,220,0.14);
+  --border2:rgba(140,130,220,0.25);
+  --text:#eeeaf8;
+  --text2:#8c88a8;
+  --text3:#5c5878;
+  --primary:#8b7ff5;
+  --primary-light:#221e40;
+  --primary-hover:#7a6de0;
+  --danger:#f87171;
+  --danger-light:#2d1515;
+  --danger-border:rgba(248,113,113,0.3);
+  --shadow:0 2px 12px rgba(0,0,0,0.3),0 1px 3px rgba(0,0,0,0.2);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.4),0 2px 8px rgba(0,0,0,0.3);
+  --card-back:#1e1c35;
+  --card-back2:#2a2748;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;
+  transition:background 0.3s,color 0.3s;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+/* ── Nav ── */
+.nav-bar{
+  position:relative;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;height:58px;
+  background:rgba(240,239,246,0.85);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border2);
+}
+.retro-dark .nav-bar{background:rgba(15,14,23,0.88);}
+.nav-left{display:flex;align-items:center;gap:14px;}
+.back-link{
+  font-size:12px;color:var(--text2);text-decoration:none;
+  display:flex;align-items:center;gap:5px;
+  padding:5px 10px;border-radius:8px;border:1px solid var(--border2);
+  background:var(--glass);transition:all 0.15s;
+}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
+.logo-phoenix{
+  font-size:18px;font-weight:600;letter-spacing:-0.6px;
+  background:linear-gradient(135deg,#f97316 0%,#c026d3 55%,#6c5ce7 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.logo-retro{font-size:18px;font-weight:300;letter-spacing:-0.3px;color:var(--text2);}
+.theme-toggle{
+  display:flex;border:1px solid var(--border2);border-radius:10px;overflow:hidden;height:32px;
+}
+.theme-toggle button{
+  border:none;border-radius:0;height:32px;padding:0 11px;font-size:14px;
+  background:var(--glass);color:var(--text2);cursor:pointer;transition:background 0.15s;
+  font-family:'DM Sans',sans-serif;
+}
+.theme-toggle button.active{background:var(--primary);color:#fff;}
+.theme-toggle button:hover:not(.active){background:var(--primary-light);}
+
+/* ── Wrap ── */
+.wrap{position:relative;z-index:1;padding:2rem;max-width:1000px;margin:0 auto;}
+
+/* ── Buttons ── */
+button.btn{
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  padding:0 18px;border:1px solid var(--border2);border-radius:10px;
+  background:var(--glass);backdrop-filter:blur(8px);color:var(--text);
+  cursor:pointer;height:38px;white-space:nowrap;
+  transition:all 0.18s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow:var(--shadow);
+}
+button.btn:hover{background:var(--glass2);border-color:var(--primary);transform:translateY(-1px);box-shadow:var(--shadow-lg);}
+button.btn:active{transform:scale(0.98);}
+button.btn.primary{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 14px rgba(108,92,231,0.35);}
+button.btn.primary:hover{background:var(--primary-hover);box-shadow:0 6px 20px rgba(108,92,231,0.45);}
+button.btn.danger{color:var(--danger);border-color:var(--danger-border);}
+button.btn.danger:hover{background:var(--danger-light);}
+button.btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;box-shadow:none;}
+input[type=text]{
+  font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:0 12px;border:1px solid var(--border2);border-radius:10px;
+  background:var(--glass);backdrop-filter:blur(8px);color:var(--text);
+  height:38px;outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+  box-shadow:var(--shadow);
+}
+input[type=text]:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(108,92,231,0.15);}
+select{
+  font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:0 12px;border:1px solid var(--border2);border-radius:10px;
+  background:var(--glass);backdrop-filter:blur(8px);color:var(--text);
+  height:38px;outline:none;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239e9bb5' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;
+  box-shadow:var(--shadow);
+}
+
+/* ── Lobby ── */
+.lobby{display:flex;flex-direction:column;align-items:center;padding:4rem 1rem;text-align:center;animation:fade-in 0.35s ease;}
+@keyframes fade-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.lobby-icon{margin-bottom:1.5rem;}
+.lobby h2{font-size:28px;font-weight:600;letter-spacing:-0.8px;margin-bottom:0.5rem;}
+.lobby-sub{font-size:14px;color:var(--text2);margin-bottom:2.5rem;font-weight:300;}
+.lobby-form{
+  background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--border2);
+  border-radius:16px;padding:24px 28px;
+  display:flex;flex-direction:column;gap:16px;width:100%;max-width:420px;
+  box-shadow:var(--shadow-lg);
+}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);}
+.field input,.field select{width:100%;}
+.lobby-divider{
+  display:flex;align-items:center;gap:10px;color:var(--text3);font-size:11px;
+}
+.lobby-divider::before,.lobby-divider::after{content:'';flex:1;height:1px;background:var(--border2);}
+.join-form{
+  background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--border2);
+  border-radius:16px;padding:20px 28px;
+  display:flex;flex-direction:column;gap:14px;width:100%;max-width:420px;
+  box-shadow:var(--shadow);
+}
+
+/* ── Session header ── */
+.session-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px;margin-bottom:1.5rem;
+  background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border2);
+  border-radius:14px;padding:12px 18px;box-shadow:var(--shadow);
+}
+.session-name{font-size:16px;font-weight:600;letter-spacing:-0.3px;}
+.session-meta{font-size:12px;color:var(--text2);}
+.session-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.deck-label{
+  font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--text3);background:var(--primary-light);
+  border:1px solid rgba(108,92,231,0.2);
+  border-radius:20px;padding:3px 10px;
+}
+
+/* ── Story input ── */
+.story-bar{
+  display:flex;gap:8px;margin-bottom:1.5rem;
+  background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border2);
+  border-radius:14px;padding:12px 18px;box-shadow:var(--shadow);
+  align-items:center;flex-wrap:wrap;
+}
+.story-bar input{flex:1;min-width:200px;}
+.story-current{font-size:13px;color:var(--text2);}
+.story-current strong{color:var(--text);}
+
+/* ── Voting cards ── */
+.cards-section{margin-bottom:2rem;}
+.cards-section-title{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.cards-row{display:flex;flex-wrap:wrap;gap:10px;}
+.vote-card{
+  width:72px;height:100px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  font-size:22px;font-weight:600;
+  border:2px solid var(--border2);
+  background:var(--glass);backdrop-filter:blur(8px);
+  cursor:pointer;user-select:none;
+  transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+  color:var(--text);
+}
+.vote-card:hover{transform:translateY(-6px) scale(1.04);box-shadow:var(--shadow-lg);border-color:var(--primary);}
+.vote-card.selected{
+  border-color:var(--primary);
+  background:var(--primary);color:#fff;
+  transform:translateY(-8px) scale(1.06);
+  box-shadow:0 10px 28px rgba(108,92,231,0.45);
+}
+.vote-card.selected::after{
+  content:'✓';position:absolute;bottom:6px;right:8px;font-size:11px;opacity:0.8;
+}
+.vote-card-sub{font-size:10px;font-weight:400;opacity:0.65;margin-top:2px;}
+
+/* ── Players table ── */
+.players-section{margin-bottom:2rem;}
+.players-grid{display:flex;flex-wrap:wrap;gap:10px;}
+.player-tile{
+  background:var(--glass);backdrop-filter:blur(8px);
+  border:1px solid var(--border2);border-radius:14px;
+  padding:14px 16px;min-width:110px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  box-shadow:var(--shadow);
+  transition:all 0.2s;
+  position:relative;
+}
+.player-avatar{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:600;
+  background:var(--primary-light);color:var(--primary);
+  border:2px solid rgba(108,92,231,0.2);
+}
+.player-name{font-size:12px;font-weight:500;color:var(--text);text-align:center;}
+.player-card{
+  width:46px;height:62px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:700;
+  transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.player-card.waiting{
+  background:var(--card-back);
+  border:2px dashed var(--border2);
+  color:var(--text3);font-size:11px;font-weight:400;
+}
+.player-card.voted{
+  background:var(--primary-light);
+  border:2px solid rgba(108,92,231,0.3);
+  color:var(--primary);font-size:11px;
+}
+.player-card.revealed{
+  background:var(--primary);color:#fff;
+  border:2px solid var(--primary);
+  box-shadow:0 4px 14px rgba(108,92,231,0.4);
+  animation:flip-in 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+.player-card.revealed.outlier{
+  background:linear-gradient(135deg,#f97316,#c026d3);
+  border-color:transparent;
+}
+@keyframes flip-in{from{transform:rotateY(90deg) scale(0.8);}to{transform:rotateY(0) scale(1);}}
+.you-badge{
+  position:absolute;top:6px;right:8px;
+  font-size:9px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;
+  color:var(--primary);background:var(--primary-light);
+  border-radius:20px;padding:1px 6px;
+}
+
+/* ── Results ── */
+.results-bar{
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--border2);
+  border-radius:14px;padding:14px 20px;margin-bottom:1.5rem;
+  box-shadow:var(--shadow);
+  animation:fade-in 0.3s ease;
+}
+.result-stat{text-align:center;}
+.result-num{
+  font-family:'DM Mono',monospace;font-size:22px;font-weight:500;
+  color:var(--primary);display:block;
+}
+.result-label{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);}
+.results-divider{width:1px;height:36px;background:var(--border2);}
+.consensus-badge{
+  padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;
+  background:linear-gradient(135deg,rgba(108,92,231,0.15),rgba(192,38,211,0.1));
+  border:1px solid rgba(108,92,231,0.25);color:var(--primary);
+}
+.consensus-badge.agree{background:linear-gradient(135deg,rgba(22,163,74,0.12),rgba(22,163,74,0.06));border-color:rgba(22,163,74,0.3);color:#16a34a;}
+
+/* ── Status bar ── */
+.status-bar{font-size:11px;color:var(--text3);min-height:16px;margin-bottom:8px;font-weight:500;}
+
+/* ── Share pill ── */
+.share-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;color:var(--text2);
+  background:var(--glass);border:1px solid var(--border2);
+  border-radius:20px;padding:4px 12px;cursor:pointer;
+  transition:all 0.15s;box-shadow:var(--shadow);
+}
+.share-pill:hover{border-color:var(--primary);color:var(--primary);}
+
+/* ── History ── */
+.history-section{margin-top:2rem;}
+.history-title{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
+.history-table{width:100%;border-collapse:collapse;}
+.history-table th{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);text-align:left;padding:6px 10px;}
+.history-table td{font-size:13px;color:var(--text2);padding:8px 10px;border-top:1px solid var(--border);}
+.history-table td:first-child{color:var(--text);font-weight:500;}
+.history-table .final-est{
+  font-family:'DM Mono',monospace;font-weight:500;
+  color:var(--primary);font-size:14px;
+}
+</style>
+</head>
+<body>
+<div class="retro-light" id="app">
+
+<!-- Nav -->
+<div class="nav-bar">
+  <div class="nav-left">
+    <a href="index.html" class="back-link">← Hub</a>
+    <a href="#" class="nav-logo">
+      <svg width="26" height="26" viewBox="0 0 36 36" fill="none">
+        <defs>
+          <linearGradient id="pg1" x1="0" y1="36" x2="36" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#f97316"/>
+            <stop offset="55%" stop-color="#c026d3"/>
+            <stop offset="100%" stop-color="#6c5ce7"/>
+          </linearGradient>
+        </defs>
+        <path d="M18 33C18 33 5 25 5 14C5 8 10 4 14 5C12 8 13 12 18 15C23 12 24 8 22 5C26 4 31 8 31 14C31 25 18 33 18 33Z" fill="url(#pg1)"/>
+        <circle cx="18" cy="7" r="2.2" fill="white" opacity="0.85"/>
+      </svg>
+      <span class="logo-phoenix">Phoenix</span><span class="logo-retro">Poker</span>
+    </a>
+  </div>
+  <div class="theme-toggle">
+    <button id="btn-light" class="active">☀</button>
+    <button id="btn-dark">☾</button>
+  </div>
+</div>
+
+<div class="wrap" id="wrap">
+  <div id="view-lobby"></div>
+  <div id="view-session" style="display:none;"></div>
+</div>
+
+</div><!-- #app -->
+
+<script>
+const DECKS={
+  fibonacci:{name:'Fibonacci',cards:['1','2','3','5','8','13','21','34','55','89','?','☕']},
+  tshirt:{name:'T-Shirt Sizes',cards:['XS','S','M','L','XL','XXL','?']},
+  fruit:{name:'Fruit',cards:['🍇','🍓','🍊','🍋','🍎','🍉','🎃','?']}
+};
+const FRUIT_VALS={'🍇':1,'🍓':2,'🍊':3,'🍋':5,'🍎':8,'🍉':13,'🎃':21,'?':null};
+const TSHIRT_VALS={'XS':1,'S':2,'M':3,'L':5,'XL':8,'XXL':13,'?':null};
+const NUMERIC_VALS=v=>isNaN(v)?null:parseFloat(v);
+
+const app=document.getElementById('app');
+const viewLobby=document.getElementById('view-lobby');
+const viewSession=document.getElementById('view-session');
+
+let myName='';
+let myId='';
+let sessionId='';
+let isDark=false;
+let pollInterval=null;
+
+// ── Theme ──
+document.getElementById('btn-light').addEventListener('click',()=>setTheme(false));
+document.getElementById('btn-dark').addEventListener('click',()=>setTheme(true));
+function setTheme(dark){
+  isDark=dark;
+  app.className=dark?'retro-dark':'retro-light';
+  document.body.style.background=dark?'#0f0e17':'#f0eff6';
+  document.getElementById('btn-light').classList.toggle('active',!dark);
+  document.getElementById('btn-dark').classList.toggle('active',dark);
+}
+
+// ── ID gen ──
+function uid(){return Math.random().toString(36).slice(2,9);}
+function initials(name){return name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
+function avatarColor(name){
+  const cols=['#ede9ff','#d4f0e5','#ffd5ec','#fff0d4','#d5e8ff','#ffd5d5'];
+  const textCols=['#6c5ce7','#16a34a','#c026d3','#d97706','#2563eb','#dc2626'];
+  const i=name.charCodeAt(0)%cols.length;
+  return{bg:cols[i],color:textCols[i]};
+}
+
+// ── Storage helpers ──
+async function readSession(sid){
+  try{const r=await window.storage.get('poker-session-'+sid,true);return r?JSON.parse(r.value):null;}catch(e){return null;}
+}
+async function writeSession(sid,data){
+  try{await window.storage.set('poker-session-'+sid,JSON.stringify(data),true);}catch(e){}
+}
+
+// ── Lobby ──
+function renderLobby(){
+  stopPoll();
+  viewLobby.style.display='';viewSession.style.display='none';
+  const joinId=getUrlSession();
+  viewLobby.innerHTML=`
+  <div class="lobby">
+    <div class="lobby-icon">
+      <svg width="64" height="64" viewBox="0 0 36 36" fill="none">
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="36" x2="36" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#f97316"/><stop offset="55%" stop-color="#c026d3"/><stop offset="100%" stop-color="#6c5ce7"/>
+          </linearGradient>
+        </defs>
+        <path d="M18 33C18 33 5 25 5 14C5 8 10 4 14 5C12 8 13 12 18 15C23 12 24 8 22 5C26 4 31 8 31 14C31 25 18 33 18 33Z" fill="url(#lg1)"/>
+        <circle cx="18" cy="7" r="2.2" fill="white" opacity="0.85"/>
+      </svg>
+    </div>
+    <h2>PhoenixPoker</h2>
+    <p class="lobby-sub">Relative estimation for agile teams — Fibonacci, T-Shirt Sizes, or Fruit</p>
+
+    <div class="lobby-form">
+      <div style="font-size:13px;font-weight:600;color:var(--text);">Create a session</div>
+      <div class="field"><label>Your name</label><input id="host-name" type="text" placeholder="e.g. Sarah" maxlength="24"/></div>
+      <div class="field"><label>Session name</label><input id="session-name" type="text" placeholder="e.g. Sprint 14 Planning" maxlength="40"/></div>
+      <div class="field">
+        <label>Deck</label>
+        <select id="deck-select">
+          <option value="fibonacci">Fibonacci (1, 2, 3, 5, 8…)</option>
+          <option value="tshirt">T-Shirt Sizes (XS, S, M, L…)</option>
+          <option value="fruit">Fruit 🍇🍓🍊🍋🍎🍉</option>
+        </select>
+      </div>
+      <button class="btn primary" id="create-btn">Create session →</button>
+    </div>
+
+    <div class="lobby-divider">or join an existing session</div>
+
+    <div class="join-form">
+      <div style="font-size:13px;font-weight:600;color:var(--text);">Join a session</div>
+      <div class="field"><label>Your name</label><input id="join-name" type="text" placeholder="e.g. Marcus" maxlength="24" value="${joinId&&myName?myName:''}"/></div>
+      <div class="field"><label>Session ID</label><input id="join-id" type="text" placeholder="e.g. abc1234" maxlength="20" value="${joinId||''}"/></div>
+      <button class="btn primary" id="join-btn">Join session →</button>
+    </div>
+  </div>`;
+
+  document.getElementById('create-btn').addEventListener('click',createSession);
+  document.getElementById('join-btn').addEventListener('click',joinSession);
+  ['host-name','session-name'].forEach(id=>{
+    document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')createSession();});
+  });
+  ['join-name','join-id'].forEach(id=>{
+    document.getElementById(id).addEventListener('keydown',e=>{if(e.key==='Enter')joinSession();});
+  });
+
+  if(joinId){document.getElementById('join-id').value=joinId;document.getElementById('join-name').focus();}
+  else{document.getElementById('host-name').focus();}
+}
+
+function getUrlSession(){
+  try{
+    const hash=window.location.hash;
+    if(hash&&hash.startsWith('#session='))return hash.slice(9);
+  }catch(e){}
+  return null;
+}
+
+async function createSession(){
+  const name=(document.getElementById('host-name').value||'').trim();
+  const sname=(document.getElementById('session-name').value||'').trim()||'Planning Session';
+  const deck=document.getElementById('deck-select').value;
+  if(!name){document.getElementById('host-name').focus();return;}
+  myName=name;myId=uid();sessionId=uid();
+  const data={
+    id:sessionId,name:sname,deck,
+    host:myId,revealed:false,story:'',
+    players:{[myId]:{id:myId,name,vote:null,joined:Date.now()}},
+    history:[],created:Date.now()
+  };
+  await writeSession(sessionId,data);
+  window.location.hash='session='+sessionId;
+  renderSessionView(data);
+  startPoll();
+}
+
+async function joinSession(){
+  const name=(document.getElementById('join-name').value||'').trim();
+  const sid=(document.getElementById('join-id').value||'').trim().toLowerCase();
+  if(!name||!sid)return;
+  const data=await readSession(sid);
+  if(!data){alert('Session not found. Check the ID and try again.');return;}
+  myName=name;myId=uid();sessionId=sid;
+  data.players[myId]={id:myId,name,vote:null,joined:Date.now()};
+  await writeSession(sid,data);
+  window.location.hash='session='+sid;
+  renderSessionView(data);
+  startPoll();
+}
+
+// ── Session view ──
+function renderSessionView(data){
+  viewLobby.style.display='none';viewSession.style.display='';
+  const deck=DECKS[data.deck];
+  const players=Object.values(data.players).sort((a,b)=>a.joined-b.joined);
+  const myPlayer=data.players[myId]||{vote:null};
+  const isHost=data.host===myId;
+  const allVoted=players.length>0&&players.every(p=>p.vote!==null);
+
+  // Results calc
+  let resultsHtml='';
+  if(data.revealed){
+    const votes=players.map(p=>p.vote).filter(v=>v&&v!=='?'&&v!=='☕');
+    let nums=[];
+    if(data.deck==='fibonacci')nums=votes.map(v=>NUMERIC_VALS(v)).filter(v=>v!==null);
+    else if(data.deck==='tshirt')nums=votes.map(v=>TSHIRT_VALS[v]).filter(v=>v!==null);
+    else if(data.deck==='fruit')nums=votes.map(v=>FRUIT_VALS[v]).filter(v=>v!==null);
+    const avg=nums.length?nums.reduce((a,b)=>a+b,0)/nums.length:null;
+    const min=nums.length?Math.min(...nums):null;
+    const max=nums.length?Math.max(...nums):null;
+    const consensus=max!==null&&min!==null&&(max-min)<=1;
+    resultsHtml=`<div class="results-bar">
+      ${avg!==null?`<div class="result-stat"><span class="result-num">${avg%1===0?avg:avg.toFixed(1)}</span><span class="result-label">Average</span></div><div class="results-divider"></div>`:''}
+      ${min!==null?`<div class="result-stat"><span class="result-num">${min}</span><span class="result-label">Min</span></div>`:''}
+      ${max!==null?`<div class="result-stat"><span class="result-num">${max}</span><span class="result-label">Max</span></div>`:''}
+      ${min!==null?`<div class="results-divider"></div>`:''}
+      <div class="consensus-badge ${consensus?'agree':''}">${consensus?'✓ Consensus':'⚡ Discuss'}</div>
+      ${isHost?`<div style="margin-left:auto;display:flex;gap:8px;">
+        <button class="btn" id="accept-btn">Set estimate</button>
+        <button class="btn primary" id="next-btn">Next story</button>
+      </div>`:''}
+    </div>`;
+  }
+
+  viewSession.innerHTML=`
+  <div class="session-bar">
+    <div>
+      <div class="session-name">${data.name}</div>
+      <div class="session-meta">ID: <span style="font-family:'DM Mono',monospace;font-weight:500;">${data.id}</span> · ${players.length} player${players.length!==1?'s':''} · <span class="deck-label">${deck.name}</span></div>
+    </div>
+    <div class="session-actions">
+      <span class="share-pill" id="share-pill">🔗 Copy invite link</span>
+      ${isHost&&!data.revealed?`<button class="btn primary" id="reveal-btn" ${!allVoted?'disabled':''}>Reveal cards</button>`:''}
+      ${isHost&&data.revealed?`<button class="btn primary" id="next-btn2">Next story</button>`:''}
+      <button class="btn danger" id="leave-btn">Leave</button>
+    </div>
+  </div>
+
+  <div class="story-bar">
+    ${isHost
+      ?`<input id="story-input" type="text" placeholder="Enter story or ticket name…" value="${data.story||''}" style="flex:1;min-width:200px;"/><button class="btn" id="set-story-btn">Set</button>`
+      :`<span class="story-current">${data.story?`Estimating: <strong>${data.story}</strong>`:'<em style="opacity:0.5">Waiting for host to set a story…</em>'}</span>`
+    }
+  </div>
+
+  ${resultsHtml}
+
+  <div class="status-bar" id="status-bar">${data.revealed?'Cards revealed!':allVoted?'All voted — host can reveal.':myPlayer.vote?'Vote cast. Waiting for others…':'Pick a card below.'}</div>
+
+  <div class="players-section">
+    <div class="cards-section-title">Players</div>
+    <div class="players-grid" id="players-grid">
+      ${players.map(p=>{
+        const ac=avatarColor(p.name);
+        const isMe=p.id===myId;
+        const cardContent=data.revealed&&p.vote
+          ?p.vote
+          :p.vote?'✓':'–';
+        const cardClass=data.revealed&&p.vote?'revealed':p.vote?'voted':'waiting';
+        // outlier: only when revealed and numeric
+        let outlier=false;
+        if(data.revealed&&p.vote&&p.vote!=='?'&&p.vote!=='☕'){
+          const votes2=players.map(q=>q.vote).filter(v=>v&&v!=='?'&&v!=='☕');
+          let nums2=[];
+          if(data.deck==='fibonacci')nums2=votes2.map(v=>NUMERIC_VALS(v)).filter(v=>v!==null);
+          else if(data.deck==='tshirt')nums2=votes2.map(v=>TSHIRT_VALS[v]).filter(v=>v!==null);
+          else if(data.deck==='fruit')nums2=votes2.map(v=>FRUIT_VALS[v]).filter(v=>v!==null);
+          if(nums2.length>1){
+            const avg2=nums2.reduce((a,b)=>a+b,0)/nums2.length;
+            let pv=data.deck==='fibonacci'?NUMERIC_VALS(p.vote):data.deck==='tshirt'?TSHIRT_VALS[p.vote]:FRUIT_VALS[p.vote];
+            if(pv!==null&&Math.abs(pv-avg2)>avg2*0.6)outlier=true;
+          }
+        }
+        return `<div class="player-tile">
+          ${isMe?'<div class="you-badge">you</div>':''}
+          <div class="player-avatar" style="background:${ac.bg};color:${ac.color};">${initials(p.name)}</div>
+          <div class="player-name">${p.name}${p.id===data.host?' 👑':''}</div>
+          <div class="player-card ${cardClass}${outlier?' outlier':''}">${cardContent}</div>
+        </div>`;
+      }).join('')}
+    </div>
+  </div>
+
+  ${!data.revealed?`
+  <div class="cards-section">
+    <div class="cards-section-title">Your vote</div>
+    <div class="cards-row">
+      ${deck.cards.map(c=>`
+        <div class="vote-card ${myPlayer.vote===c?'selected':''}" data-card="${c}">
+          <span>${c}</span>
+          ${data.deck==='fruit'&&FRUIT_VALS[c]!==null?`<span class="vote-card-sub">${FRUIT_VALS[c]}</span>`:''}
+          ${data.deck==='tshirt'&&TSHIRT_VALS[c]!==null?`<span class="vote-card-sub">${TSHIRT_VALS[c]}</span>`:''}
+        </div>`).join('')}
+    </div>
+  </div>`:''}
+
+  ${data.history&&data.history.length?`
+  <div class="history-section">
+    <div class="history-title">Estimation history</div>
+    <table class="history-table">
+      <thead><tr><th>Story</th><th>Estimate</th><th>Votes</th></tr></thead>
+      <tbody>${data.history.map(h=>`
+        <tr>
+          <td>${h.story||'—'}</td>
+          <td class="final-est">${h.estimate||'—'}</td>
+          <td style="font-size:12px;color:var(--text3);">${h.votes.join(', ')}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`:''}
+  `;
+
+  // Events
+  document.getElementById('share-pill').addEventListener('click',()=>{
+    const url=window.location.origin+window.location.pathname+'#session='+data.id;
+    navigator.clipboard.writeText(url).then(()=>{
+      const p=document.getElementById('share-pill');
+      p.textContent='✓ Copied!';setTimeout(()=>{p.textContent='🔗 Copy invite link';},2000);
+    }).catch(()=>prompt('Share this link:',url));
+  });
+
+  document.getElementById('leave-btn').addEventListener('click',async()=>{
+    stopPoll();
+    const d=await readSession(sessionId);
+    if(d){delete d.players[myId];await writeSession(sessionId,d);}
+    window.location.hash='';sessionId='';myId='';renderLobby();
+  });
+
+  if(isHost){
+    const storyInput=document.getElementById('story-input');
+    const setStoryBtn=document.getElementById('set-story-btn');
+    if(setStoryBtn){
+      setStoryBtn.addEventListener('click',async()=>{
+        const d=await readSession(sessionId);
+        if(d){d.story=storyInput.value.trim();await writeSession(sessionId,d);}
+      });
+      storyInput&&storyInput.addEventListener('keydown',e=>{if(e.key==='Enter')setStoryBtn.click();});
+    }
+
+    const revealBtn=document.getElementById('reveal-btn');
+    if(revealBtn){
+      revealBtn.addEventListener('click',async()=>{
+        const d=await readSession(sessionId);
+        if(d){d.revealed=true;await writeSession(sessionId,d);renderSessionView(d);}
+      });
+    }
+
+    ['next-btn','next-btn2'].forEach(id=>{
+      const btn=document.getElementById(id);
+      if(btn){
+        btn.addEventListener('click',async()=>{
+          const d=await readSession(sessionId);
+          if(d){
+            Object.values(d.players).forEach(p=>p.vote=null);
+            d.revealed=false;d.story='';
+            await writeSession(sessionId,d);renderSessionView(d);
+          }
+        });
+      }
+    });
+
+    const acceptBtn=document.getElementById('accept-btn');
+    if(acceptBtn){
+      acceptBtn.addEventListener('click',async()=>{
+        const d=await readSession(sessionId);
+        if(!d)return;
+        const est=prompt('Set final estimate for this story:',data.story?'':'');
+        if(est===null)return;
+        const votes=Object.values(d.players).filter(p=>p.vote).map(p=>p.vote);
+        if(!d.history)d.history=[];
+        d.history.unshift({story:d.story||'Unnamed story',estimate:est,votes,ts:Date.now()});
+        Object.values(d.players).forEach(p=>p.vote=null);
+        d.revealed=false;d.story='';
+        await writeSession(sessionId,d);renderSessionView(d);
+      });
+    }
+  }
+
+  document.querySelectorAll('.vote-card').forEach(card=>{
+    card.addEventListener('click',async()=>{
+      const val=card.dataset.card;
+      const d=await readSession(sessionId);
+      if(!d||d.revealed)return;
+      if(d.players[myId])d.players[myId].vote=d.players[myId].vote===val?null:val;
+      await writeSession(sessionId,d);renderSessionView(d);
+    });
+  });
+}
+
+// ── Polling ──
+function startPoll(){
+  stopPoll();
+  pollInterval=setInterval(async()=>{
+    if(!sessionId)return;
+    const d=await readSession(sessionId);
+    if(!d)return;
+    // only re-render if something changed
+    renderSessionView(d);
+  },2500);
+}
+function stopPoll(){if(pollInterval){clearInterval(pollInterval);pollInterval=null;}}
+
+// ── Init ──
+renderLobby();
+</script>
+</body>
+</html>

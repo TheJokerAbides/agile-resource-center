@@ -270,7 +270,67 @@ nav{
   border-radius:8px;padding:4px 10px;
 }
 
-/* ── Footer ── */
+/* ── Video cards ── */
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;
+}
+.video-card{
+  background:var(--surface);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  display:flex;flex-direction:column;
+}
+.video-card:not(.placeholder):hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.video-card.placeholder{border-style:dashed;opacity:0.6;}
+.video-thumb{
+  width:100%;aspect-ratio:16/9;
+  background:linear-gradient(135deg,var(--primary-light) 0%,rgba(192,38,211,0.08) 100%);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  flex-shrink:0;
+}
+.video-thumb::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 60%,rgba(108,92,231,0.08));
+}
+.play-btn{
+  width:44px;height:44px;border-radius:50%;
+  background:rgba(108,92,231,0.15);
+  backdrop-filter:blur(4px);
+  border:1.5px dashed rgba(108,92,231,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--primary);
+  position:relative;z-index:1;
+}
+.video-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1;}
+.video-meta{display:flex;align-items:center;gap:8px;}
+.video-tag{
+  font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;
+  background:var(--primary-light);color:var(--primary);
+  border:1px solid rgba(108,92,231,0.15);
+}
+.video-duration{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;}
+.video-title{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-0.2px;line-height:1.35;}
+.video-desc{font-size:12px;color:var(--text2);line-height:1.5;flex:1;}
+.video-host{
+  display:flex;align-items:center;gap:6px;margin-top:6px;
+  font-size:11px;color:var(--text3);
+}
+.video-avatar{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--primary-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:600;color:var(--primary);
+}
+
+
 footer{
   position:relative;z-index:1;
   border-top:1px solid var(--border2);
@@ -311,6 +371,7 @@ footer{
     <a href="#resources">Resources</a>
     <a href="#books">Books</a>
     <a href="#links">Links</a>
+    <a href="#sessions">Sessions</a>
   </div>
   <a href="agile_retro_board_v5.html" class="nav-cta">Open PhoenixRetro →</a>
 </nav>
@@ -367,6 +428,37 @@ footer{
         <span class="tag">Voting</span>
         <span class="tag">Timer</span>
         <span class="tag">PDF export</span>
+      </div>
+      <div class="tool-arrow">↗</div>
+    </a>
+
+    <!-- PhoenixPoker — live -->
+    <a href="phoenixpoker.html" class="tool-card featured">
+      <div class="tool-top">
+        <div class="tool-icon" style="background:#fff0d4;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C9 2 6 4 6 7c0 4 4 7 6 9 2-2 6-5 6-9 0-3-3-5-6-5z" fill="url(#pk1)"/>
+            <defs>
+              <linearGradient id="pk1" x1="6" y1="16" x2="18" y2="2" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#f97316"/>
+                <stop offset="100%" stop-color="#c026d3"/>
+              </linearGradient>
+            </defs>
+            <rect x="9" y="10" width="6" height="8" rx="1" fill="white" opacity="0.85"/>
+            <text x="12" y="17" text-anchor="middle" font-size="5" font-weight="700" fill="#c026d3">8</text>
+          </svg>
+        </div>
+        <span class="tool-badge">Live</span>
+      </div>
+      <div>
+        <div class="tool-name">PhoenixPoker</div>
+        <div class="tool-desc">Multiplayer planning poker for relative estimation. Fibonacci, T-Shirt Sizes, or Fruit decks. Simultaneous reveal, consensus detection, and session history.</div>
+      </div>
+      <div class="tool-tags">
+        <span class="tag">Estimation</span>
+        <span class="tag">Multiplayer</span>
+        <span class="tag">Fibonacci</span>
+        <span class="tag">T-Shirt</span>
       </div>
       <div class="tool-arrow">↗</div>
     </a>
@@ -502,11 +594,12 @@ footer{
     <span class="coming-soon">✦ Reviews coming soon</span>
   </div>
   <div class="card-grid">
-    <div class="card placeholder">
+    <a href="https://scrumguides.org/scrum-guide.html" target="_blank" rel="noopener" class="card" style="text-decoration:none;">
       <div class="card-icon">📗</div>
       <div class="card-title">The Scrum Guide</div>
       <div class="card-desc">Sutherland & Schwaber. The definitive guide to Scrum — free, concise, and essential.</div>
-    </div>
+      <span class="card-link">scrumguides.org ↗</span>
+    </a>
     <div class="card placeholder">
       <div class="card-icon">📘</div>
       <div class="card-title">Accelerate</div>
@@ -538,11 +631,18 @@ footer{
     <span class="coming-soon">✦ Links being curated</span>
   </div>
   <div class="card-grid">
-    <div class="card placeholder">
-      <div class="card-icon">🌐</div>
-      <div class="card-title">Agile Alliance</div>
-      <div class="card-desc">agilealliance.org — Articles, events, and the home of the Agile Manifesto.</div>
-    </div>
+    <a href="https://www.humanizingwork.com/the-humanizing-work-guide-to-splitting-user-stories/" target="_blank" rel="noopener" class="card" style="text-decoration:none;">
+      <div class="card-icon">✂️</div>
+      <div class="card-title">Story Splitting</div>
+      <div class="card-desc">The Humanizing Work guide to splitting user stories — one of the most practical references for breaking down large stories effectively.</div>
+      <span class="card-link">humanizingwork.com ↗</span>
+    </a>
+    <a href="https://agilealliance.org/agile101/subway-map-to-agile-practices/" target="_blank" rel="noopener" class="card" style="text-decoration:none;">
+      <div class="card-icon">🗺️</div>
+      <div class="card-title">The Agile Subway Map</div>
+      <div class="card-desc">Agile Alliance's visual map of agile practices — a brilliant way to explore how concepts connect across the agile landscape.</div>
+      <span class="card-link">agilealliance.org ↗</span>
+    </a>
     <div class="card placeholder">
       <div class="card-icon">🌐</div>
       <div class="card-title">Scrum.org</div>
@@ -561,6 +661,113 @@ footer{
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- ── Recorded Sessions ── -->
+<section class="section" id="sessions">
+  <div class="section-header">
+    <div>
+      <div class="section-label">Phoenix Recorded Sessions</div>
+      <div class="section-title">Watch past agile sessions</div>
+      <div class="section-sub">Recordings of retrospectives, planning sessions, workshops and team demos from the Phoenix community.</div>
+    </div>
+    <span class="coming-soon">✦ Recordings coming soon</span>
+  </div>
+  <div class="video-grid">
+
+    <div class="video-card placeholder">
+      <div class="video-thumb">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-body">
+        <div class="video-meta">
+          <span class="video-tag">Retrospective</span>
+          <span class="video-duration">~45 min</span>
+        </div>
+        <div class="video-title">Sprint 12 Retrospective — Starfish format</div>
+        <div class="video-desc">Full retrospective walkthrough using the Starfish template in PhoenixRetro. See how the team used voting to surface the top themes.</div>
+        <div class="video-host"><div class="video-avatar">PH</div>Phoenix Team · Coming soon</div>
+      </div>
+    </div>
+
+    <div class="video-card placeholder">
+      <div class="video-thumb">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-body">
+        <div class="video-meta">
+          <span class="video-tag">Planning Poker</span>
+          <span class="video-duration">~30 min</span>
+        </div>
+        <div class="video-title">Estimation session with PhoenixPoker — Fibonacci deck</div>
+        <div class="video-desc">A live sprint planning session using PhoenixPoker. Watch how the team handles outlier votes and reaches consensus on complex stories.</div>
+        <div class="video-host"><div class="video-avatar">PH</div>Phoenix Team · Coming soon</div>
+      </div>
+    </div>
+
+    <div class="video-card placeholder">
+      <div class="video-thumb">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-body">
+        <div class="video-meta">
+          <span class="video-tag">Workshop</span>
+          <span class="video-duration">~60 min</span>
+        </div>
+        <div class="video-title">Story Splitting workshop — breaking down epics</div>
+        <div class="video-desc">A facilitated workshop on applying the Humanizing Work story splitting patterns to a real backlog. Practical and hands-on.</div>
+        <div class="video-host"><div class="video-avatar">PH</div>Phoenix Team · Coming soon</div>
+      </div>
+    </div>
+
+    <div class="video-card placeholder">
+      <div class="video-thumb">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-body">
+        <div class="video-meta">
+          <span class="video-tag">Retrospective</span>
+          <span class="video-duration">~40 min</span>
+        </div>
+        <div class="video-title">Running a 4Ls retro with a distributed team</div>
+        <div class="video-desc">Tips and techniques for facilitating the Liked, Learned, Lacked, Longed for format with a fully remote team across time zones.</div>
+        <div class="video-host"><div class="video-avatar">PH</div>Phoenix Team · Coming soon</div>
+      </div>
+    </div>
+
+    <div class="video-card placeholder">
+      <div class="video-thumb">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-body">
+        <div class="video-meta">
+          <span class="video-tag">Demo</span>
+          <span class="video-duration">~15 min</span>
+        </div>
+        <div class="video-title">PhoenixRetro tool walkthrough — all templates</div>
+        <div class="video-desc">A quick tour of every built-in template in PhoenixRetro — from Happy/Mad/Sad to Genie in a Bottle — with tips on when to use each.</div>
+        <div class="video-host"><div class="video-avatar">PH</div>Phoenix Team · Coming soon</div>
+      </div>
+    </div>
+
+    <div class="video-card placeholder">
+      <div class="video-thumb">
+        <div class="play-btn">▶</div>
+      </div>
+      <div class="video-body">
+        <div class="video-meta">
+          <span class="video-tag">Coaching</span>
+          <span class="video-duration">~50 min</span>
+        </div>
+        <div class="video-title">Agile coaching clinic — handling low engagement in retros</div>
+        <div class="video-desc">Common patterns that lead to quiet or unproductive retrospectives, and facilitation techniques to re-energise your team's reflections.</div>
+        <div class="video-host"><div class="video-avatar">PH</div>Phoenix Team · Coming soon</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 </div><!-- end .page -->
 
 <!-- ── Footer ── -->
@@ -572,6 +779,7 @@ footer{
     <a href="#resources">Resources</a>
     <a href="#books">Books</a>
     <a href="#links">Links</a>
+    <a href="#sessions">Sessions</a>
   </div>
   <div class="footer-copy">Built with PhoenixRetro · Open source friendly</div>
 </footer>
