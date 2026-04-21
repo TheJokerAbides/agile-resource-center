@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Definition of Done & Ready Examples — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;
+  --surface:rgba(255,255,255,0.82);
+  --surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.2);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --purple:#7c3aed;--purple-bg:#ede9ff;--purple-border:rgba(124,58,237,0.2);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;height:62px;
+  background:rgba(240,239,246,0.88);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border2);
+}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+.page{position:relative;z-index:1;max-width:1060px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+
+/* ── Hero ── */
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);border-radius:20px;padding:4px 14px;margin-bottom:1rem;}
+.page-hero{margin-bottom:2.5rem;}
+.page-hero h1{font-size:32px;font-weight:600;letter-spacing:-0.8px;color:var(--text);margin-bottom:0.5rem;line-height:1.2;}
+.page-hero h1 em{font-style:normal;background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:14px;color:var(--text2);font-weight:300;line-height:1.7;max-width:640px;}
+
+/* ── Quick nav tabs ── */
+.tab-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2.5rem;}
+.tab{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:7px 16px;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);cursor:pointer;text-decoration:none;transition:all 0.15s;}
+.tab:hover{border-color:var(--primary);color:var(--primary);}
+.tab.dor{background:var(--green-bg);color:var(--green);border-color:var(--green-border);}
+.tab.dod{background:var(--red-bg);color:var(--red);border-color:var(--red-border);}
+
+/* ── Definition cards ── */
+.def-card{background:var(--surface);backdrop-filter:blur(10px);border:1px solid var(--border2);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);margin-bottom:1.5rem;}
+.def-card h3{font-size:16px;font-weight:600;color:var(--text);margin-bottom:8px;}
+.def-card p{font-size:13px;color:var(--text2);line-height:1.7;}
+.def-card .purpose{margin-top:10px;padding:10px 14px;border-radius:9px;font-size:12px;color:var(--text2);line-height:1.6;}
+.def-card .purpose strong{display:block;font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:3px;}
+.dor-card{border-left:4px solid var(--green);}
+.dod-card{border-left:4px solid var(--red);}
+.dor-card .purpose{background:var(--green-bg);border:1px solid var(--green-border);}
+.dor-card .purpose strong{color:var(--green);}
+.dod-card .purpose{background:var(--red-bg);border:1px solid var(--red-border);}
+.dod-card .purpose strong{color:var(--red);}
+
+/* ── Section headers ── */
+.section-block{margin-bottom:3rem;}
+.section-block-header{display:flex;align-items:center;gap:10px;margin-bottom:1.25rem;}
+.section-block-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.section-block-title{font-size:20px;font-weight:600;letter-spacing:-0.4px;color:var(--text);}
+.section-block-sub{font-size:12px;color:var(--text2);margin-top:1px;}
+.level-badge{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;padding:3px 10px;border-radius:20px;}
+.level-story{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.level-epic{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border);}
+.level-release{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+
+/* ── DoR / DoD tables ── */
+.dor-dod-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:650px){.dor-dod-grid{grid-template-columns:1fr;}}
+
+.checklist-table{
+  background:var(--surface);backdrop-filter:blur(8px);
+  border:1px solid var(--border2);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);
+}
+.checklist-table-header{
+  padding:12px 16px 10px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--border2);
+}
+.checklist-table-header.dor{background:var(--green-bg);}
+.checklist-table-header.dod{background:var(--red-bg);}
+.checklist-table-title{font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
+.checklist-table-header.dor .checklist-table-title{color:var(--green);}
+.checklist-table-header.dod .checklist-table-title{color:var(--red);}
+.checklist-table-header.dor::before{content:'✓ Ready when…';font-size:10px;color:var(--green);opacity:0.7;margin-left:auto;}
+.checklist-table-header.dod::before{content:'✓ Done when…';font-size:10px;color:var(--red);opacity:0.7;margin-left:auto;}
+
+.checklist-items{list-style:none;padding:8px 0;}
+.checklist-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:8px 16px;font-size:12px;color:var(--text2);line-height:1.5;
+  border-bottom:1px solid var(--border);
+  transition:background 0.12s;
+}
+.checklist-item:last-child{border-bottom:none;}
+.checklist-item:hover{background:rgba(108,92,231,0.03);}
+.check-icon{
+  width:18px;height:18px;border-radius:5px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;margin-top:1px;
+}
+.check-icon.dor{background:var(--green-bg);color:var(--green);}
+.check-icon.dod{background:var(--red-bg);color:var(--red);}
+
+/* ── INVEST box ── */
+.invest-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:10px;margin-top:1.25rem;
+}
+.invest-card{
+  background:var(--surface);border:1px solid var(--border2);border-radius:12px;
+  padding:12px 14px;box-shadow:var(--shadow);
+}
+.invest-letter{
+  font-size:26px;font-weight:700;letter-spacing:-1px;
+  background:linear-gradient(135deg,#f97316,#c026d3,#6c5ce7);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;margin-bottom:4px;
+}
+.invest-word{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.invest-desc{font-size:11px;color:var(--text2);line-height:1.4;}
+
+/* ── Export button ── */
+.export-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  padding:6px 14px;border-radius:8px;
+  border:1px solid var(--border2);background:var(--surface);
+  color:var(--text2);cursor:pointer;transition:all 0.15s;
+  margin-top:12px;
+}
+.export-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-light);}
+.export-btn:active{transform:scale(0.97);}
+.export-btn.loading{opacity:0.6;cursor:not-allowed;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">Definition of Done &amp; Ready Examples</span>
+  <div style="width:120px;"></div>
+</nav>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="page-eyebrow">📝 Resources</div>
+    <h1>Definition of <em>Done &amp; Ready</em> Examples</h1>
+    <p>A practical reference for teams defining their agreements on when work is ready to start and when it's truly complete — at the Story, Epic, and Release level.</p>
+  </div>
+
+  <!-- Quick nav -->
+  <div class="tab-row">
+    <a href="#overview" class="tab">Overview</a>
+    <a href="#story" class="tab dor">Story DoR / DoD</a>
+    <a href="#epic" class="tab dod">Epic DoR / DoD</a>
+    <a href="#release" class="tab">Release DoR / DoD</a>
+    <a href="#invest" class="tab">INVEST</a>
+  </div>
+
+  <!-- Overview -->
+  <div class="section-block" id="overview">
+    <div class="def-card dor-card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;">
+        <h3 style="margin-bottom:0;">Definition of Ready (DoR)</h3>
+        <button class="export-btn" onclick="exportSection('dor-overview')" style="margin-top:0;flex-shrink:0;">⬇ Export to Word</button>
+      </div>
+      <p>An agreement of the project team that defines certain pre-conditions that must be met to know when something is ready to take action on. The conditions of the DoR should include: Target Audience, Goal(s), Required Tasks, Technical Requirements, Time Estimation, Clear Acceptance Criteria, and complement the DoD.</p>
+      <div class="purpose"><strong>Purpose</strong>The DoR provides criteria that allows the team to evaluate work in the backlog as being ready prior to initiating work on it. A well-conceived DoR will enhance communication, improve efficiency, reduce errors, promote collaboration, and empower the team.</div>
+    </div>
+    <div class="def-card dod-card">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:8px;">
+        <h3 style="margin-bottom:0;">Definition of Done (DoD)</h3>
+        <button class="export-btn" onclick="exportSection('dod-overview')" style="margin-top:0;flex-shrink:0;">⬇ Export to Word</button>
+      </div>
+      <p>An agreement made by the entire project team that defines the required steps to finish and deliver an incremental release with the best quality possible, from development through deployment.</p>
+      <div class="purpose"><strong>Purpose</strong>An explicit and concrete DoD is a critical checkpoint in the agile development process. The DoD should start with organisational standards that all teams must follow as a minimum. It ensures that functionality produced at the end of a sprint is of high quality with minimal defects.</div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Story -->
+  <div class="section-block" id="story">
+    <div class="section-block-header">
+      <div class="section-block-icon" style="background:var(--blue-bg);">📄</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+          <div class="section-block-title">Story Level</div>
+          <span class="level-badge level-story">Story</span>
+        </div>
+        <div class="section-block-sub">Criteria applied to individual user stories before and after development</div>
+      </div>
+      <button class="export-btn" onclick="exportSection('story')">⬇ Export to Word</button>
+    </div>
+    <div class="dor-dod-grid">
+      <div class="checklist-table">
+        <div class="checklist-table-header dor"><span class="checklist-table-title">Definition of Ready</span></div>
+        <ul class="checklist-items">
+          <li class="checklist-item"><span class="check-icon dor">R</span>Issue has a description</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Item has acceptance criteria</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Item has been prioritised and approved by the Product Owner</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Dependencies have been identified to the best of the team's knowledge</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Item has been refined by the development team</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Point of contact is identified as needed</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>The story fits within a sprint</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Follows INVEST criteria</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Issue has a Fix Version</li>
+        </ul>
+      </div>
+      <div class="checklist-table">
+        <div class="checklist-table-header dod"><span class="checklist-table-title">Definition of Done</span></div>
+        <ul class="checklist-items">
+          <li class="checklist-item"><span class="check-icon dod">D</span>Coding is completed</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Unit tests are done</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Additional tests completed as applicable (functional, automated, performance)</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Tested and validated in the QA environment</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>"To Do's" are resolved</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Documentation updated in Confluence</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Code was paired, swarmed or at minimum peer reviewed</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Code is checked into a branch (flow dependent)</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span><em style="font-style:italic;opacity:0.7;">Future state: Functional stories reviewed and accepted by Product Owner</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Epic -->
+  <div class="section-block" id="epic">
+    <div class="section-block-header">
+      <div class="section-block-icon" style="background:var(--purple-bg);">⚡</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+          <div class="section-block-title">Epic Level</div>
+          <span class="level-badge level-epic">Epic</span>
+        </div>
+        <div class="section-block-sub">Criteria applied to epics spanning multiple sprints or releases</div>
+      </div>
+      <button class="export-btn" onclick="exportSection('epic')">⬇ Export to Word</button>
+    </div>
+    <div class="dor-dod-grid">
+      <div class="checklist-table">
+        <div class="checklist-table-header dor"><span class="checklist-table-title">Definition of Ready</span></div>
+        <ul class="checklist-items">
+          <li class="checklist-item"><span class="check-icon dor">R</span>Epic has a summary and details</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Value statement is clearly defined</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Epic has acceptance criteria</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Definition of success is clear</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Test scenarios have been evaluated</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Dependencies and constraints have been identified</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Risks have been identified</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Epic has been T-shirt sized (max size considered for release cadence)</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Epic has been prioritised</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>NFRs not part of Story DoD have been identified</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Impact personas are identified</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>SMEs have been identified</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Unknowns have been identified and minimised</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Required designs are complete</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Architecture considerations are documented</li>
+        </ul>
+      </div>
+      <div class="checklist-table">
+        <div class="checklist-table-header dod"><span class="checklist-table-title">Definition of Done</span></div>
+        <ul class="checklist-items">
+          <li class="checklist-item"><span class="check-icon dod">D</span>All stories are "Done"</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Feature has been accepted by the Product Owner</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Regression testing is complete in production-like environment</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Static and dynamic scans are complete</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Performance testing is complete</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>DDL and DML scripts are checked into a release branch</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Deployment package has been peer reviewed</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Unit tests all pass</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Integration tests pass</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Documentation and run books have been updated</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Training completed as necessary (iMIS)</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>UX / 504 compliance review has been completed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Release -->
+  <div class="section-block" id="release">
+    <div class="section-block-header">
+      <div class="section-block-icon" style="background:var(--amber-bg);">🚀</div>
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+          <div class="section-block-title">Release Level</div>
+          <span class="level-badge level-release">Release</span>
+        </div>
+        <div class="section-block-sub">Criteria that must be met before and after a production release</div>
+      </div>
+      <button class="export-btn" onclick="exportSection('release')">⬇ Export to Word</button>
+    </div>
+    <div class="dor-dod-grid">
+      <div class="checklist-table">
+        <div class="checklist-table-header dor"><span class="checklist-table-title">Definition of Ready</span></div>
+        <ul class="checklist-items">
+          <li class="checklist-item"><span class="check-icon dor">R</span>All stories meet the Definition of Done</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Epic has been accepted by the Product Owner</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Regression testing complete in STAGE environment</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Static and dynamic scans are complete</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Performance testing complete (as applicable)</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>DDL and DML scripts checked into release branch</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Deployment package has been peer reviewed</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Unit tests all pass</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Integration tests pass</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Deployment steps have been updated</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>User documentation and run books updated</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>Training completed as necessary</li>
+          <li class="checklist-item"><span class="check-icon dor">R</span>UX / 508 compliance review completed</li>
+        </ul>
+      </div>
+      <div class="checklist-table">
+        <div class="checklist-table-header dod"><span class="checklist-table-title">Definition of Done</span></div>
+        <ul class="checklist-items">
+          <li class="checklist-item"><span class="check-icon dod">D</span>Partners have been notified</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Release has been smoke tested</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>No severe bugs identified</li>
+          <li class="checklist-item"><span class="check-icon dod">D</span>Business Owners provide acceptance</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- INVEST -->
+  <div class="section-block" id="invest">
+    <div class="section-block-header">
+      <div class="section-block-icon" style="background:var(--primary-light);">🎯</div>
+      <div>
+        <div class="section-block-title">INVEST Criteria</div>
+        <div class="section-block-sub">The six qualities that define a well-formed user story — referenced in the Story DoR</div>
+      </div>
+      <button class="export-btn" onclick="exportSection('invest')">⬇ Export to Word</button>
+    </div>
+    <div class="def-card" style="border-left:4px solid var(--primary);">
+      <p style="font-size:13px;color:var(--text2);">Every user story should satisfy the INVEST criteria before it is considered ready. These qualities ensure stories are well-scoped, independently deliverable, and testable within a sprint.</p>
+      <div class="invest-grid">
+        <div class="invest-card">
+          <div class="invest-letter">I</div>
+          <div class="invest-word">Independent</div>
+          <div class="invest-desc">Of all other stories — can be developed and delivered on its own</div>
+        </div>
+        <div class="invest-card">
+          <div class="invest-letter">N</div>
+          <div class="invest-word">Negotiable</div>
+          <div class="invest-desc">Not a fixed contract — details can be discussed and refined</div>
+        </div>
+        <div class="invest-card">
+          <div class="invest-letter">V</div>
+          <div class="invest-word">Valuable</div>
+          <div class="invest-desc">Delivers value to the end user or customer (also: vertical)</div>
+        </div>
+        <div class="invest-card">
+          <div class="invest-letter">E</div>
+          <div class="invest-word">Estimable</div>
+          <div class="invest-desc">The team can estimate its size to a good approximation</div>
+        </div>
+        <div class="invest-card">
+          <div class="invest-letter">S</div>
+          <div class="invest-word">Small</div>
+          <div class="invest-desc">Small enough to fit comfortably within a single iteration</div>
+        </div>
+        <div class="invest-card">
+          <div class="invest-letter">T</div>
+          <div class="invest-word">Testable</div>
+          <div class="invest-desc">In principle — even if a test doesn't exist yet</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://unpkg.com/docx@8.5.0/build/index.js"></script>
+<script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+
+// ── Section data ──
+const SECTIONS={
+  'dor-overview':{
+    title:'Definition of Ready (DoR)',
+    subtitle:'An agreement defining pre-conditions that must be met before work can begin',
+    filename:'Definition-of-Ready.docx',
+    bodyParas:[
+      'An agreement of the project team that defines certain pre-conditions that must be met to know when something is ready to take action on.',
+      'The conditions of the DoR should include: Target Audience, Goal(s), Required Tasks, Technical Requirements, Time Estimation, Clear Acceptance Criteria, and complement the DoD.',
+      'Purpose: The DoR provides criteria that allows the team to evaluate work in the backlog as being ready prior to initiating work on it. A well-conceived DoR will enhance communication, improve efficiency, reduce errors, promote collaboration, and empower the team.',
+    ],
+    type:'overview'
+  },
+  'dod-overview':{
+    title:'Definition of Done (DoD)',
+    subtitle:'An agreement defining the required steps to finish and deliver an incremental release',
+    filename:'Definition-of-Done.docx',
+    bodyParas:[
+      'An agreement made by the entire project team that defines the required steps to finish and deliver an incremental release with the best quality possible, from development through deployment.',
+      'Purpose: An explicit and concrete DoD is a critical checkpoint in the agile development process. The DoD should start with organisational standards that all teams must follow as a minimum. It ensures that functionality produced at the end of a sprint is of high quality with minimal defects.',
+    ],
+    type:'overview'
+  },
+  story:{
+    title:'Story Level — Definition of Ready & Done',
+    subtitle:'Criteria applied to individual user stories before and after development',
+    filename:'Story-DoR-DoD.docx',
+    dor:[
+      'Issue has a description',
+      'Item has acceptance criteria',
+      'Item has been prioritised and approved by the Product Owner',
+      'Dependencies have been identified to the best of the team\'s knowledge',
+      'Item has been refined by the development team',
+      'Point of contact is identified as needed',
+      'The story fits within a sprint',
+      'Follows INVEST criteria',
+      'Issue has a Fix Version',
+    ],
+    dod:[
+      'Coding is completed',
+      'Unit tests are done',
+      'Additional tests completed as applicable (functional, automated, performance)',
+      'Tested and validated in the QA environment',
+      '"To Do\'s" are resolved',
+      'Documentation updated in Confluence',
+      'Code was paired, swarmed or at minimum peer reviewed',
+      'Code is checked into a branch (flow dependent)',
+      'Future state: Functional stories reviewed and accepted by Product Owner',
+    ]
+  },
+  epic:{
+    title:'Epic Level — Definition of Ready & Done',
+    subtitle:'Criteria applied to epics spanning multiple sprints or releases',
+    filename:'Epic-DoR-DoD.docx',
+    dor:[
+      'Epic has a summary and details',
+      'Value statement is clearly defined',
+      'Epic has acceptance criteria',
+      'Definition of success is clear',
+      'Test scenarios have been evaluated',
+      'Dependencies and constraints have been identified',
+      'Risks have been identified',
+      'Epic has been T-shirt sized (max size considered for release cadence)',
+      'Epic has been prioritised',
+      'NFRs not part of Story DoD have been identified',
+      'Impact personas are identified',
+      'SMEs have been identified',
+      'Unknowns have been identified and minimised',
+      'Required designs are complete',
+      'Architecture considerations are documented',
+    ],
+    dod:[
+      'All stories are "Done"',
+      'Feature has been accepted by the Product Owner',
+      'Regression testing is complete in production-like environment',
+      'Static and dynamic scans are complete',
+      'Performance testing is complete',
+      'DDL and DML scripts are checked into a release branch',
+      'Deployment package has been peer reviewed',
+      'Unit tests all pass',
+      'Integration tests pass',
+      'Documentation and run books have been updated',
+      'Training completed as necessary (iMIS)',
+      'UX / 504 compliance review has been completed',
+    ]
+  },
+  release:{
+    title:'Release Level — Definition of Ready & Done',
+    subtitle:'Criteria that must be met before and after a production release',
+    filename:'Release-DoR-DoD.docx',
+    dor:[
+      'All stories meet the Definition of Done',
+      'Epic has been accepted by the Product Owner',
+      'Regression testing complete in STAGE environment',
+      'Static and dynamic scans are complete',
+      'Performance testing complete (as applicable)',
+      'DDL and DML scripts checked into release branch',
+      'Deployment package has been peer reviewed',
+      'Unit tests all pass',
+      'Integration tests pass',
+      'Deployment steps have been updated',
+      'User documentation and run books updated',
+      'Training completed as necessary',
+      'UX / 508 compliance review completed',
+    ],
+    dod:[
+      'Partners have been notified',
+      'Release has been smoke tested',
+      'No severe bugs identified',
+      'Business Owners provide acceptance',
+    ]
+  },
+  invest:{
+    title:'INVEST Criteria',
+    subtitle:'The six qualities that define a well-formed user story',
+    filename:'INVEST-Criteria.docx',
+    items:[
+      {letter:'I', word:'Independent', desc:'Of all other stories — can be developed and delivered on its own'},
+      {letter:'N', word:'Negotiable', desc:'Not a fixed contract — details can be discussed and refined'},
+      {letter:'V', word:'Valuable', desc:'Delivers value to the end user or customer (also: vertical)'},
+      {letter:'E', word:'Estimable', desc:'The team can estimate its size to a good approximation'},
+      {letter:'S', word:'Small', desc:'Small enough to fit comfortably within a single iteration'},
+      {letter:'T', word:'Testable', desc:'In principle — even if a test doesn\'t exist yet'},
+    ]
+  }
+};
+
+async function exportSection(key){
+  const btn=event.currentTarget;
+  btn.textContent='Generating…';btn.classList.add('loading');
+  try{
+    const{Document,Packer,Paragraph,TextRun,Table,TableRow,TableCell,
+      HeadingLevel,AlignmentType,BorderStyle,WidthType,ShadingType,
+      VerticalAlign,LevelFormat}=docx;
+
+    const sec=SECTIONS[key];
+    const GRAY='E8E5F8';const GREEN='D4F0E5';const RED='FFD5D5';
+    const DARK='1A1826';const MID='6B6880';
+    const border={style:BorderStyle.SINGLE,size:1,color:'CCCCCC'};
+    const borders={top:border,bottom:border,left:border,right:border};
+    const noBorder={style:BorderStyle.NONE,size:0,color:'FFFFFF'};
+    const noBorders={top:noBorder,bottom:noBorder,left:noBorder,right:noBorder};
+
+    const heading=new Paragraph({
+      children:[new TextRun({text:sec.title,bold:true,size:36,color:DARK,font:'Arial'})],
+      spacing:{after:120},
+    });
+    const subheading=new Paragraph({
+      children:[new TextRun({text:sec.subtitle,size:22,color:MID,font:'Arial'})],
+      spacing:{after:320},
+    });
+    const dateLine=new Paragraph({
+      children:[new TextRun({text:`Generated: ${new Date().toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'})}`,size:18,color:'AAAAAA',font:'Arial'})],
+      spacing:{after:480},
+    });
+
+    let children=[heading,subheading,dateLine];
+
+    if(sec.type==='overview'){
+      sec.bodyParas.forEach(text=>{
+        children.push(new Paragraph({
+          children:[new TextRun({text,size:22,color:'1A1826',font:'Arial'})],
+          spacing:{after:200},
+        }));
+      });
+    } else if(key==='invest'){
+      children.push(new Paragraph({
+        children:[new TextRun({text:'Every user story should satisfy the INVEST criteria before it is considered ready. These qualities ensure stories are well-scoped, independently deliverable, and testable within a sprint.',size:22,color:MID,font:'Arial'})],
+        spacing:{after:320},
+      }));
+      const rows=sec.items.map(item=>new TableRow({
+        children:[
+          new TableCell({
+            borders,width:{size:1200,type:WidthType.DXA},
+            shading:{fill:GRAY,type:ShadingType.CLEAR},
+            margins:{top:120,bottom:120,left:160,right:160},
+            verticalAlign:VerticalAlign.CENTER,
+            children:[new Paragraph({
+              children:[new TextRun({text:item.letter,bold:true,size:36,color:'6C5CE7',font:'Arial'})],
+              alignment:AlignmentType.CENTER,
+            })]
+          }),
+          new TableCell({
+            borders,width:{size:2400,type:WidthType.DXA},
+            shading:{fill:GRAY,type:ShadingType.CLEAR},
+            margins:{top:120,bottom:120,left:160,right:160},
+            verticalAlign:VerticalAlign.CENTER,
+            children:[new Paragraph({children:[new TextRun({text:item.word,bold:true,size:24,color:DARK,font:'Arial'})]})]
+          }),
+          new TableCell({
+            borders,width:{size:5760,type:WidthType.DXA},
+            margins:{top:120,bottom:120,left:160,right:160},
+            verticalAlign:VerticalAlign.CENTER,
+            children:[new Paragraph({children:[new TextRun({text:item.desc,size:22,color:MID,font:'Arial'})]})]
+          }),
+        ]
+      }));
+      children.push(new Table({
+        width:{size:9360,type:WidthType.DXA},
+        columnWidths:[1200,2400,5760],
+        rows
+      }));
+    } else {
+      // Two-column DoR / DoD table
+      const dorHeader=new TableRow({
+        children:[
+          new TableCell({
+            borders,width:{size:4680,type:WidthType.DXA},
+            shading:{fill:'C6EFCE',type:ShadingType.CLEAR},
+            margins:{top:120,bottom:120,left:160,right:160},
+            children:[new Paragraph({children:[new TextRun({text:'Definition of Ready (DoR)',bold:true,size:24,color:'16a34a',font:'Arial'})]})]
+          }),
+          new TableCell({
+            borders,width:{size:4680,type:WidthType.DXA},
+            shading:{fill:'FFC7CE',type:ShadingType.CLEAR},
+            margins:{top:120,bottom:120,left:160,right:160},
+            children:[new Paragraph({children:[new TextRun({text:'Definition of Done (DoD)',bold:true,size:24,color:'DC2626',font:'Arial'})]})]
+          }),
+        ]
+      });
+
+      const maxRows=Math.max(sec.dor.length,sec.dod.length);
+      const dataRows=[];
+      for(let i=0;i<maxRows;i++){
+        const dorItem=sec.dor[i]||'';
+        const dodItem=sec.dod[i]||'';
+        dataRows.push(new TableRow({
+          children:[
+            new TableCell({
+              borders,width:{size:4680,type:WidthType.DXA},
+              shading:{fill:dorItem?'F0FBF4':'FFFFFF',type:ShadingType.CLEAR},
+              margins:{top:100,bottom:100,left:160,right:160},
+              children:[new Paragraph({
+                numbering:dorItem?{reference:'bullets',level:0}:undefined,
+                children:[new TextRun({text:dorItem,size:20,color:dorItem?'14532D':MID,font:'Arial'})]
+              })]
+            }),
+            new TableCell({
+              borders,width:{size:4680,type:WidthType.DXA},
+              shading:{fill:dodItem?'FFF5F5':'FFFFFF',type:ShadingType.CLEAR},
+              margins:{top:100,bottom:100,left:160,right:160},
+              children:[new Paragraph({
+                numbering:dodItem?{reference:'bullets2',level:0}:undefined,
+                children:[new TextRun({text:dodItem,size:20,color:dodItem?'7F1D1D':MID,font:'Arial'})]
+              })]
+            }),
+          ]
+        }));
+      }
+
+      children.push(new Table({
+        width:{size:9360,type:WidthType.DXA},
+        columnWidths:[4680,4680],
+        rows:[dorHeader,...dataRows]
+      }));
+    }
+
+    // Footer note
+    children.push(new Paragraph({spacing:{before:480}}));
+    children.push(new Paragraph({
+      children:[new TextRun({text:'Agile Resource Center — Definition of Done & Ready Examples',size:18,color:'AAAAAA',font:'Arial',italics:true})],
+    }));
+
+    const doc=new Document({
+      numbering:{config:[
+        {reference:'bullets',levels:[{level:0,format:LevelFormat.BULLET,text:'•',alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:360,hanging:240}}}}]},
+        {reference:'bullets2',levels:[{level:0,format:LevelFormat.BULLET,text:'•',alignment:AlignmentType.LEFT,style:{paragraph:{indent:{left:360,hanging:240}}}}]},
+      ]},
+      sections:[{
+        properties:{page:{size:{width:12240,height:15840},margin:{top:1080,right:1080,bottom:1080,left:1080}}},
+        children
+      }]
+    });
+
+    const buf=await Packer.toBlob(doc);
+    const url=URL.createObjectURL(buf);
+    const a=document.createElement('a');
+    a.href=url;a.download=sec.filename;a.click();
+    URL.revokeObjectURL(url);
+    btn.textContent='✓ Downloaded!';
+    setTimeout(()=>{btn.textContent='⬇ Export to Word';btn.classList.remove('loading');},2000);
+  }catch(err){
+    console.error(err);
+    btn.textContent='⬇ Export to Word';btn.classList.remove('loading');
+    alert('Export failed. Please try again.');
+  }
+}
+</script>
+</body>
+</html>

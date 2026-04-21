@@ -80,7 +80,62 @@ nav{
 /* ── Layout ── */
 .page{position:relative;z-index:1;}
 
-/* ── Hero ── */
+/* ── News & Noteworthy ── */
+.news-band{
+  position:relative;z-index:1;
+  border-bottom:1px solid var(--border2);
+  background:rgba(255,255,255,0.5);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.news-inner{
+  max-width:1100px;margin:0 auto;
+  padding:2rem 2.5rem;
+}
+.news-header{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:1.25rem;gap:1rem;flex-wrap:wrap;
+}
+.news-feed{display:flex;flex-direction:column;gap:10px;}
+.news-item{
+  display:flex;align-items:flex-start;gap:14px;
+  background:var(--surface);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--border2);
+  border-radius:12px;
+  padding:14px 18px;
+  box-shadow:var(--shadow);
+  transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  text-decoration:none;color:inherit;
+}
+.news-item:hover{transform:translateX(3px);border-color:var(--primary);box-shadow:var(--shadow-lg);}
+.news-item.placeholder{opacity:0.55;border-style:dashed;}
+.news-item.placeholder:hover{transform:none;border-color:var(--border2);box-shadow:var(--shadow);}
+.news-dot{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+}
+.news-dot.event{background:#ede9ff;}
+.news-dot.update{background:#d4f0e5;}
+.news-dot.announcement{background:#fff0d4;}
+.news-dot.tip{background:#ffd5ec;}
+.news-body{flex:1;min-width:0;}
+.news-meta{display:flex;align-items:center;gap:8px;margin-bottom:3px;flex-wrap:wrap;}
+.news-type{
+  font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;
+}
+.news-type.event{background:#ede9ff;color:#6c5ce7;}
+.news-type.update{background:#d4f0e5;color:#16a34a;}
+.news-type.announcement{background:#fff0d4;color:#d97706;}
+.news-type.tip{background:#ffd5ec;color:#c026d3;}
+.news-date{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;}
+.news-title{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-0.2px;line-height:1.35;}
+.news-desc{font-size:12px;color:var(--text2);margin-top:3px;line-height:1.5;}
+.news-arrow{font-size:14px;color:var(--text3);align-self:center;flex-shrink:0;transition:transform 0.2s,color 0.2s;}
+.news-item:hover .news-arrow{transform:translateX(3px);color:var(--primary);}
+
+
 .hero{
   padding:5rem 2.5rem 4rem;
   max-width:860px;margin:0 auto;
@@ -345,6 +400,93 @@ footer{
 .footer-links a{font-size:12px;color:var(--text3);text-decoration:none;}
 .footer-links a:hover{color:var(--primary);}
 .footer-copy{font-size:11px;color:var(--text3);}
+
+/* ── Manifesto Modal ── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(15,14,23,0.6);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;
+  padding:1.5rem;
+}
+.modal-overlay.open{display:flex;}
+.modal-box{
+  background:var(--bg);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  box-shadow:0 24px 64px rgba(80,60,160,0.2),0 4px 16px rgba(80,60,160,0.1);
+  width:100%;max-width:680px;
+  max-height:90vh;display:flex;flex-direction:column;
+  animation:modal-in 0.28s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes modal-in{from{opacity:0;transform:scale(0.94) translateY(12px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-header{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:22px 24px 16px;
+  border-bottom:1px solid var(--border2);
+  flex-shrink:0;
+}
+.modal-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);margin-bottom:4px;}
+.modal-title{font-size:22px;font-weight:600;letter-spacing:-0.5px;color:var(--text);}
+.modal-close{
+  width:32px;height:32px;border-radius:8px;
+  border:1px solid var(--border2);background:var(--surface);
+  color:var(--text2);cursor:pointer;font-size:13px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all 0.15s;font-family:'DM Sans',sans-serif;
+}
+.modal-close:hover{background:var(--danger-light, #fff0f0);color:#e55353;border-color:rgba(229,83,83,0.3);}
+.modal-body{
+  overflow-y:auto;padding:22px 24px 24px;
+  display:flex;flex-direction:column;gap:20px;
+}
+.modal-body::-webkit-scrollbar{width:5px;}
+.modal-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px;}
+.manifesto-intro{
+  font-size:14px;color:var(--text2);line-height:1.7;font-style:italic;
+  border-left:3px solid var(--primary);padding-left:14px;
+}
+.manifesto-values{display:flex;flex-direction:column;gap:10px;}
+.value-pair{
+  background:var(--surface);border:1px solid var(--border2);border-radius:12px;
+  padding:14px 18px;display:flex;flex-direction:column;gap:3px;
+  transition:border-color 0.15s;
+}
+.value-pair:hover{border-color:var(--primary);}
+.value-over{font-size:15px;font-weight:600;line-height:1.3;}
+.value-highlight{
+  background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.value-over-sub{font-size:12px;color:var(--text3);font-weight:400;}
+.manifesto-caveat{
+  font-size:12px;color:var(--text2);font-style:italic;
+  text-align:center;padding:0 1rem;line-height:1.6;
+}
+.modal-divider{height:1px;background:var(--border2);}
+.principles-title{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
+.principles-list{
+  list-style:none;display:flex;flex-direction:column;gap:8px;
+  counter-reset:principles;
+}
+.principles-list li{
+  counter-increment:principles;
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:13px;color:var(--text2);line-height:1.55;
+}
+.principles-list li::before{
+  content:counter(principles);
+  flex-shrink:0;width:22px;height:22px;border-radius:6px;
+  background:var(--primary-light);color:var(--primary);
+  font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  margin-top:1px;
+}
+.manifesto-footer-note{
+  border-top:1px solid var(--border2);padding-top:14px;
+  font-size:11px;color:var(--text3);line-height:1.7;
+  display:flex;flex-direction:column;gap:6px;
+}
 </style>
 </head>
 <body>
@@ -366,6 +508,7 @@ footer{
     <span class="nav-wordmark">Agile Resource <span>Center</span></span>
   </a>
   <div class="nav-links">
+    <a href="#news">News</a>
     <a href="#tools" class="active">Tools</a>
     <a href="#learning">Learning</a>
     <a href="#resources">Resources</a>
@@ -389,6 +532,60 @@ footer{
     <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Better sprints</span></div>
   </div>
 </section>
+
+<!-- ── News & Noteworthy ── -->
+<section class="section" id="news">
+  <div class="news-header">
+    <div>
+      <div class="section-label">News &amp; Noteworthy</div>
+      <div class="section-title">What's happening in the world of Agile</div>
+    </div>
+    <span class="coming-soon">✦ Updated regularly</span>
+  </div>
+  <div class="news-feed">
+
+    <div class="news-item">
+      <div class="news-dot event">📅</div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-type event">Recurring Event</span>
+          <span class="news-date">Every 3rd Thursday</span>
+        </div>
+        <div class="news-title">Agile Community of Practice — held every 3rd Thursday at Phoenix!</div>
+        <div class="news-desc">Join the team for our regular Agile CoP session. A space to share learnings, discuss challenges, and explore new agile practices together. All are welcome.</div>
+      </div>
+    </div>
+
+    <div class="news-item placeholder">
+      <div class="news-dot update">🚀</div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-type update">Tool Update</span>
+          <span class="news-date">Coming soon</span>
+        </div>
+        <div class="news-title">PhoenixRetro v2 — new features incoming</div>
+        <div class="news-desc">Author names on sticky notes, multi-board support, and more. Stay tuned for the next release.</div>
+      </div>
+      <div class="news-arrow">→</div>
+    </div>
+
+    <div class="news-item placeholder">
+      <div class="news-dot announcement">📣</div>
+      <div class="news-body">
+        <div class="news-meta">
+          <span class="news-type announcement">Announcement</span>
+          <span class="news-date">Coming soon</span>
+        </div>
+        <div class="news-title">New learning paths available — Scrum and Kanban</div>
+        <div class="news-desc">Structured self-paced learning content is being added to the Resource Center. First paths to drop: Scrum in Practice and Kanban Mastery.</div>
+      </div>
+      <div class="news-arrow">→</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
 
 <!-- ── Tools ── -->
 <section class="section" id="tools">
@@ -563,21 +760,29 @@ footer{
       <div class="card-title">Retrospective Facilitation Guide</div>
       <div class="card-desc">A step-by-step guide to running retros that actually lead to change.</div>
     </div>
-    <div class="card placeholder">
-      <div class="card-icon">📊</div>
-      <div class="card-title">Sprint Velocity Tracker</div>
-      <div class="card-desc">Spreadsheet template to track team velocity across sprints.</div>
-    </div>
+    <a href="sprint-planning.html" class="card" style="text-decoration:none;">
+      <div class="card-icon">📅</div>
+      <div class="card-title">Bill's Sprint Planning Template v1.0</div>
+      <div class="card-desc">A structured sprint planning template covering objectives, team impacts, velocity and status — with a sample sprint included.</div>
+      <span class="card-link">View template ↗</span>
+    </a>
     <div class="card placeholder">
       <div class="card-icon">🗺️</div>
       <div class="card-title">User Story Mapping Template</div>
       <div class="card-desc">Map user journeys and identify your MVP slice with this structured template.</div>
     </div>
-    <div class="card placeholder">
+    <a href="dor-dod.html" class="card" style="text-decoration:none;">
       <div class="card-icon">📝</div>
-      <div class="card-title">Definition of Done Checklist</div>
-      <div class="card-desc">A customisable DoD template to align your team on quality standards.</div>
-    </div>
+      <div class="card-title">Definition of Done &amp; Ready Examples</div>
+      <div class="card-desc">Story, Epic and Release DoR &amp; DoD checklists, plus INVEST criteria — a practical reference for any agile team.</div>
+      <span class="card-link">View checklists ↗</span>
+    </a>
+    <a href="certifications.html" class="card" style="text-decoration:none;">
+      <div class="card-icon">🏅</div>
+      <div class="card-title">Agile Certifications Guide</div>
+      <div class="card-desc">A comparison of the major agile certifications — PSM, CSM, SAFe and more — with pros, cons, cost and difficulty.</div>
+      <span class="card-link">View comparison table ↗</span>
+    </a>
   </div>
 </section>
 
@@ -600,21 +805,30 @@ footer{
       <div class="card-desc">Sutherland & Schwaber. The definitive guide to Scrum — free, concise, and essential.</div>
       <span class="card-link">scrumguides.org ↗</span>
     </a>
-    <div class="card placeholder">
+    <div class="card" id="manifesto-card" style="cursor:pointer;" onclick="document.getElementById('manifesto-modal').classList.add('open')">
+      <div class="card-icon">📜</div>
+      <div class="card-title">The Agile Manifesto</div>
+      <div class="card-desc">Beck, Beedle, van Bennekum et al. The 4 values and 12 principles that started it all — published in 2001.</div>
+      <span class="card-link">Read the manifesto ↗</span>
+    </div>
+    <a href="https://www.oreilly.com/library/view/accelerate/9781457191435/" target="_blank" rel="noopener" class="card" style="text-decoration:none;">
       <div class="card-icon">📘</div>
       <div class="card-title">Accelerate</div>
       <div class="card-desc">Forsgren, Humble & Kim. Research-backed insights into what makes high-performing software teams.</div>
-    </div>
-    <div class="card placeholder">
+      <span class="card-link">oreilly.com ↗</span>
+    </a>
+    <a href="https://www.oreilly.com/library/view/the-phoenix-project/9781457191350/" target="_blank" rel="noopener" class="card" style="text-decoration:none;">
       <div class="card-icon">📙</div>
       <div class="card-title">The Phoenix Project</div>
       <div class="card-desc">Kim, Behr & Spafford. A novel about DevOps and IT transformation — surprisingly unputdownable.</div>
-    </div>
-    <div class="card placeholder">
+      <span class="card-link">oreilly.com ↗</span>
+    </a>
+    <a href="https://www.mountaingoatsoftware.com/books/user-stories-applied" target="_blank" rel="noopener" class="card" style="text-decoration:none;">
       <div class="card-icon">📕</div>
-      <div class="card-title">Lean Startup</div>
-      <div class="card-desc">Eric Ries. Build-Measure-Learn and the principles behind rapid, validated product development.</div>
-    </div>
+      <div class="card-title">User Stories Applied</div>
+      <div class="card-desc">Mike Cohn. The definitive guide to writing and using user stories for agile software development.</div>
+      <span class="card-link">mountaingoatsoftware.com ↗</span>
+    </a>
   </div>
 </section>
 
@@ -770,10 +984,76 @@ footer{
 
 </div><!-- end .page -->
 
+<!-- ── Agile Manifesto Modal ── -->
+<div class="modal-overlay" id="manifesto-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">📜 Published 2001</div>
+        <div class="modal-title">The Agile Manifesto</div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('manifesto-modal').classList.remove('open')">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="manifesto-intro">
+        We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:
+      </div>
+
+      <div class="manifesto-values">
+        <div class="value-pair">
+          <div class="value-over"><span class="value-highlight">Individuals and interactions</span></div>
+          <div class="value-over-sub">over processes and tools</div>
+        </div>
+        <div class="value-pair">
+          <div class="value-over"><span class="value-highlight">Working software</span></div>
+          <div class="value-over-sub">over comprehensive documentation</div>
+        </div>
+        <div class="value-pair">
+          <div class="value-over"><span class="value-highlight">Customer collaboration</span></div>
+          <div class="value-over-sub">over contract negotiation</div>
+        </div>
+        <div class="value-pair">
+          <div class="value-over"><span class="value-highlight">Responding to change</span></div>
+          <div class="value-over-sub">over following a plan</div>
+        </div>
+      </div>
+
+      <div class="manifesto-caveat">
+        That is, while there is value in the items on the right, we value the items on the left more.
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <div class="principles-title">12 Principles behind the Agile Manifesto</div>
+      <ol class="principles-list">
+        <li>Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.</li>
+        <li>Welcome changing requirements, even late in development. Agile processes harness change for the customer's competitive advantage.</li>
+        <li>Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale.</li>
+        <li>Business people and developers must work together daily throughout the project.</li>
+        <li>Build projects around motivated individuals. Give them the environment and support they need, and trust them to get the job done.</li>
+        <li>The most efficient and effective method of conveying information to and within a development team is face-to-face conversation.</li>
+        <li>Working software is the primary measure of progress.</li>
+        <li>Agile processes promote sustainable development. The sponsors, developers, and users should be able to maintain a constant pace indefinitely.</li>
+        <li>Continuous attention to technical excellence and good design enhances agility.</li>
+        <li>Simplicity — the art of maximising the amount of work not done — is essential.</li>
+        <li>The best architectures, requirements, and designs emerge from self-organising teams.</li>
+        <li>At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behaviour accordingly.</li>
+      </ol>
+
+      <div class="manifesto-footer">
+        <span>Kent Beck · Mike Beedle · Arie van Bennekum · Alistair Cockburn · Ward Cunningham · Martin Fowler · James Grenning · Jim Highsmith · Andrew Hunt · Ron Jeffries · Jon Kern · Brian Marick · Robert C. Martin · Steve Mellor · Ken Schwaber · Jeff Sutherland · Dave Thomas</span>
+        <a href="https://agilemanifesto.org" target="_blank" rel="noopener" class="card-link" style="margin-top:10px;display:inline-block;">agilemanifesto.org ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ── Footer ── -->
 <footer>
   <div class="footer-logo">Agile Resource <span>Center</span></div>
   <div class="footer-links">
+    <a href="#news">News</a>
     <a href="#tools">Tools</a>
     <a href="#learning">Learning</a>
     <a href="#resources">Resources</a>
@@ -806,6 +1086,70 @@ const obs=new IntersectionObserver(entries=>{
   });
 },{threshold:0.4});
 sections.forEach(s=>obs.observe(s));
+
+// Close manifesto modal on Escape
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')document.getElementById('manifesto-modal').classList.remove('open');
+});
 </script>
+<!-- ── Agile Manifesto Modal ── -->
+<div class="modal-overlay" id="manifesto-modal" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">📜 Published February 2001</div>
+        <div class="modal-title">The Agile Manifesto</div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('manifesto-modal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="manifesto-intro">
+        We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:
+      </div>
+      <div class="manifesto-values">
+        <div class="value-pair">
+          <div class="value-over"><span class="value-highlight">Individuals and interactions</span></div>
+          <div class="value-over-sub">over processes and tools</div>
+        </div>
+        <div class="value-pair">
+          <div class="value-over"><span class="value-highlight">Working software</span></div>
+          <div class="value-over-sub">over comprehensive documentation</div>
+        </div>
+        <div class="value-pair">
+          <div class="value-over"><span class="value-highlight">Customer collaboration</span></div>
+          <div class="value-over-sub">over contract negotiation</div>
+        </div>
+        <div class="value-pair">
+          <div class="value-over"><span class="value-highlight">Responding to change</span></div>
+          <div class="value-over-sub">over following a plan</div>
+        </div>
+      </div>
+      <div class="manifesto-caveat">
+        That is, while there is value in the items on the right, we value the items on the left more.
+      </div>
+      <div class="modal-divider"></div>
+      <div class="principles-title">12 Principles behind the Agile Manifesto</div>
+      <ol class="principles-list">
+        <li>Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.</li>
+        <li>Welcome changing requirements, even late in development. Agile processes harness change for the customer's competitive advantage.</li>
+        <li>Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale.</li>
+        <li>Business people and developers must work together daily throughout the project.</li>
+        <li>Build projects around motivated individuals. Give them the environment and support they need, and trust them to get the job done.</li>
+        <li>The most efficient and effective method of conveying information to and within a development team is face-to-face conversation.</li>
+        <li>Working software is the primary measure of progress.</li>
+        <li>Agile processes promote sustainable development. The sponsors, developers, and users should be able to maintain a constant pace indefinitely.</li>
+        <li>Continuous attention to technical excellence and good design enhances agility.</li>
+        <li>Simplicity — the art of maximising the amount of work not done — is essential.</li>
+        <li>The best architectures, requirements, and designs emerge from self-organising teams.</li>
+        <li>At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behaviour accordingly.</li>
+      </ol>
+      <div class="manifesto-footer-note">
+        <span>Kent Beck · Mike Beedle · Arie van Bennekum · Alistair Cockburn · Ward Cunningham · Martin Fowler · James Grenning · Jim Highsmith · Andrew Hunt · Ron Jeffries · Jon Kern · Brian Marick · Robert C. Martin · Steve Mellor · Ken Schwaber · Jeff Sutherland · Dave Thomas</span>
+        <a href="https://agilemanifesto.org" target="_blank" rel="noopener" class="card-link">agilemanifesto.org ↗</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

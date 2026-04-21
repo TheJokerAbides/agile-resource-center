@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agile Certifications Guide — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;
+  --surface:rgba(255,255,255,0.72);
+  --surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+  --green:#16a34a; --green-bg:#d4f0e5;
+  --red:#dc2626; --red-bg:#ffd5d5;
+  --amber:#d97706; --amber-bg:#fff0d4;
+  --blue:#2563eb; --blue-bg:#d5e8ff;
+}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;line-height:1.6;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+
+/* ── Nav ── */
+nav{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;height:62px;
+  background:rgba(240,239,246,0.88);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border2);
+}
+.back-link{
+  font-size:13px;color:var(--text2);text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:8px;border:1px solid var(--border2);
+  background:var(--surface);transition:all 0.15s;
+}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+/* ── Page ── */
+.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:3rem 2.5rem 5rem;}
+
+/* ── Hero ── */
+.page-hero{margin-bottom:3rem;}
+.page-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--primary);background:var(--primary-light);
+  border:1px solid rgba(108,92,231,0.2);border-radius:20px;padding:4px 14px;
+  margin-bottom:1rem;
+}
+.page-hero h1{
+  font-size:36px;font-weight:600;letter-spacing:-1px;
+  color:var(--text);margin-bottom:0.75rem;line-height:1.15;
+}
+.page-hero h1 em{
+  font-style:normal;
+  background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.page-hero p{font-size:15px;color:var(--text2);max-width:600px;font-weight:300;line-height:1.7;}
+
+/* ── Filter tabs ── */
+.filter-row{
+  display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2rem;
+}
+.filter-btn{
+  font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  padding:6px 14px;border-radius:20px;border:1px solid var(--border2);
+  background:var(--surface);color:var(--text2);cursor:pointer;
+  transition:all 0.15s;
+}
+.filter-btn:hover{border-color:var(--primary);color:var(--primary);}
+.filter-btn.active{background:var(--primary);color:#fff;border-color:var(--primary);}
+
+/* ── Cert cards ── */
+.certs-grid{display:flex;flex-direction:column;gap:16px;}
+.cert-card{
+  background:var(--surface);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--border2);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);
+  transition:box-shadow 0.2s;
+}
+.cert-card:hover{box-shadow:var(--shadow-lg);}
+.cert-header{
+  display:flex;align-items:center;gap:16px;
+  padding:18px 22px 14px;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;user-select:none;
+}
+.cert-logo{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;letter-spacing:0.04em;
+  flex-shrink:0;text-align:center;line-height:1.2;
+}
+.cert-header-text{flex:1;}
+.cert-name{font-size:17px;font-weight:600;letter-spacing:-0.3px;color:var(--text);}
+.cert-full{font-size:12px;color:var(--text2);margin-top:1px;}
+.cert-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.cert-badge{
+  font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;
+  padding:2px 9px;border-radius:20px;border:1px solid transparent;
+}
+.cert-toggle{
+  font-size:18px;color:var(--text3);transition:transform 0.2s;
+  margin-left:auto;flex-shrink:0;
+}
+.cert-card.open .cert-toggle{transform:rotate(180deg);}
+
+.cert-body{
+  display:none;padding:20px 22px 22px;
+}
+.cert-card.open .cert-body{display:block;}
+
+.cert-summary{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:10px;margin-bottom:20px;
+}
+.cert-stat{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;padding:10px 14px;
+}
+.cert-stat-label{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);margin-bottom:3px;}
+.cert-stat-val{font-size:14px;font-weight:500;color:var(--text);}
+
+.pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+@media(max-width:600px){.pros-cons{grid-template-columns:1fr;}}
+.pros,.cons{border-radius:10px;padding:14px 16px;}
+.pros{background:var(--green-bg);border:1px solid rgba(22,163,74,0.2);}
+.cons{background:var(--red-bg);border:1px solid rgba(220,38,38,0.15);}
+.pros-cons-title{
+  font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+  margin-bottom:10px;display:flex;align-items:center;gap:5px;
+}
+.pros .pros-cons-title{color:var(--green);}
+.cons .pros-cons-title{color:var(--red);}
+.pros-cons-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.pros-cons-list li{
+  font-size:12px;line-height:1.45;
+  display:flex;align-items:flex-start;gap:7px;
+}
+.pros-cons-list li::before{
+  flex-shrink:0;font-size:12px;margin-top:1px;
+}
+.pros .pros-cons-list li{color:#14532d;}
+.pros .pros-cons-list li::before{content:'✓';color:var(--green);}
+.cons .pros-cons-list li{color:#7f1d1d;}
+.cons .pros-cons-list li::before{content:'✕';color:var(--red);}
+
+.cert-verdict{
+  background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);
+  border-radius:10px;padding:12px 16px;
+  font-size:13px;color:var(--text);line-height:1.55;
+}
+.cert-verdict strong{color:var(--primary);}
+
+/* ── Comparison table ── */
+.comparison-section{margin-top:3.5rem;}
+.comparison-title{font-size:20px;font-weight:600;letter-spacing:-0.4px;margin-bottom:0.4rem;}
+.comparison-sub{font-size:13px;color:var(--text2);margin-bottom:1.5rem;}
+.table-wrap{
+  overflow-x:auto;
+  border:1px solid var(--border2);border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+table{
+  width:100%;border-collapse:collapse;
+  background:var(--surface);
+  font-size:13px;min-width:700px;
+}
+thead tr{border-bottom:2px solid var(--border2);}
+thead th{
+  padding:12px 16px;text-align:left;
+  font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--text3);background:var(--surface2);
+}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(108,92,231,0.03);}
+td{padding:12px 16px;vertical-align:middle;color:var(--text2);}
+td:first-child{font-weight:600;color:var(--text);}
+.cell-yes{color:var(--green);font-weight:600;}
+.cell-no{color:var(--red);}
+.cell-mid{color:var(--amber);font-weight:500;}
+.pill{
+  display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.04em;
+  padding:2px 8px;border-radius:20px;text-transform:uppercase;
+}
+.pill-easy{background:#d4f0e5;color:var(--green);}
+.pill-med{background:#fff0d4;color:var(--amber);}
+.pill-hard{background:#ffd5d5;color:var(--red);}
+.pill-scrum{background:#ede9ff;color:#6c5ce7;}
+.pill-kanban{background:#d5e8ff;color:#2563eb;}
+.pill-scaled{background:#ffd5ec;color:#c026d3;}
+.pill-lean{background:#d4f0e5;color:#16a34a;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">Agile Certifications Guide</span>
+  <div style="width:160px;"></div>
+</nav>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="page-eyebrow">🏅 Resources</div>
+    <h1>Agile <em>Certifications</em> Guide</h1>
+    <p>A practical breakdown of the most recognised agile certifications — what they cover, who they're for, and the honest pros and cons of each. Use this to decide what's worth your time and money.</p>
+  </div>
+
+  <div class="filter-row">
+    <button class="filter-btn active" data-filter="all">All certifications</button>
+    <button class="filter-btn" data-filter="scrum">Scrum</button>
+    <button class="filter-btn" data-filter="kanban">Kanban</button>
+    <button class="filter-btn" data-filter="scaled">Scaled Agile</button>
+    <button class="filter-btn" data-filter="lean">Lean / Other</button>
+  </div>
+
+  <div class="certs-grid" id="certs-grid">
+
+    <!-- PSM I -->
+    <div class="cert-card" data-type="scrum">
+      <div class="cert-header">
+        <div class="cert-logo" style="background:#ede9ff;color:#6c5ce7;">PSM I</div>
+        <div class="cert-header-text">
+          <div class="cert-name">Professional Scrum Master I</div>
+          <div class="cert-full">Scrum.org · PSM I</div>
+          <div class="cert-meta">
+            <span class="cert-badge pill pill-scrum">Scrum</span>
+            <span class="cert-badge pill pill-easy">Beginner friendly</span>
+          </div>
+        </div>
+        <div class="cert-toggle">⌄</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-summary">
+          <div class="cert-stat"><div class="cert-stat-label">Cost</div><div class="cert-stat-val">~$200 USD</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Exam format</div><div class="cert-stat-val">80 questions, 60 min</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Pass mark</div><div class="cert-stat-val">85%</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Difficulty</div><div class="cert-stat-val"><span class="pill pill-med">Moderate</span></div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Renewal</div><div class="cert-stat-val">Never expires</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Prerequisites</div><div class="cert-stat-val">None</div></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-cons-title">✓ Pros</div>
+            <ul class="pros-cons-list">
+              <li>No mandatory training — study at your own pace</li>
+              <li>Relatively affordable at ~$200</li>
+              <li>Never expires — no renewal fees</li>
+              <li>Highly respected and widely recognised</li>
+              <li>Rigorous exam tests real understanding, not memorisation</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="pros-cons-title">✕ Cons</div>
+            <ul class="pros-cons-list">
+              <li>High pass mark (85%) — requires thorough preparation</li>
+              <li>No classroom component included</li>
+              <li>Less name recognition outside tech than CSM</li>
+              <li>Free retake not included</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cert-verdict"><strong>Best for:</strong> Self-motivated learners who want a rigorous, cost-effective Scrum certification that never needs renewing. A great first cert for developers and aspiring Scrum Masters.</div>
+      </div>
+    </div>
+
+    <!-- CSM -->
+    <div class="cert-card" data-type="scrum">
+      <div class="cert-header">
+        <div class="cert-logo" style="background:#d4f0e5;color:#16a34a;">CSM</div>
+        <div class="cert-header-text">
+          <div class="cert-name">Certified ScrumMaster</div>
+          <div class="cert-full">Scrum Alliance · CSM</div>
+          <div class="cert-meta">
+            <span class="cert-badge pill pill-scrum">Scrum</span>
+            <span class="cert-badge pill pill-easy">Beginner friendly</span>
+          </div>
+        </div>
+        <div class="cert-toggle">⌄</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-summary">
+          <div class="cert-stat"><div class="cert-stat-label">Cost</div><div class="cert-stat-val">$1,000–$1,500+</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Exam format</div><div class="cert-stat-val">50 questions, 60 min</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Pass mark</div><div class="cert-stat-val">74%</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Difficulty</div><div class="cert-stat-val"><span class="pill pill-easy">Accessible</span></div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Renewal</div><div class="cert-stat-val">Every 2 years</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Prerequisites</div><div class="cert-stat-val">2-day training required</div></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-cons-title">✓ Pros</div>
+            <ul class="pros-cons-list">
+              <li>2-day instructor-led training included in cost</li>
+              <li>Most widely recognised cert among non-technical hiring managers</li>
+              <li>Strong Scrum Alliance community and network</li>
+              <li>Lower pass mark makes it more accessible</li>
+              <li>Good for career changers entering agile roles</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="pros-cons-title">✕ Cons</div>
+            <ul class="pros-cons-list">
+              <li>Significantly more expensive than PSM I</li>
+              <li>Renewal fees every 2 years (SEUs required)</li>
+              <li>Mandatory training can feel like box-ticking</li>
+              <li>Exam considered less rigorous than PSM I</li>
+              <li>Cost varies widely by training provider</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cert-verdict"><strong>Best for:</strong> Those who benefit from structured classroom learning and want the most broadly recognised Scrum brand, especially when targeting non-tech organisations or enterprise roles.</div>
+      </div>
+    </div>
+
+    <!-- PSM II -->
+    <div class="cert-card" data-type="scrum">
+      <div class="cert-header">
+        <div class="cert-logo" style="background:#ede9ff;color:#6c5ce7;">PSM II</div>
+        <div class="cert-header-text">
+          <div class="cert-name">Professional Scrum Master II</div>
+          <div class="cert-full">Scrum.org · PSM II</div>
+          <div class="cert-meta">
+            <span class="cert-badge pill pill-scrum">Scrum</span>
+            <span class="cert-badge pill pill-hard">Advanced</span>
+          </div>
+        </div>
+        <div class="cert-toggle">⌄</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-summary">
+          <div class="cert-stat"><div class="cert-stat-label">Cost</div><div class="cert-stat-val">~$250 USD</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Exam format</div><div class="cert-stat-val">30 questions, 90 min</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Pass mark</div><div class="cert-stat-val">85%</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Difficulty</div><div class="cert-stat-val"><span class="pill pill-hard">Challenging</span></div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Renewal</div><div class="cert-stat-val">Never expires</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Prerequisites</div><div class="cert-stat-val">PSM I recommended</div></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-cons-title">✓ Pros</div>
+            <ul class="pros-cons-list">
+              <li>Demonstrates genuine advanced Scrum mastery</li>
+              <li>No expiry — permanent credential</li>
+              <li>Great differentiator for experienced Scrum Masters</li>
+              <li>Still affordable relative to content depth</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="pros-cons-title">✕ Cons</div>
+            <ul class="pros-cons-list">
+              <li>Significantly harder than PSM I — requires real experience</li>
+              <li>Less recognised than PSM I at entry level</li>
+              <li>Scenario-based questions require deep situational judgement</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cert-verdict"><strong>Best for:</strong> Experienced Scrum Masters with 2+ years of practice who want to prove advanced competency and differentiate themselves from the sea of PSM I / CSM holders.</div>
+      </div>
+    </div>
+
+    <!-- CSPO -->
+    <div class="cert-card" data-type="scrum">
+      <div class="cert-header">
+        <div class="cert-logo" style="background:#d4f0e5;color:#16a34a;">CSPO</div>
+        <div class="cert-header-text">
+          <div class="cert-name">Certified Scrum Product Owner</div>
+          <div class="cert-full">Scrum Alliance · CSPO</div>
+          <div class="cert-meta">
+            <span class="cert-badge pill pill-scrum">Scrum</span>
+            <span class="cert-badge pill pill-easy">Beginner friendly</span>
+          </div>
+        </div>
+        <div class="cert-toggle">⌄</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-summary">
+          <div class="cert-stat"><div class="cert-stat-label">Cost</div><div class="cert-stat-val">$1,000–$1,500+</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Exam format</div><div class="cert-stat-val">No exam — attendance only</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Pass mark</div><div class="cert-stat-val">N/A</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Difficulty</div><div class="cert-stat-val"><span class="pill pill-easy">Accessible</span></div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Renewal</div><div class="cert-stat-val">Every 2 years</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Prerequisites</div><div class="cert-stat-val">2-day training required</div></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-cons-title">✓ Pros</div>
+            <ul class="pros-cons-list">
+              <li>No exam required — just attend the training</li>
+              <li>Good foundation for Product Owners new to Scrum</li>
+              <li>Widely requested in job descriptions</li>
+              <li>Strong focus on stakeholder collaboration</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="pros-cons-title">✕ Cons</div>
+            <ul class="pros-cons-list">
+              <li>No exam means it doesn't truly validate knowledge</li>
+              <li>Expensive for what is essentially a 2-day course certificate</li>
+              <li>Quality varies massively by training provider</li>
+              <li>Renewal costs and SEU requirements add up</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cert-verdict"><strong>Best for:</strong> Product Owners or BAs who need a recognised credential quickly and whose employer will fund the training. The lack of an exam means it's easy to obtain but less meaningful as a signal of expertise.</div>
+      </div>
+    </div>
+
+    <!-- SAFe Agilist -->
+    <div class="cert-card" data-type="scaled">
+      <div class="cert-header">
+        <div class="cert-logo" style="background:#ffd5ec;color:#c026d3;font-size:9px;">SAFe SA</div>
+        <div class="cert-header-text">
+          <div class="cert-name">SAFe Agilist (SA)</div>
+          <div class="cert-full">Scaled Agile Inc · SA / Leading SAFe</div>
+          <div class="cert-meta">
+            <span class="cert-badge pill pill-scaled">Scaled Agile</span>
+            <span class="cert-badge pill pill-med">Intermediate</span>
+          </div>
+        </div>
+        <div class="cert-toggle">⌄</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-summary">
+          <div class="cert-stat"><div class="cert-stat-label">Cost</div><div class="cert-stat-val">$995–$1,295+</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Exam format</div><div class="cert-stat-val">45 questions, 90 min</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Pass mark</div><div class="cert-stat-val">73%</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Difficulty</div><div class="cert-stat-val"><span class="pill pill-med">Moderate</span></div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Renewal</div><div class="cert-stat-val">Every year</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Prerequisites</div><div class="cert-stat-val">2-day training required</div></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-cons-title">✓ Pros</div>
+            <ul class="pros-cons-list">
+              <li>Dominant framework in large enterprise organisations</li>
+              <li>High demand in financial services, government and large tech</li>
+              <li>Covers PI Planning, ARTs, and enterprise-level agility</li>
+              <li>Well-structured learning path with multiple role-based certs</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="pros-cons-title">✕ Cons</div>
+            <ul class="pros-cons-list">
+              <li>Annual renewal fee ($100+) even after passing</li>
+              <li>Controversial — critics argue SAFe dilutes agile values</li>
+              <li>Heavy and complex framework not suited to all organisations</li>
+              <li>Expensive relative to depth of individual learning</li>
+              <li>Less useful outside large enterprise contexts</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cert-verdict"><strong>Best for:</strong> Agile practitioners working in or targeting large enterprises that have adopted SAFe. Less relevant for small to medium teams or organisations focused on pure Scrum or Kanban.</div>
+      </div>
+    </div>
+
+    <!-- KMP -->
+    <div class="cert-card" data-type="kanban">
+      <div class="cert-header">
+        <div class="cert-logo" style="background:#d5e8ff;color:#2563eb;">KMP</div>
+        <div class="cert-header-text">
+          <div class="cert-name">Kanban Management Professional</div>
+          <div class="cert-full">Kanban University · KMP I & II</div>
+          <div class="cert-meta">
+            <span class="cert-badge pill pill-kanban">Kanban</span>
+            <span class="cert-badge pill pill-med">Intermediate</span>
+          </div>
+        </div>
+        <div class="cert-toggle">⌄</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-summary">
+          <div class="cert-stat"><div class="cert-stat-label">Cost</div><div class="cert-stat-val">~$1,500–$2,000</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Exam format</div><div class="cert-stat-val">No exam — two courses</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Pass mark</div><div class="cert-stat-val">N/A</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Difficulty</div><div class="cert-stat-val"><span class="pill pill-med">Moderate</span></div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Renewal</div><div class="cert-stat-val">No expiry</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Prerequisites</div><div class="cert-stat-val">KMP I (Team Kanban)</div></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-cons-title">✓ Pros</div>
+            <ul class="pros-cons-list">
+              <li>Deep focus on flow, WIP limits and evolutionary change</li>
+              <li>No expiry once completed</li>
+              <li>Highly practical — applicable immediately</li>
+              <li>Well respected in software and operations industries</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="pros-cons-title">✕ Cons</div>
+            <ul class="pros-cons-list">
+              <li>Less widely recognised than Scrum certs in job ads</li>
+              <li>Requires two separate courses to achieve KMP</li>
+              <li>Smaller community compared to Scrum Alliance</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cert-verdict"><strong>Best for:</strong> Operations managers, team leads and agile coaches who want to apply Kanban at a systemic level. Excellent complement to Scrum certifications for well-rounded practitioners.</div>
+      </div>
+    </div>
+
+    <!-- PMI-ACP -->
+    <div class="cert-card" data-type="lean">
+      <div class="cert-header">
+        <div class="cert-logo" style="background:#fff0d4;color:#d97706;font-size:9px;">PMI-ACP</div>
+        <div class="cert-header-text">
+          <div class="cert-name">PMI Agile Certified Practitioner</div>
+          <div class="cert-full">Project Management Institute · PMI-ACP</div>
+          <div class="cert-meta">
+            <span class="cert-badge pill pill-lean">Multi-framework</span>
+            <span class="cert-badge pill pill-hard">Advanced</span>
+          </div>
+        </div>
+        <div class="cert-toggle">⌄</div>
+      </div>
+      <div class="cert-body">
+        <div class="cert-summary">
+          <div class="cert-stat"><div class="cert-stat-label">Cost</div><div class="cert-stat-val">$435–$495 USD</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Exam format</div><div class="cert-stat-val">120 questions, 3 hours</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Pass mark</div><div class="cert-stat-val">Not published</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Difficulty</div><div class="cert-stat-val"><span class="pill pill-hard">Challenging</span></div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Renewal</div><div class="cert-stat-val">Every 3 years (PDUs)</div></div>
+          <div class="cert-stat"><div class="cert-stat-label">Prerequisites</div><div class="cert-stat-val">2,000 hrs agile exp.</div></div>
+        </div>
+        <div class="pros-cons">
+          <div class="pros">
+            <div class="pros-cons-title">✓ Pros</div>
+            <ul class="pros-cons-list">
+              <li>Covers multiple frameworks — Scrum, Kanban, XP, Lean</li>
+              <li>Highly regarded in project management circles</li>
+              <li>Strong signal of broad agile experience</li>
+              <li>PMI brand is globally recognised</li>
+              <li>Good for PMs transitioning to agile delivery</li>
+            </ul>
+          </div>
+          <div class="cons">
+            <div class="pros-cons-title">✕ Cons</div>
+            <ul class="pros-cons-list">
+              <li>Requires 2,000 hours of agile project experience</li>
+              <li>PDU maintenance every 3 years</li>
+              <li>Broad coverage means less depth in any one framework</li>
+              <li>Less recognised than CSM/PSM for pure Scrum Master roles</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cert-verdict"><strong>Best for:</strong> Experienced project managers and delivery leads with existing PMI credentials who want to formally demonstrate agile breadth. Less suitable as a first certification.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Comparison table ── -->
+  <div class="comparison-section">
+    <div class="comparison-title">Quick comparison</div>
+    <div class="comparison-sub">Side-by-side overview of all certifications covered above.</div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Certification</th>
+            <th>Body</th>
+            <th>Type</th>
+            <th>Cost (approx)</th>
+            <th>Exam?</th>
+            <th>Difficulty</th>
+            <th>Expires?</th>
+            <th>Best for</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PSM I</td>
+            <td>Scrum.org</td>
+            <td><span class="pill pill-scrum">Scrum</span></td>
+            <td>~$200</td>
+            <td class="cell-yes">Yes (85%)</td>
+            <td><span class="pill pill-med">Moderate</span></td>
+            <td class="cell-yes">Never</td>
+            <td>Self-study learners</td>
+          </tr>
+          <tr>
+            <td>CSM</td>
+            <td>Scrum Alliance</td>
+            <td><span class="pill pill-scrum">Scrum</span></td>
+            <td>$1,000–1,500</td>
+            <td class="cell-yes">Yes (74%)</td>
+            <td><span class="pill pill-easy">Accessible</span></td>
+            <td class="cell-no">2 years</td>
+            <td>Enterprise / career changers</td>
+          </tr>
+          <tr>
+            <td>PSM II</td>
+            <td>Scrum.org</td>
+            <td><span class="pill pill-scrum">Scrum</span></td>
+            <td>~$250</td>
+            <td class="cell-yes">Yes (85%)</td>
+            <td><span class="pill pill-hard">Challenging</span></td>
+            <td class="cell-yes">Never</td>
+            <td>Experienced SMs</td>
+          </tr>
+          <tr>
+            <td>CSPO</td>
+            <td>Scrum Alliance</td>
+            <td><span class="pill pill-scrum">Scrum</span></td>
+            <td>$1,000–1,500</td>
+            <td class="cell-no">No exam</td>
+            <td><span class="pill pill-easy">Accessible</span></td>
+            <td class="cell-no">2 years</td>
+            <td>Product Owners</td>
+          </tr>
+          <tr>
+            <td>SAFe Agilist</td>
+            <td>Scaled Agile</td>
+            <td><span class="pill pill-scaled">Scaled</span></td>
+            <td>$995–1,295</td>
+            <td class="cell-yes">Yes (73%)</td>
+            <td><span class="pill pill-med">Moderate</span></td>
+            <td class="cell-no">1 year</td>
+            <td>Large enterprise</td>
+          </tr>
+          <tr>
+            <td>KMP</td>
+            <td>Kanban University</td>
+            <td><span class="pill pill-kanban">Kanban</span></td>
+            <td>$1,500–2,000</td>
+            <td class="cell-no">No exam</td>
+            <td><span class="pill pill-med">Moderate</span></td>
+            <td class="cell-yes">Never</td>
+            <td>Flow / ops focus</td>
+          </tr>
+          <tr>
+            <td>PMI-ACP</td>
+            <td>PMI</td>
+            <td><span class="pill pill-lean">Multi</span></td>
+            <td>$435–495</td>
+            <td class="cell-yes">Yes</td>
+            <td><span class="pill pill-hard">Challenging</span></td>
+            <td class="cell-no">3 years</td>
+            <td>Experienced PMs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Accordion
+document.querySelectorAll('.cert-header').forEach(header=>{
+  header.addEventListener('click',()=>{
+    const card=header.closest('.cert-card');
+    const wasOpen=card.classList.contains('open');
+    document.querySelectorAll('.cert-card').forEach(c=>c.classList.remove('open'));
+    if(!wasOpen)card.classList.add('open');
+  });
+});
+
+// Filter
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter=btn.dataset.filter;
+    document.querySelectorAll('.cert-card').forEach(card=>{
+      card.style.display=(filter==='all'||card.dataset.type===filter)?'':'none';
+    });
+  });
+});
+
+// Open first card by default
+document.querySelector('.cert-card')?.classList.add('open');
+</script>
+</body>
+</html>
