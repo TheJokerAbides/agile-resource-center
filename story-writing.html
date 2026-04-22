@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Story Writing — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;--surface:rgba(255,255,255,0.82);--surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);--border2:rgba(110,100,180,0.25);
+  --text:#1a1826;--text2:#6b6880;--text3:#9e9bb5;
+  --primary:#6c5ce7;--primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.15);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --teal:#0d9488;--teal-bg:#d4f0ee;--teal-border:rgba(13,148,136,0.2);
+  --coral:#c026d3;--coral-bg:#fbeaff;--coral-border:rgba(192,38,211,0.2);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(240,239,246,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+.page{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:3rem 2.5rem 6rem;}
+
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--coral);background:var(--coral-bg);border:1px solid var(--coral-border);border-radius:20px;padding:4px 14px;margin-bottom:1.25rem;}
+.page-hero{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:44px;font-weight:400;letter-spacing:-1px;color:var(--text);margin-bottom:0.75rem;line-height:1.15;}
+.page-hero h1 em{font-style:italic;background:linear-gradient(135deg,#c026d3,#6c5ce7,#2563eb);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:16px;color:var(--text2);font-weight:300;line-height:1.75;max-width:640px;}
+
+.toc{background:var(--surface);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:var(--radius);padding:18px 22px;margin-bottom:3rem;box-shadow:var(--shadow);}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li{display:flex;align-items:center;gap:10px;}
+.toc-list a{font-size:13px;font-weight:500;color:var(--primary);text-decoration:none;transition:opacity 0.15s;}
+.toc-list a:hover{opacity:0.7;}
+.toc-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);width:20px;flex-shrink:0;}
+
+.section{margin-bottom:3.5rem;}
+.section-anchor{display:block;height:80px;margin-top:-80px;visibility:hidden;}
+.section-label{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.label-coral{background:var(--coral-bg);color:var(--coral);border:1px solid var(--coral-border);}
+.label-purple{background:var(--primary-light);color:var(--primary);border:1px solid rgba(108,92,231,0.2);}
+.label-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.label-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.label-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.label-teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-border);}
+.label-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+.section h2{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;letter-spacing:-0.5px;color:var(--text);margin-bottom:0.75rem;line-height:1.2;}
+.section p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:1rem;}
+.section p:last-child{margin-bottom:0;}
+.section-divider{height:1px;background:var(--border2);margin:3rem 0;}
+
+/* Three Cs */
+.three-cs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5rem 0;}
+@media(max-width:580px){.three-cs{grid-template-columns:1fr;}}
+.c-card{border-radius:var(--radius);padding:20px;text-align:center;box-shadow:var(--shadow);transition:transform 0.18s,box-shadow 0.18s;}
+.c-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.c-letter{font-family:'DM Serif Display',serif;font-size:52px;font-weight:400;line-height:1;margin-bottom:8px;}
+.c-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.c-desc{font-size:12px;line-height:1.6;}
+
+/* Story format box */
+.format-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px;}
+.format-header{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;transition:background 0.12s;}
+.format-header:hover{background:rgba(108,92,231,0.03);}
+.format-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.format-header-text{flex:1;}
+.format-name{font-size:15px;font-weight:600;color:var(--text);}
+.format-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.format-toggle{font-size:16px;color:var(--text3);transition:transform 0.2s;}
+.format-card.open .format-toggle{transform:rotate(180deg);}
+.format-body{display:none;padding:16px 20px 20px;}
+.format-card.open .format-body{display:block;}
+.format-desc{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:14px;}
+
+/* Template box */
+.template-box{border-radius:10px;padding:14px 18px;font-family:'DM Mono',monospace;font-size:13px;line-height:1.8;margin-bottom:12px;}
+.template-box.purple{background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);color:var(--text);}
+.template-box.blue{background:var(--blue-bg);border:1px solid var(--blue-border);color:var(--text);}
+.template-box.green{background:var(--green-bg);border:1px solid var(--green-border);color:var(--text);}
+.template-fill{color:var(--text3);font-style:italic;}
+
+/* Example box */
+.example-box{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;margin-bottom:12px;}
+.example-label{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.example-text{font-size:13px;color:var(--text);line-height:1.7;}
+
+/* Gherkin */
+.gherkin-block{background:#1a1826;border-radius:12px;padding:18px 20px;font-family:'DM Mono',monospace;font-size:12px;line-height:1.9;margin:1rem 0;}
+.gherkin-keyword{color:#c026d3;font-weight:600;}
+.gherkin-text{color:#e2e0ff;}
+.gherkin-comment{color:#6b6880;font-style:italic;}
+
+/* Two col */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.25rem 0;}
+@media(max-width:580px){.two-col{grid-template-columns:1fr;}}
+.col-card{border-radius:10px;padding:14px 16px;}
+.col-green{background:var(--green-bg);border:1px solid var(--green-border);}
+.col-red{background:var(--red-bg);border:1px solid var(--red-border);}
+.col-blue{background:var(--blue-bg);border:1px solid var(--blue-border);}
+.col-amber{background:var(--amber-bg);border:1px solid var(--amber-border);}
+.col-teal{background:var(--teal-bg);border:1px solid var(--teal-border);}
+.col-title{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.col-green .col-title{color:var(--green);}
+.col-red .col-title{color:var(--red);}
+.col-blue .col-title{color:var(--blue);}
+.col-amber .col-title{color:var(--amber);}
+.col-teal .col-title{color:var(--teal);}
+.item-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:12px;line-height:1.5;display:flex;align-items:flex-start;gap:6px;}
+.item-list li::before{flex-shrink:0;font-size:11px;margin-top:2px;}
+.col-green .item-list li{color:#14532d;}
+.col-green .item-list li::before{content:'✓';color:var(--green);}
+.col-red .item-list li{color:#7f1d1d;}
+.col-red .item-list li::before{content:'✕';color:var(--red);}
+.col-blue .item-list li{color:#1e3a5f;}
+.col-blue .item-list li::before{content:'→';color:var(--blue);}
+.col-amber .item-list li{color:#78350f;}
+.col-amber .item-list li::before{content:'→';color:var(--amber);}
+.col-teal .item-list li{color:#0f4841;}
+.col-teal .item-list li::before{content:'→';color:var(--teal);}
+
+/* Persona cards */
+.persona-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:1.5rem 0;}
+.persona-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);transition:transform 0.18s,box-shadow 0.18s;}
+.persona-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.persona-avatar{font-size:28px;margin-bottom:8px;}
+.persona-name{font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.persona-role{font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:10px;}
+.persona-row{display:flex;flex-direction:column;gap:4px;margin-bottom:6px;}
+.persona-row-label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);}
+.persona-row-text{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* Comparison table */
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border2);margin:1.25rem 0;box-shadow:var(--shadow);}
+table{width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);}
+thead tr{border-bottom:1px solid var(--border2);background:var(--surface2);}
+th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:last-child{border-bottom:none;}
+tbody tr:hover{background:rgba(108,92,231,0.03);}
+td{padding:10px 14px;color:var(--text2);vertical-align:top;line-height:1.5;}
+td:first-child{font-weight:600;color:var(--text);}
+
+/* Anti-pattern cards */
+.antipattern-list{display:flex;flex-direction:column;gap:12px;margin:1.5rem 0;}
+.antipattern-card{background:var(--surface);border:1px solid var(--border2);border-left:4px solid var(--red);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);}
+.antipattern-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:8px;}
+.antipattern-badge{font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 8px;border-radius:20px;background:var(--red-bg);color:var(--red);}
+.antipattern-example{font-family:'DM Mono',monospace;font-size:11px;color:var(--red);background:var(--red-bg);border-radius:7px;padding:7px 10px;margin:6px 0;line-height:1.6;}
+.antipattern-fix{font-size:12px;color:var(--text2);line-height:1.55;display:flex;gap:6px;align-items:flex-start;}
+.antipattern-fix::before{content:'✓ Fix:';font-weight:600;color:var(--green);flex-shrink:0;}
+
+/* Callout */
+.callout{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border-radius:10px;margin:1.25rem 0;font-size:13px;line-height:1.6;}
+.callout.tip{background:var(--green-bg);border:1px solid var(--green-border);color:#14532d;}
+.callout.note{background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350f;}
+.callout.info{background:var(--blue-bg);border:1px solid var(--blue-border);color:#1e3a5f;}
+.callout-icon{flex-shrink:0;font-size:15px;}
+
+/* Quote */
+.quote-block{border-left:4px solid var(--coral);padding:14px 20px;background:var(--coral-bg);border-radius:0 10px 10px 0;margin:1.25rem 0;font-size:14px;font-style:italic;color:var(--text);line-height:1.75;}
+.quote-block cite{display:block;margin-top:8px;font-size:12px;font-style:normal;font-weight:500;color:var(--text3);}
+
+/* Lean principles row */
+.lean-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:1.5rem 0;}
+.lean-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);transition:transform 0.18s,box-shadow 0.18s;}
+.lean-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.lean-icon{font-size:20px;margin-bottom:6px;}
+.lean-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.lean-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">Story Writing</span>
+  <div style="width:120px;"></div>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-eyebrow">✍️ Learning Paths</div>
+    <h1>Lean <em>Story Writing</em></h1>
+    <p>A comprehensive guide to writing user stories the right way — from lean principles and the 3 C's through to acceptance criteria formats, personas, and the anti-patterns that turn backlogs into graveyards.</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">01</span><a href="#lean">Lean Story Writing Principles</a></li>
+      <li><span class="toc-num">02</span><a href="#threecs">The 3 C's</a></li>
+      <li><span class="toc-num">03</span><a href="#formats">Common User Story Formats</a></li>
+      <li><span class="toc-num">04</span><a href="#personas">Personas &amp; Writing from the User's Perspective</a></li>
+      <li><span class="toc-num">05</span><a href="#acceptance">Acceptance Criteria</a></li>
+      <li><span class="toc-num">06</span><a href="#gherkin">Gherkin vs Listed Acceptance Criteria</a></li>
+      <li><span class="toc-num">07</span><a href="#bestpractices">Best Practices</a></li>
+      <li><span class="toc-num">08</span><a href="#antipatterns">Anti-patterns &amp; Pitfalls to Avoid</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. Lean principles -->
+  <div class="section" id="lean">
+    <span class="section-anchor"></span>
+    <div class="section-label label-coral">🌿 Lean</div>
+    <h2>Lean Story Writing Principles</h2>
+    <p>Lean story writing is about writing just enough, just in time. The goal is not comprehensive specifications — it's a shared understanding of user value that enables the team to build the right thing. Every word in a story should earn its place.</p>
+
+    <div class="quote-block">
+      Stories are promises for a conversation, not a contract for delivery.
+      <cite>— Alistair Cockburn</cite>
+    </div>
+
+    <div class="lean-grid">
+      <div class="lean-card">
+        <div class="lean-icon">🎯</div>
+        <div class="lean-title">Value over completeness</div>
+        <div class="lean-desc">A story exists to deliver user value. If you can't articulate the value, the story shouldn't exist.</div>
+      </div>
+      <div class="lean-card">
+        <div class="lean-icon">⏱️</div>
+        <div class="lean-title">Just in time</div>
+        <div class="lean-desc">Write detail when you need it, not months in advance. Requirements change — detailed stories written too early are often obsolete by the time they're built.</div>
+      </div>
+      <div class="lean-card">
+        <div class="lean-icon">🤝</div>
+        <div class="lean-title">Conversation over documentation</div>
+        <div class="lean-desc">The story card prompts a conversation between the team, the PO, and the business. The card is a reminder — not a requirements document.</div>
+      </div>
+      <div class="lean-card">
+        <div class="lean-icon">🔪</div>
+        <div class="lean-title">Thin vertical slices</div>
+        <div class="lean-desc">Slice stories to be as small as possible while still delivering end-to-end user value. Thin slices ship faster, reduce risk, and generate learning sooner.</div>
+      </div>
+      <div class="lean-card">
+        <div class="lean-icon">👤</div>
+        <div class="lean-title">User language</div>
+        <div class="lean-desc">Write in the language of the user, not the system. "User submits the form" not "POST request is sent to /api/orders".</div>
+      </div>
+      <div class="lean-card">
+        <div class="lean-icon">🧪</div>
+        <div class="lean-title">Testability by design</div>
+        <div class="lean-desc">If you can't write an acceptance criterion for it, the story is too vague. Testability is a quality signal, not an afterthought.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 2. Three Cs -->
+  <div class="section" id="threecs">
+    <span class="section-anchor"></span>
+    <div class="section-label label-purple">3️⃣ The 3 C's</div>
+    <h2>The 3 C's</h2>
+    <p>Ron Jeffries' 3 C's framework — Card, Conversation, Confirmation — describes the three components every user story must have to be complete. Together they define what a story <em>is</em>, not just what it says.</p>
+
+    <div class="three-cs">
+      <div class="c-card" style="background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);">
+        <div class="c-letter" style="color:var(--primary);">C</div>
+        <div class="c-name">Card</div>
+        <div class="c-desc" style="color:var(--text2);">The written story — a short description of the desired outcome on a card or ticket. It is intentionally brief because the detail lives in the conversation, not the card. The card is a reminder and a planning token.</div>
+      </div>
+      <div class="c-card" style="background:var(--teal-bg);border:1px solid var(--teal-border);">
+        <div class="c-letter" style="color:var(--teal);">C</div>
+        <div class="c-name">Conversation</div>
+        <div class="c-desc" style="color:#0f4841;">The ongoing discussion between the team, the PO, and the business — before, during, and after development. This is where requirements get clarified, assumptions get surfaced, and shared understanding is built. The conversation is the most important C.</div>
+      </div>
+      <div class="c-card" style="background:var(--green-bg);border:1px solid var(--green-border);">
+        <div class="c-letter" style="color:var(--green);">C</div>
+        <div class="c-name">Confirmation</div>
+        <div class="c-desc" style="color:#14532d;">The acceptance criteria — the conditions that confirm the story is done. Confirmation makes the story testable and creates a shared definition of "done" for this specific piece of work. No confirmation = no way to know when you're finished.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>If a story has a detailed Card but no Conversation has happened, you don't have a story — you have a specification. The value of a story comes from the shared understanding built through conversation, not from what's written on the card.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 3. Story formats -->
+  <div class="section" id="formats">
+    <span class="section-anchor"></span>
+    <div class="section-label label-blue">📝 Formats</div>
+    <h2>Common User Story Formats</h2>
+    <p>There is no single "correct" format for a user story. Different teams use different templates depending on context, audience, and what drives the best conversation. What matters is that the story captures who, what, and why — not which template you use.</p>
+
+    <div class="format-card open">
+      <div class="format-header">
+        <div class="format-icon" style="background:var(--primary-light);">⭐</div>
+        <div class="format-header-text">
+          <div class="format-name">Standard Format — As a / I want / So that</div>
+          <div class="format-sub">Most widely used · Good for all contexts</div>
+        </div>
+        <div class="format-toggle">⌄</div>
+      </div>
+      <div class="format-body">
+        <div class="format-desc">The classic story format. It explicitly captures the user (As a), the action or feature (I want), and the business value or reason (So that). The "So that" clause is the most important part — and the most frequently omitted.</div>
+        <div class="template-box purple">
+          As a <span class="template-fill">[type of user]</span>,<br>
+          I want <span class="template-fill">[to perform some action / have some feature]</span>,<br>
+          So that <span class="template-fill">[I can achieve some goal or receive some value]</span>.
+        </div>
+        <div class="example-box">
+          <div class="example-label">✓ Good example</div>
+          <div class="example-text">As a <strong>registered customer</strong>, I want to <strong>save multiple delivery addresses to my account</strong>, so that <strong>I can check out faster when ordering to familiar locations</strong>.</div>
+        </div>
+        <div class="example-box">
+          <div class="example-label">✕ Weak example</div>
+          <div class="example-text">As a <strong>user</strong>, I want to <strong>save addresses</strong>. <span style="color:var(--red);font-size:11px;">← No specific persona. No "so that". No value stated.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-header">
+        <div class="format-icon" style="background:var(--blue-bg);">🎯</div>
+        <div class="format-header-text">
+          <div class="format-name">Job Story Format — When / I want / So I can</div>
+          <div class="format-sub">Alan Klement · Situational context · Jobs to be Done</div>
+        </div>
+        <div class="format-toggle">⌄</div>
+      </div>
+      <div class="format-body">
+        <div class="format-desc">Job Stories (from Alan Klement's Jobs to be Done framework) replace the persona with a situation or context. This avoids the assumptions baked into personas and focuses on the motivating circumstances that drive behaviour. Particularly powerful for product discovery.</div>
+        <div class="template-box blue">
+          When <span class="template-fill">[situation / context / trigger]</span>,<br>
+          I want to <span class="template-fill">[motivation / action]</span>,<br>
+          So I can <span class="template-fill">[expected outcome]</span>.
+        </div>
+        <div class="example-box">
+          <div class="example-label">✓ Good example</div>
+          <div class="example-text">When <strong>I'm checking out on my phone and need to deliver to a new address</strong>, I want to <strong>type an address and have it auto-suggested by postcode</strong>, so I can <strong>complete checkout without frustrating typing errors</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-header">
+        <div class="format-icon" style="background:var(--green-bg);">🔍</div>
+        <div class="format-header-text">
+          <div class="format-name">Feature Injection — In order to / As a / I want</div>
+          <div class="format-sub">Chris Matts · Business-value first</div>
+        </div>
+        <div class="format-toggle">⌄</div>
+      </div>
+      <div class="format-body">
+        <div class="format-desc">Feature Injection (from Chris Matts) flips the standard format to lead with the business value. This forces the author to justify the feature before describing it — a powerful check against building things for the wrong reasons. Useful when stories are being written from a business stakeholder perspective.</div>
+        <div class="template-box green">
+          In order to <span class="template-fill">[achieve business value / outcome]</span>,<br>
+          As a <span class="template-fill">[role / persona]</span>,<br>
+          I want <span class="template-fill">[feature / capability]</span>.
+        </div>
+        <div class="example-box">
+          <div class="example-label">✓ Good example</div>
+          <div class="example-text">In order to <strong>reduce checkout abandonment on mobile</strong>, as a <strong>returning customer</strong>, I want <strong>my saved addresses to auto-populate the delivery form</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="format-card">
+      <div class="format-header">
+        <div class="format-icon" style="background:var(--amber-bg);">⚡</div>
+        <div class="format-header-text">
+          <div class="format-name">Lightweight Format — Plain English</div>
+          <div class="format-sub">No template · Experienced teams · Direct</div>
+        </div>
+        <div class="format-toggle">⌄</div>
+      </div>
+      <div class="format-body">
+        <div class="format-desc">Experienced agile teams sometimes drop the template entirely and write stories as plain, concise statements of user need. This works well when the team has strong shared context, but risks losing the "why" if not disciplined about articulating value. Always pair with clear acceptance criteria.</div>
+        <div class="example-box">
+          <div class="example-label">✓ Good example</div>
+          <div class="example-text"><strong>"Returning customers can save and reuse delivery addresses at checkout."</strong><br><span style="font-size:12px;color:var(--text3);">Clear, direct, user-focused. The acceptance criteria fill in the detail.</span></div>
+        </div>
+        <div class="callout note" style="margin-top:10px;">
+          <span class="callout-icon">⚠️</span>
+          <span>Only use plain format when the team has enough shared context to fill in the gaps through conversation. New teams or complex domains benefit from the structure that templates provide.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 4. Personas -->
+  <div class="section" id="personas">
+    <span class="section-anchor"></span>
+    <div class="section-label label-teal">👤 Personas</div>
+    <h2>Personas &amp; Writing from the User's Perspective</h2>
+    <p>A persona is a research-based representation of a user segment — a fictional character built from real data about the people who use (or will use) your product. Writing stories from a persona's perspective keeps the team anchored in real user behaviour rather than imagined or idealised use cases.</p>
+    <p>A good persona captures more than demographics. It describes goals, frustrations, behaviours, and context. When the team debates a feature, they should be able to say "would Sarah do this?" — not "would a user do this?"</p>
+
+    <div class="persona-grid">
+      <div class="persona-card">
+        <div class="persona-avatar">👩‍💼</div>
+        <div class="persona-name">Sarah</div>
+        <div class="persona-role">Busy professional · First-time buyer</div>
+        <div class="persona-row">
+          <div class="persona-row-label">Goal</div>
+          <div class="persona-row-text">Buy a gift quickly without friction — ideally in under 5 minutes on her phone.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Frustration</div>
+          <div class="persona-row-text">Hates being forced to create an account before she can check out.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Context</div>
+          <div class="persona-row-text">Usually shops during lunch or on the commute. Always on mobile.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Story angle</div>
+          <div class="persona-row-text" style="font-style:italic;color:var(--primary);">"As Sarah, I want to guest checkout so that I don't have to register just to buy one thing."</div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-avatar">🧑‍💻</div>
+        <div class="persona-name">Marcus</div>
+        <div class="persona-role">Power user · Frequent buyer</div>
+        <div class="persona-row">
+          <div class="persona-row-label">Goal</div>
+          <div class="persona-row-text">Repeat orders as fast as possible — he buys the same things regularly.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Frustration</div>
+          <div class="persona-row-text">Entering the same address and payment details every time is tedious.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Context</div>
+          <div class="persona-row-text">Uses desktop, logged in, knows exactly what he wants.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Story angle</div>
+          <div class="persona-row-text" style="font-style:italic;color:var(--primary);">"As Marcus, I want one-click reorder so that I can replenish items without re-entering any details."</div>
+        </div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-avatar">👴</div>
+        <div class="persona-name">David</div>
+        <div class="persona-role">Occasional buyer · Low tech confidence</div>
+        <div class="persona-row">
+          <div class="persona-row-label">Goal</div>
+          <div class="persona-row-text">Complete a purchase without feeling confused or worried he's done something wrong.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Frustration</div>
+          <div class="persona-row-text">Unclear error messages and confusing navigation make him abandon the cart.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Context</div>
+          <div class="persona-row-text">Desktop user. Reads every line. Will call support if unsure.</div>
+        </div>
+        <div class="persona-row">
+          <div class="persona-row-label">Story angle</div>
+          <div class="persona-row-text" style="font-style:italic;color:var(--primary);">"As David, I want clear confirmation at each checkout step so that I know my order is going through correctly."</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <span>When the team debates whether a feature belongs in the story, ask "does <strong>[persona name]</strong> need this to achieve their goal?" It cuts through opinion and returns the conversation to user value. "Would Sarah need this on her five-minute lunch checkout?" is a far more useful question than "should we include this?"</span>
+    </div>
+
+    <p>When writing stories from a user's perspective, avoid technical language entirely. The test is: <em>could the persona say this sentence themselves?</em> If the story contains words like "endpoint", "database", or "API", it's been written from a system perspective — not a user one.</p>
+
+    <div class="two-col">
+      <div class="col-card col-green">
+        <div class="col-title">✓ User perspective</div>
+        <ul class="item-list">
+          <li>I want to save my delivery address</li>
+          <li>I want to see my order history</li>
+          <li>I want to reset my password via email</li>
+          <li>I want to filter results by price</li>
+          <li>I want to be notified when my order ships</li>
+        </ul>
+      </div>
+      <div class="col-card col-red">
+        <div class="col-title">✕ System perspective (avoid)</div>
+        <ul class="item-list">
+          <li>Persist user address to the addresses table</li>
+          <li>Implement GET /api/orders endpoint</li>
+          <li>Send password reset token via SMTP</li>
+          <li>Add price_range filter parameter to search query</li>
+          <li>Trigger Kafka event on shipment status change</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 5. Acceptance criteria -->
+  <div class="section" id="acceptance">
+    <span class="section-anchor"></span>
+    <div class="section-label label-green">✅ Acceptance Criteria</div>
+    <h2>Acceptance Criteria</h2>
+    <p>Acceptance criteria (AC) are the conditions that must be true for a story to be considered complete. They are the "Confirmation" in the 3 C's — the shared definition of done for this specific story. Without AC, neither the team nor the Product Owner has a shared understanding of when the story is finished.</p>
+    <p>Good AC are precise enough to be testable and concise enough to remain readable. They describe <em>what</em> the system must do — not <em>how</em> it does it. They cover the happy path, key edge cases, and important error states.</p>
+
+    <div class="two-col">
+      <div class="col-card col-green">
+        <div class="col-title">✓ Characteristics of good AC</div>
+        <ul class="item-list">
+          <li>Testable — you can write a test or verify it manually</li>
+          <li>Specific — unambiguous, no room for interpretation</li>
+          <li>User-focused — describes observable behaviour, not implementation</li>
+          <li>Complete — covers happy path, error cases, and edge cases</li>
+          <li>Agreed — written with input from PO, dev, and QA</li>
+          <li>Concise — as brief as possible while remaining clear</li>
+        </ul>
+      </div>
+      <div class="col-card col-red">
+        <div class="col-title">✕ Signs of weak AC</div>
+        <ul class="item-list">
+          <li>"Works correctly" — not testable</li>
+          <li>"User-friendly" — subjective, not measurable</li>
+          <li>Only the happy path — no edge cases or errors</li>
+          <li>Describes implementation: "validates using regex"</li>
+          <li>Duplicates the story description without adding detail</li>
+          <li>Written by one person without team review</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>Use the <strong>Three Amigos</strong> technique: bring the developer, tester, and Product Owner together to write AC collaboratively. Each perspective surfaces different gaps — the developer thinks about implementation constraints, the tester thinks about edge cases, the PO thinks about user intent.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 6. Gherkin vs Listed -->
+  <div class="section" id="gherkin">
+    <span class="section-anchor"></span>
+    <div class="section-label label-purple">📐 AC Formats</div>
+    <h2>Gherkin vs Listed Acceptance Criteria</h2>
+    <p>There are two dominant formats for writing acceptance criteria: <strong>Gherkin</strong> (Given/When/Then) and <strong>listed criteria</strong> (bullet points or numbered conditions). Both are valid — the right choice depends on your team's practices, tooling, and how much precision you need.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Dimension</th><th>Gherkin (Given/When/Then)</th><th>Listed criteria</th></tr></thead>
+        <tbody>
+          <tr><td>Structure</td><td>Scenario-based — one scenario per behaviour</td><td>Condition-based — one bullet per requirement</td></tr>
+          <tr><td>Readability</td><td>Very precise, slightly more verbose</td><td>Faster to read, less explicit about context</td></tr>
+          <tr><td>Automation</td><td>Can be directly consumed by BDD tools (Cucumber, SpecFlow)</td><td>Requires manual interpretation for automation</td></tr>
+          <tr><td>Best for</td><td>Teams practising BDD, complex multi-step behaviours</td><td>Teams without BDD tooling, simpler stories</td></tr>
+          <tr><td>Learning curve</td><td>Moderate — requires discipline to write well</td><td>Low — immediately accessible to all stakeholders</td></tr>
+          <tr><td>Risk</td><td>Can become overly prescriptive about implementation</td><td>Can be too vague without enough context</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="margin-top:1.5rem;margin-bottom:0.5rem;font-size:13px;font-weight:600;color:var(--text);">Gherkin format (Given / When / Then)</p>
+    <p>Gherkin describes behaviour from the user's perspective in a structured, scenario-by-scenario format. It was designed for BDD (Behaviour-Driven Development) and can be consumed directly by automation frameworks.</p>
+
+    <div class="gherkin-block">
+      <div><span class="gherkin-comment"># Story: Returning customer saves a delivery address</span></div>
+      <div>&nbsp;</div>
+      <div><span class="gherkin-keyword">Scenario:</span> <span class="gherkin-text">Customer saves a new address successfully</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">Given</span> <span class="gherkin-text">I am logged in as a registered customer</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">And</span> <span class="gherkin-text">I am on the "My Addresses" page</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">When</span> <span class="gherkin-text">I enter a valid UK address and click "Save"</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">Then</span> <span class="gherkin-text">the address should appear in my saved addresses list</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">And</span> <span class="gherkin-text">I should see a confirmation message "Address saved"</span></div>
+      <div>&nbsp;</div>
+      <div><span class="gherkin-keyword">Scenario:</span> <span class="gherkin-text">Customer attempts to save an incomplete address</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">Given</span> <span class="gherkin-text">I am on the "My Addresses" page</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">When</span> <span class="gherkin-text">I submit the form without a postcode</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">Then</span> <span class="gherkin-text">I should see an inline error: "Postcode is required"</span></div>
+      <div>&nbsp; <span class="gherkin-keyword">And</span> <span class="gherkin-text">the address should not be saved</span></div>
+    </div>
+
+    <p style="margin-top:1.5rem;margin-bottom:0.5rem;font-size:13px;font-weight:600;color:var(--text);">Listed criteria format</p>
+    <p>Listed criteria are faster to write and easier for non-technical stakeholders to read. They work well for simpler stories or teams without BDD tooling.</p>
+
+    <div class="example-box" style="margin-top:0.5rem;">
+      <div class="example-label">Story: Customer saves a delivery address</div>
+      <div class="example-text">
+        <strong>Acceptance Criteria:</strong><br>
+        1. A logged-in customer can add a new delivery address from the "My Addresses" page.<br>
+        2. Required fields: full name, address line 1, city, postcode, country.<br>
+        3. On successful save, a confirmation message is displayed and the address appears in the list.<br>
+        4. Incomplete form submissions show inline validation errors for each missing field.<br>
+        5. A customer can save a maximum of 5 addresses; attempting to add a 6th shows an error.<br>
+        6. Addresses can be edited and deleted from the list.<br>
+        7. The address is available for selection at checkout immediately after saving.
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <span>You don't have to choose one format for all stories. Use Gherkin for complex, multi-step behaviours where precision matters — and listed criteria for simpler stories. The key is consistency within a story, and agreement across the team on which format to use when.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 7. Best practices -->
+  <div class="section" id="bestpractices">
+    <span class="section-anchor"></span>
+    <div class="section-label label-green">✓ Best Practices</div>
+    <h2>Best Practices</h2>
+
+    <div class="two-col">
+      <div class="col-card col-teal">
+        <div class="col-title">→ Writing the story</div>
+        <ul class="item-list">
+          <li>Always include the "So that" — value is non-negotiable</li>
+          <li>Name a specific persona, not "a user"</li>
+          <li>Write from the user's perspective, not the system's</li>
+          <li>Keep the title concise — one line, active voice</li>
+          <li>Use the Three Amigos to write AC together</li>
+          <li>Write stories small enough to complete in a sprint</li>
+          <li>Stories should be independently deliverable — no half-features</li>
+          <li>Don't write acceptance criteria for every possible edge case upfront — cover the key ones and let conversation handle the rest</li>
+        </ul>
+      </div>
+      <div class="col-card col-blue">
+        <div class="col-title">→ Managing stories</div>
+        <ul class="item-list">
+          <li>Keep future stories intentionally vague — detail them only when they're upcoming</li>
+          <li>Stories that can't be completed in a sprint should be split, not stretched</li>
+          <li>A story with no AC is not ready to be pulled into a sprint</li>
+          <li>Review stories with QA before sprint planning — they find the gaps</li>
+          <li>Link stories to a parent epic or goal so context is always visible</li>
+          <li>Close stories that will never be built — a backlog graveyard slows everyone down</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>The <strong>INVEST</strong> criteria are the quality check for every story: Independent, Negotiable, Valuable, Estimable, Small, Testable. If a story fails any of these, it needs work before it enters a sprint. See the <a href="dor-dod.html" style="color:var(--green);font-weight:500;">DoR &amp; DoD Examples</a> for a full INVEST reference.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 8. Anti-patterns -->
+  <div class="section" id="antipatterns">
+    <span class="section-anchor"></span>
+    <div class="section-label label-red">⚠️ Anti-patterns</div>
+    <h2>Anti-patterns &amp; Pitfalls to Avoid</h2>
+    <p>Most story-writing problems follow predictable patterns. Recognising these anti-patterns early — in refinement, not in production — is one of the highest-value skills a team can develop.</p>
+
+    <div class="antipattern-list">
+
+      <div class="antipattern-card">
+        <div class="antipattern-name">The Missing "So That" <span class="antipattern-badge">No value</span></div>
+        <div class="antipattern-example">As a user, I want to be able to filter results.</div>
+        <div class="antipattern-fix">Add the reason: "...so that I can quickly find products within my budget." Without the "so that", there's no basis for prioritisation or scope decisions.</div>
+      </div>
+
+      <div class="antipattern-card">
+        <div class="antipattern-name">The Generic Persona <span class="antipattern-badge">Vague</span></div>
+        <div class="antipattern-example">As a user / As an admin / As the system...</div>
+        <div class="antipattern-fix">Replace "user" with a named persona. "As Sarah, our first-time mobile buyer..." The specificity forces the team to think about whose behaviour they're actually designing for.</div>
+      </div>
+
+      <div class="antipattern-card">
+        <div class="antipattern-name">The Technical Story <span class="antipattern-badge">System perspective</span></div>
+        <div class="antipattern-example">As a developer, I want to refactor the address service to use the repository pattern so that the codebase is cleaner.</div>
+        <div class="antipattern-fix">Technical work should be in an enabler or tech debt story — not a user story. If there's no user value, it shouldn't be in user story format. Use a plain task or spike instead.</div>
+      </div>
+
+      <div class="antipattern-card">
+        <div class="antipattern-name">The Epic Disguised as a Story <span class="antipattern-badge">Too large</span></div>
+        <div class="antipattern-example">As a customer, I want to be able to manage my account so that I can update all my personal information, preferences, and order history.</div>
+        <div class="antipattern-fix">Split into independent deliverable stories: "...update my email address", "...set notification preferences", "...view my order history". Each should be completable in a sprint.</div>
+      </div>
+
+      <div class="antipattern-card">
+        <div class="antipattern-name">The Testless Story <span class="antipattern-badge">No AC</span></div>
+        <div class="antipattern-example">As a user, I want the checkout to be fast. <em>(Acceptance criteria: none)</em></div>
+        <div class="antipattern-fix">Every story must have at least one testable acceptance criterion. "Fast" isn't testable — "Checkout completes in under 3 seconds on a standard 4G connection" is.</div>
+      </div>
+
+      <div class="antipattern-card">
+        <div class="antipattern-name">The Solution Story <span class="antipattern-badge">Prescribes implementation</span></div>
+        <div class="antipattern-example">As a user, I want a dropdown with a checkbox for each category so that I can filter by multiple categories at once.</div>
+        <div class="antipattern-fix">Separate the need from the solution: "As a user, I want to filter by multiple categories so that I can narrow results to what I'm looking for." Let the team decide how to implement it.</div>
+      </div>
+
+      <div class="antipattern-card">
+        <div class="antipattern-name">The Conjunction Story <span class="antipattern-badge">Multiple stories</span></div>
+        <div class="antipattern-example">As a user, I want to add, edit, and delete saved addresses so that I can keep my details up to date.</div>
+        <div class="antipattern-fix">Watch for "and" in the "I want" clause — it's usually two or three stories. Split: "...add a saved address", "...edit a saved address", "...delete a saved address". Each can then be sized, prioritised, and delivered independently.</div>
+      </div>
+
+      <div class="antipattern-card">
+        <div class="antipattern-name">The Waterfall Story <span class="antipattern-badge">Horizontal slice</span></div>
+        <div class="antipattern-example">Frontend story: Build the address form UI. Backend story: Build the address API. Database story: Create addresses table.</div>
+        <div class="antipattern-fix">Layer-by-layer stories can't be independently delivered or demoed. Slice vertically: one story that delivers end-to-end "save an address" — even minimally. Technical tasks can exist inside the story, not as separate stories.</div>
+      </div>
+
+    </div>
+
+    <div class="callout note">
+      <span class="callout-icon">⚠️</span>
+      <span>The most expensive stories are the ones that look finished on paper but were never understood the same way by everyone involved. Invest in the conversation — before, during, and after writing. The card is the beginning of the story, not the end of it.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.format-header').forEach(h=>{
+  h.addEventListener('click',()=>h.closest('.format-card').classList.toggle('open'));
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
