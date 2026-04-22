@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Scrum in Practice — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;
+  --surface:rgba(255,255,255,0.82);
+  --surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.15);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --purple:#7c3aed;--purple-bg:#ede9ff;--purple-border:rgba(124,58,237,0.2);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(240,239,246,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+/* ── Layout ── */
+.page{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:3rem 2.5rem 6rem;}
+
+/* ── Hero ── */
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);border-radius:20px;padding:4px 14px;margin-bottom:1.25rem;}
+.page-hero{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:44px;font-weight:400;letter-spacing:-1px;color:var(--text);margin-bottom:0.75rem;line-height:1.15;}
+.page-hero h1 em{font-style:italic;background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:16px;color:var(--text2);font-weight:300;line-height:1.75;max-width:640px;}
+
+/* ── TOC ── */
+.toc{background:var(--surface);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:var(--radius);padding:18px 22px;margin-bottom:3rem;box-shadow:var(--shadow);}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li{display:flex;align-items:center;gap:10px;}
+.toc-list a{font-size:13px;font-weight:500;color:var(--primary);text-decoration:none;transition:opacity 0.15s;}
+.toc-list a:hover{opacity:0.7;}
+.toc-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);width:20px;flex-shrink:0;}
+
+/* ── Section ── */
+.section{margin-bottom:3.5rem;}
+.section-anchor{display:block;height:80px;margin-top:-80px;visibility:hidden;}
+.section-label{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.label-roles{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.label-events{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-border);}
+.label-artefacts{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.section h2{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;letter-spacing:-0.5px;color:var(--text);margin-bottom:0.75rem;line-height:1.2;}
+.section p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:1rem;}
+.section p:last-child{margin-bottom:0;}
+.section-divider{height:1px;background:var(--border2);margin:3rem 0;}
+
+/* ── Role cards ── */
+.roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5rem 0;}
+@media(max-width:620px){.roles-grid{grid-template-columns:1fr;}}
+.role-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;}
+.role-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.role-card-header{padding:16px 18px 12px;border-bottom:1px solid var(--border);}
+.role-icon{font-size:22px;margin-bottom:6px;}
+.role-title{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
+.role-subtitle{font-size:11px;color:var(--text3);margin-top:2px;font-weight:500;text-transform:uppercase;letter-spacing:0.05em;}
+.role-card-body{padding:12px 18px 16px;display:flex;flex-direction:column;gap:10px;}
+.role-section-title{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;}
+.role-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.role-list li{font-size:12px;color:var(--text2);display:flex;align-items:flex-start;gap:7px;line-height:1.45;}
+.role-list li::before{content:'—';color:var(--text3);flex-shrink:0;}
+.accountability-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;margin-top:4px;}
+.badge-po{background:#ffd5ec;color:#c026d3;}
+.badge-sm{background:var(--blue-bg);color:var(--blue);}
+.badge-dev{background:var(--green-bg);color:var(--green);}
+
+/* ── Event cards ── */
+.events-list{display:flex;flex-direction:column;gap:16px;margin-top:1.5rem;}
+.event-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.event-header{display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;transition:background 0.12s;}
+.event-header:hover{background:rgba(108,92,231,0.03);}
+.event-icon{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.event-header-text{flex:1;}
+.event-name{font-size:16px;font-weight:600;letter-spacing:-0.3px;color:var(--text);}
+.event-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.event-timebox{font-size:11px;font-family:'DM Mono',monospace;color:var(--text3);}
+.event-badge{font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 8px;border-radius:20px;}
+.event-toggle{font-size:16px;color:var(--text3);transition:transform 0.2s;}
+.event-card.open .event-toggle{transform:rotate(180deg);}
+.event-body{display:none;padding:18px 20px 20px;}
+.event-card.open .event-body{display:block;}
+
+.event-purpose{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:16px;padding:12px 14px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--primary);}
+
+.tips-pitfalls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:580px){.tips-pitfalls{grid-template-columns:1fr;}}
+.tips,.pitfalls{border-radius:10px;padding:12px 14px;}
+.tips{background:var(--green-bg);border:1px solid var(--green-border);}
+.pitfalls{background:var(--red-bg);border:1px solid var(--red-border);}
+.tips-title,.pitfalls-title{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:4px;}
+.tips .tips-title{color:var(--green);}
+.pitfalls .pitfalls-title{color:var(--red);}
+.tips-list,.pitfalls-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.tips-list li,.pitfalls-list li{font-size:12px;line-height:1.5;display:flex;align-items:flex-start;gap:6px;}
+.tips-list li::before,.pitfalls-list li::before{flex-shrink:0;font-size:11px;margin-top:2px;}
+.tips .tips-list li{color:#14532d;}
+.tips .tips-list li::before{content:'✓';color:var(--green);}
+.pitfalls .pitfalls-list li{color:#7f1d1d;}
+.pitfalls .pitfalls-list li::before{content:'✕';color:var(--red);}
+
+.scrum-master-tip{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:10px;padding:10px 14px;font-size:12px;color:#1e3a5f;line-height:1.55;display:flex;align-items:flex-start;gap:8px;}
+.scrum-master-tip::before{content:'🛡️';flex-shrink:0;}
+
+/* ── Artefact cards ── */
+.artefacts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5rem 0;}
+@media(max-width:620px){.artefacts-grid{grid-template-columns:1fr;}}
+.artefact-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;}
+.artefact-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.artefact-icon{font-size:22px;margin-bottom:8px;}
+.artefact-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.2px;}
+.artefact-commitment{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:20px;padding:2px 8px;display:inline-block;margin-bottom:8px;}
+.artefact-desc{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px;}
+.artefact-tips{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.artefact-tips li{font-size:11px;color:var(--text2);display:flex;align-items:flex-start;gap:6px;line-height:1.4;}
+.artefact-tips li::before{content:'→';color:var(--primary);flex-shrink:0;font-size:10px;margin-top:2px;}
+
+/* ── Callout ── */
+.callout{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border-radius:10px;margin:1.25rem 0;font-size:13px;line-height:1.6;}
+.callout.tip{background:var(--green-bg);border:1px solid var(--green-border);color:#14532d;}
+.callout.note{background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350f;}
+.callout.info{background:var(--blue-bg);border:1px solid var(--blue-border);color:#1e3a5f;}
+.callout-icon{flex-shrink:0;font-size:15px;}
+
+/* ── Sprint cycle diagram ── */
+.sprint-cycle{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;padding:20px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);margin:1.5rem 0;box-shadow:var(--shadow);}
+.cycle-step{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.cycle-pill{font-size:11px;font-weight:600;padding:6px 14px;border-radius:20px;white-space:nowrap;}
+.cycle-arrow{color:var(--text3);font-size:14px;margin:0 2px;}
+.cycle-label{font-size:9px;color:var(--text3);font-weight:500;letter-spacing:0.04em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">Scrum in Practice</span>
+  <div style="width:120px;"></div>
+</nav>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="page-eyebrow">🏃 Learning Paths</div>
+    <h1>Scrum <em>in Practice</em></h1>
+    <p>A practical guide to how Scrum works day-to-day — the roles, events, and artefacts explained clearly, with real tips for running each event well and the common pitfalls to watch out for.</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">01</span><a href="#roles">The Three Roles</a></li>
+      <li><span class="toc-num">02</span><a href="#events">The Five Events</a></li>
+      <li><span class="toc-num">03</span><a href="#artefacts">The Three Artefacts</a></li>
+    </ul>
+  </div>
+
+  <!-- ── 1. Roles ── -->
+  <div class="section" id="roles">
+    <span class="section-anchor"></span>
+    <div class="section-label label-roles">👥 Roles</div>
+    <h2>The Three Roles</h2>
+    <p>The Scrum Guide refers to these as accountabilities rather than job titles — a deliberate choice that emphasises what each person is responsible for, not what their org chart says. A small, cross-functional Scrum Team typically has no more than ten people.</p>
+
+    <div class="roles-grid">
+
+      <div class="role-card">
+        <div class="role-card-header">
+          <div class="role-icon">🧭</div>
+          <div class="role-title">Product Owner</div>
+          <div class="role-subtitle">Value maximiser</div>
+          <span class="accountability-badge badge-po">Accountable for value</span>
+        </div>
+        <div class="role-card-body">
+          <div>
+            <div class="role-section-title">Key responsibilities</div>
+            <ul class="role-list">
+              <li>Owns and orders the Product Backlog</li>
+              <li>Defines and communicates the product goal</li>
+              <li>Makes backlog items clear and transparent</li>
+              <li>Ensures the team builds the right thing</li>
+              <li>The single voice for stakeholder priorities</li>
+            </ul>
+          </div>
+          <div>
+            <div class="role-section-title">Common challenges</div>
+            <ul class="role-list">
+              <li>Being too unavailable for the team</li>
+              <li>Letting stakeholders bypass them directly</li>
+              <li>Confusing output (features) with outcome (value)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-card">
+        <div class="role-card-header">
+          <div class="role-icon">🛡️</div>
+          <div class="role-title">Scrum Master</div>
+          <div class="role-subtitle">Servant leader</div>
+          <span class="accountability-badge badge-sm">Accountable for effectiveness</span>
+        </div>
+        <div class="role-card-body">
+          <div>
+            <div class="role-section-title">Key responsibilities</div>
+            <ul class="role-list">
+              <li>Coaches the team in Scrum theory and practice</li>
+              <li>Facilitates all Scrum events</li>
+              <li>Removes impediments to team progress</li>
+              <li>Helps the PO with backlog management</li>
+              <li>Protects the team from external interruptions</li>
+            </ul>
+          </div>
+          <div>
+            <div class="role-section-title">Common challenges</div>
+            <ul class="role-list">
+              <li>Becoming a task manager or status reporter</li>
+              <li>Solving problems instead of coaching the team to solve them</li>
+              <li>Being seen as a meeting organiser rather than a coach</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="role-card">
+        <div class="role-card-header">
+          <div class="role-icon">👩‍💻</div>
+          <div class="role-title">Developers</div>
+          <div class="role-subtitle">Delivery team</div>
+          <span class="accountability-badge badge-dev">Accountable for quality</span>
+        </div>
+        <div class="role-card-body">
+          <div>
+            <div class="role-section-title">Key responsibilities</div>
+            <ul class="role-list">
+              <li>Create a usable increment every sprint</li>
+              <li>Self-organise how to accomplish the sprint goal</li>
+              <li>Maintain the Definition of Done</li>
+              <li>Adapt the Sprint Backlog daily</li>
+              <li>Hold each other accountable as professionals</li>
+            </ul>
+          </div>
+          <div>
+            <div class="role-section-title">Common challenges</div>
+            <ul class="role-list">
+              <li>Waiting for permission instead of self-organising</li>
+              <li>Siloed specialisation over cross-functionality</li>
+              <li>Treating DoD as optional when under pressure</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout note">
+      <span class="callout-icon">⚠️</span>
+      <span>The Scrum Master and Product Owner can be developers too — but only if it doesn't create a conflict of interest. In practice this is rare for the PO, but common for experienced engineers stepping into the SM role on small teams.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 2. Events ── -->
+  <div class="section" id="events">
+    <span class="section-anchor"></span>
+    <div class="section-label label-events">📅 Events</div>
+    <h2>The Five Events</h2>
+    <p>Every Scrum event is both an opportunity to inspect and an opportunity to adapt. Skipping events or running them poorly is the most common way teams drift away from the benefits of Scrum without realising why.</p>
+
+    <div class="sprint-cycle">
+      <div class="cycle-step">
+        <div class="cycle-pill" style="background:var(--primary-light);color:var(--primary);">Sprint Planning</div>
+        <div class="cycle-label">Start of sprint</div>
+      </div>
+      <span class="cycle-arrow">→</span>
+      <div class="cycle-step">
+        <div class="cycle-pill" style="background:var(--green-bg);color:var(--green);">Daily Scrum</div>
+        <div class="cycle-label">Every day</div>
+      </div>
+      <span class="cycle-arrow">→</span>
+      <div class="cycle-step">
+        <div class="cycle-pill" style="background:var(--blue-bg);color:var(--blue);">Sprint Review</div>
+        <div class="cycle-label">End of sprint</div>
+      </div>
+      <span class="cycle-arrow">→</span>
+      <div class="cycle-step">
+        <div class="cycle-pill" style="background:var(--amber-bg);color:var(--amber);">Sprint Retro</div>
+        <div class="cycle-label">End of sprint</div>
+      </div>
+      <span class="cycle-arrow" style="opacity:0.4;">↩</span>
+    </div>
+
+    <div class="events-list">
+
+      <!-- The Sprint -->
+      <div class="event-card open">
+        <div class="event-header">
+          <div class="event-icon" style="background:var(--primary-light);">🔁</div>
+          <div class="event-header-text">
+            <div class="event-name">The Sprint</div>
+            <div class="event-meta">
+              <span class="event-timebox">1–4 weeks · Fixed length</span>
+              <span class="event-badge" style="background:var(--primary-light);color:var(--primary);">Container event</span>
+            </div>
+          </div>
+          <div class="event-toggle">⌄</div>
+        </div>
+        <div class="event-body">
+          <div class="event-purpose">The sprint is the heartbeat of Scrum — a fixed-length container within which all other events take place and a "Done" increment is produced. Sprints create a predictable rhythm and a regular delivery cadence. A new sprint begins immediately after the previous one ends.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips for success</div>
+              <ul class="tips-list">
+                <li>Keep sprint length consistent — changing it constantly undermines predictability</li>
+                <li>Protect the sprint goal — it should be the team's north star when trade-offs arise</li>
+                <li>A sprint can be cancelled if the goal becomes obsolete — but this should be rare</li>
+                <li>Shorter sprints (1–2 weeks) give faster feedback loops and reduce risk</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Common pitfalls</div>
+              <ul class="pitfalls-list">
+                <li>Adding work mid-sprint without removing something of equal size</li>
+                <li>Having no sprint goal — just a list of tasks</li>
+                <li>Treating the sprint as a mini-waterfall with phases of design, build, then test</li>
+                <li>Extending the sprint when the team falls behind instead of adjusting scope</li>
+              </ul>
+            </div>
+          </div>
+          <div class="scrum-master-tip">SM tip: If the team regularly fails to achieve the sprint goal, investigate whether stories are too large, planning is too optimistic, or external interruptions are the cause — each needs a different solution.</div>
+        </div>
+      </div>
+
+      <!-- Sprint Planning -->
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-icon" style="background:var(--primary-light);">📋</div>
+          <div class="event-header-text">
+            <div class="event-name">Sprint Planning</div>
+            <div class="event-meta">
+              <span class="event-timebox">≤ 8 hrs for a 4-week sprint · Proportionally shorter for shorter sprints</span>
+            </div>
+          </div>
+          <div class="event-toggle">⌄</div>
+        </div>
+        <div class="event-body">
+          <div class="event-purpose">Sprint Planning kicks off the sprint. The whole Scrum Team collaborates to answer three questions: <strong>Why is this sprint valuable?</strong> (the sprint goal), <strong>What can be Done this sprint?</strong> (backlog selection), and <strong>How will the chosen work get done?</strong> (the plan). The output is a Sprint Backlog with a clear goal.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips for success</div>
+              <ul class="tips-list">
+                <li>Agree on a meaningful sprint goal before discussing which stories to pull in</li>
+                <li>Only pull in stories that meet the Definition of Ready</li>
+                <li>Let developers decompose work into tasks — don't pre-assign during planning</li>
+                <li>Leave capacity for unplanned work, bugs, and support</li>
+                <li>End with the team confident about the goal — not just a list of tickets</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Common pitfalls</div>
+              <ul class="pitfalls-list">
+                <li>Planning in stories without agreeing a sprint goal first</li>
+                <li>The PO dictating exactly what to build and how</li>
+                <li>Estimating every task in hours during planning (leads to micro-management)</li>
+                <li>Pulling in more work than the team's velocity supports</li>
+                <li>Skipping planning because "we know what we're doing"</li>
+              </ul>
+            </div>
+          </div>
+          <div class="scrum-master-tip">SM tip: If planning regularly runs long, the backlog isn't refined enough. Sprint Planning should confirm decisions, not make them — invest in backlog refinement sessions through the sprint to prepare stories in advance.</div>
+        </div>
+      </div>
+
+      <!-- Daily Scrum -->
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-icon" style="background:var(--green-bg);">☀️</div>
+          <div class="event-header-text">
+            <div class="event-name">Daily Scrum</div>
+            <div class="event-meta">
+              <span class="event-timebox">15 minutes · Same time and place each day · Developers only</span>
+            </div>
+          </div>
+          <div class="event-toggle">⌄</div>
+        </div>
+        <div class="event-body">
+          <div class="event-purpose">The Daily Scrum is a planning event for the developers — not a status report for management. Its purpose is to inspect progress toward the sprint goal and adapt the Sprint Backlog if needed. The three classic questions (what did I do yesterday, what will I do today, any blockers) are just one format — teams should use whatever structure helps them coordinate effectively.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips for success</div>
+              <ul class="tips-list">
+                <li>Keep it to 15 minutes — stand up to reinforce the timebox</li>
+                <li>Focus on the sprint goal, not individual task lists</li>
+                <li>Move detailed problem-solving to after the standup ("parking lot")</li>
+                <li>Use a board walkthrough format if the team prefers it over three questions</li>
+                <li>Identify blockers — the SM should be acting on them the same day</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Common pitfalls</div>
+              <ul class="pitfalls-list">
+                <li>Turning it into a status report for managers or stakeholders in the room</li>
+                <li>Allowing problem-solving to run the meeting overtime</li>
+                <li>People reporting to the Scrum Master instead of talking to each other</li>
+                <li>Skipping it when things are going well ("we don't need it today")</li>
+                <li>Using it as the only team coordination mechanism — collaboration should happen throughout the day</li>
+              </ul>
+            </div>
+          </div>
+          <div class="scrum-master-tip">SM tip: If the Daily Scrum feels like a chore, that's a signal. It might be too report-focused, the team may not have a clear sprint goal to orient around, or it's the wrong time of day for the team's flow. Experiment with format before abandoning it.</div>
+        </div>
+      </div>
+
+      <!-- Sprint Review -->
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-icon" style="background:var(--blue-bg);">🎤</div>
+          <div class="event-header-text">
+            <div class="event-name">Sprint Review</div>
+            <div class="event-meta">
+              <span class="event-timebox">≤ 4 hrs for a 4-week sprint · Whole team + stakeholders</span>
+            </div>
+          </div>
+          <div class="event-toggle">⌄</div>
+        </div>
+        <div class="event-body">
+          <div class="event-purpose">The Sprint Review is a working session, not a presentation. The Scrum Team and key stakeholders inspect the increment together and discuss what has changed in the environment since the last review. The Product Backlog is updated based on what is learned. The goal is to get real feedback that informs the next sprint — not applause.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips for success</div>
+              <ul class="tips-list">
+                <li>Demo working software — not slides or designs of future work</li>
+                <li>Invite the right stakeholders — people who can give meaningful product feedback</li>
+                <li>Make it a conversation, not a presentation — ask stakeholders what they think</li>
+                <li>Update the Product Backlog during or immediately after the session</li>
+                <li>Celebrate what was achieved — morale matters</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Common pitfalls</div>
+              <ul class="pitfalls-list">
+                <li>Turning it into a sign-off meeting rather than a feedback session</li>
+                <li>Only showing polished work — demos of incomplete things are valuable too</li>
+                <li>No stakeholders attending — makes the review pointless</li>
+                <li>The SM or PO doing all the talking instead of the developers who built it</li>
+                <li>Not updating the backlog based on what was discussed</li>
+              </ul>
+            </div>
+          </div>
+          <div class="scrum-master-tip">SM tip: If stakeholders keep skipping Sprint Reviews, the reviews aren't valuable enough to them. Shorten them, make them more interactive, or focus on the decisions stakeholders need to make — not just what was built.</div>
+        </div>
+      </div>
+
+      <!-- Sprint Retrospective -->
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-icon" style="background:var(--amber-bg);">🔍</div>
+          <div class="event-header-text">
+            <div class="event-name">Sprint Retrospective</div>
+            <div class="event-meta">
+              <span class="event-timebox">≤ 3 hrs for a 4-week sprint · Scrum Team only</span>
+            </div>
+          </div>
+          <div class="event-toggle">⌄</div>
+        </div>
+        <div class="event-body">
+          <div class="event-purpose">The Sprint Retrospective is the team's dedicated time to inspect how they worked — not what they built — and identify the most impactful improvements to make. It covers people, relationships, processes, and tools. At a minimum, the team should leave with one concrete improvement to implement in the next sprint.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips for success</div>
+              <ul class="tips-list">
+                <li>Keep it psychological safety-first — what's said in retro stays in retro</li>
+                <li>Commit to one or two specific, actionable improvements — not a wish list</li>
+                <li>Rotate formats to keep it fresh (try PhoenixRetro for built-in templates)</li>
+                <li>Follow up on last sprint's actions at the start of the next retro</li>
+                <li>Focus on systems and processes, not individual blame</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Common pitfalls</div>
+              <ul class="pitfalls-list">
+                <li>Running the same format every sprint — "went well / could improve" gets stale fast</li>
+                <li>No follow-through on action items from the previous retro</li>
+                <li>Management attending and chilling honest conversation</li>
+                <li>Complaining without identifying root causes or actions</li>
+                <li>Cancelling the retro when the sprint went well ("nothing to discuss")</li>
+              </ul>
+            </div>
+          </div>
+          <div class="scrum-master-tip">SM tip: If the team keeps identifying the same issues sprint after sprint, that's a sign the actions aren't specific enough, aren't being followed through, or the problem sits outside the team's control. Escalate systemic blockers — don't let them fester in retro notes.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 3. Artefacts ── -->
+  <div class="section" id="artefacts">
+    <span class="section-anchor"></span>
+    <div class="section-label label-artefacts">📦 Artefacts</div>
+    <h2>The Three Artefacts</h2>
+    <p>Scrum's artefacts represent work or value — they are designed to maximise transparency. Each artefact has a <strong>commitment</strong> associated with it: a promise that helps the team evaluate progress and maintain focus on what matters.</p>
+
+    <div class="artefacts-grid">
+
+      <div class="artefact-card">
+        <div class="artefact-icon">📋</div>
+        <div class="artefact-title">Product Backlog</div>
+        <div class="artefact-commitment">Commitment: Product Goal</div>
+        <div class="artefact-desc">An ordered, emergent list of everything that might be needed to improve the product. The Product Owner is responsible for its content, ordering, and availability to the team.</div>
+        <ul class="artefact-tips">
+          <li>Items at the top should be refined, small, and well-understood</li>
+          <li>Items lower down can remain large and vague — they'll be refined when they move up</li>
+          <li>The backlog is never "done" — it evolves as the product and market change</li>
+          <li>Refinement is ongoing throughout the sprint, not just in a single meeting</li>
+        </ul>
+      </div>
+
+      <div class="artefact-card">
+        <div class="artefact-icon">🗂️</div>
+        <div class="artefact-title">Sprint Backlog</div>
+        <div class="artefact-commitment">Commitment: Sprint Goal</div>
+        <div class="artefact-desc">The sprint goal, the set of backlog items selected for the sprint, and the actionable plan for delivering the increment. Owned by the developers — it should be visible and updated daily.</div>
+        <ul class="artefact-tips">
+          <li>The sprint goal is the "why" — the backlog items are the "what"</li>
+          <li>Developers adjust the plan daily as they learn more</li>
+          <li>If a story doesn't serve the sprint goal, question whether it belongs in the sprint</li>
+          <li>Burndown charts and boards should reflect reality, not wishful thinking</li>
+        </ul>
+      </div>
+
+      <div class="artefact-card">
+        <div class="artefact-icon">✅</div>
+        <div class="artefact-title">Increment</div>
+        <div class="artefact-commitment">Commitment: Definition of Done</div>
+        <div class="artefact-desc">The sum of all completed Product Backlog items during a sprint and all previous sprints. It must be usable and meet the Definition of Done — regardless of whether the PO decides to release it.</div>
+        <ul class="artefact-tips">
+          <li>Multiple increments can be created during a sprint</li>
+          <li>An increment must meet the DoD to count — "almost done" is not done</li>
+          <li>The DoD should grow stricter over time as the team matures</li>
+          <li>If the DoD can't be met in a sprint, stories are too large or the DoD needs renegotiation</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <span>The <strong>Definition of Done</strong> is not the same as acceptance criteria. Acceptance criteria define what a specific story must do. The DoD defines the quality bar every increment must meet — regardless of which stories are in it. See the <a href="dor-dod.html" style="color:var(--blue);font-weight:500;">DoR &amp; DoD Examples page</a> for a full reference.</span>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>A useful way to think about the three commitments: the <strong>Product Goal</strong> is where the product is heading, the <strong>Sprint Goal</strong> is the step you're taking this sprint, and the <strong>Definition of Done</strong> is the quality standard every step must meet.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.event-header').forEach(header=>{
+  header.addEventListener('click',()=>{
+    header.closest('.event-card').classList.toggle('open');
+  });
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>

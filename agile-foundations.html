@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Agile Foundations — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;
+  --surface:rgba(255,255,255,0.82);
+  --surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.15);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(240,239,246,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+/* ── Layout ── */
+.page{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:3rem 2.5rem 6rem;}
+
+/* ── Hero ── */
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);border-radius:20px;padding:4px 14px;margin-bottom:1.25rem;}
+.page-hero{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:44px;font-weight:400;letter-spacing:-1px;color:var(--text);margin-bottom:0.75rem;line-height:1.15;}
+.page-hero h1 em{font-style:italic;background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:16px;color:var(--text2);font-weight:300;line-height:1.75;max-width:620px;}
+
+/* ── Table of contents ── */
+.toc{background:var(--surface);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:var(--radius);padding:18px 22px;margin-bottom:3rem;box-shadow:var(--shadow);}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li{display:flex;align-items:center;gap:10px;}
+.toc-list a{font-size:13px;font-weight:500;color:var(--primary);text-decoration:none;transition:opacity 0.15s;}
+.toc-list a:hover{opacity:0.7;}
+.toc-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);width:20px;flex-shrink:0;}
+
+/* ── Section ── */
+.section{margin-bottom:3.5rem;}
+.section-anchor{display:block;height:80px;margin-top:-80px;visibility:hidden;}
+.section-label{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.label-history{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.label-scrum{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.label-values{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.label-manifesto{background:var(--primary-light);color:var(--primary);border:1px solid rgba(108,92,231,0.2);}
+.section h2{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;letter-spacing:-0.5px;color:var(--text);margin-bottom:0.75rem;line-height:1.2;}
+.section p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:1rem;}
+.section p:last-child{margin-bottom:0;}
+
+/* ── Quote block ── */
+.quote-block{border-left:4px solid var(--primary);padding:14px 20px;background:var(--primary-light);border-radius:0 10px 10px 0;margin:1.25rem 0;font-size:14px;font-style:italic;color:var(--text);line-height:1.75;}
+.quote-block cite{display:block;margin-top:8px;font-size:12px;font-style:normal;font-weight:500;color:var(--text3);}
+
+/* ── Timeline ── */
+.timeline{display:flex;flex-direction:column;gap:0;margin:1.5rem 0;position:relative;}
+.timeline::before{content:'';position:absolute;left:18px;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,var(--primary),rgba(108,92,231,0.15));}
+.timeline-item{display:flex;gap:18px;padding-bottom:20px;position:relative;}
+.timeline-item:last-child{padding-bottom:0;}
+.timeline-dot{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;z-index:1;border:2px solid var(--primary);background:var(--primary-light);color:var(--primary);}
+.timeline-body{padding-top:8px;flex:1;}
+.timeline-year{font-size:11px;font-weight:700;letter-spacing:0.06em;color:var(--primary);margin-bottom:2px;}
+.timeline-text{font-size:13px;color:var(--text2);line-height:1.6;}
+.timeline-text strong{color:var(--text);font-weight:600;}
+
+/* ── Values grid ── */
+.values-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin:1.5rem 0;}
+.value-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:16px 16px 14px;box-shadow:var(--shadow);transition:transform 0.2s,box-shadow 0.2s;}
+.value-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.value-icon{font-size:22px;margin-bottom:8px;}
+.value-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.2px;}
+.value-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* ── Principles list ── */
+.principles-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin:1.25rem 0;counter-reset:principles;}
+.principles-list li{counter-increment:principles;display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--text2);line-height:1.6;padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:border-color 0.15s;}
+.principles-list li:hover{border-color:var(--primary);}
+.principles-list li::before{content:counter(principles);flex-shrink:0;width:24px;height:24px;border-radius:7px;background:var(--primary-light);color:var(--primary);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+
+/* ── Manifesto values ── */
+.manifesto-values{display:flex;flex-direction:column;gap:10px;margin:1.25rem 0;}
+.manifesto-value{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:14px 18px;transition:border-color 0.15s;}
+.manifesto-value:hover{border-color:var(--primary);}
+.manifesto-value-over{font-size:16px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:3px;}
+.manifesto-value-over span{background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.manifesto-value-under{font-size:12px;color:var(--text3);}
+
+/* ── Scrum events table ── */
+.events-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border2);margin:1.25rem 0;}
+.events-table{width:100%;border-collapse:collapse;font-size:12px;min-width:480px;background:var(--surface);}
+.events-table thead tr{border-bottom:1px solid var(--border2);background:var(--surface2);}
+.events-table th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);}
+.events-table tbody tr{border-bottom:1px solid var(--border);}
+.events-table tbody tr:last-child{border-bottom:none;}
+.events-table tbody tr:hover{background:rgba(108,92,231,0.03);}
+.events-table td{padding:10px 14px;color:var(--text2);vertical-align:top;}
+.events-table td:first-child{font-weight:600;color:var(--text);}
+
+/* ── Scrum roles ── */
+.roles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.25rem 0;}
+@media(max-width:580px){.roles-grid{grid-template-columns:1fr;}}
+.role-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:16px;}
+.role-icon{font-size:20px;margin-bottom:6px;}
+.role-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.role-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* ── Artefacts ── */
+.artefacts-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.25rem 0;}
+@media(max-width:580px){.artefacts-row{grid-template-columns:1fr;}}
+.artefact-card{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:12px;padding:14px 16px;}
+.artefact-title{font-size:13px;font-weight:600;color:var(--blue);margin-bottom:4px;}
+.artefact-desc{font-size:12px;color:#1e3a5f;line-height:1.5;}
+
+/* ── Callout ── */
+.callout{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border-radius:10px;margin:1.25rem 0;font-size:13px;line-height:1.6;}
+.callout.tip{background:var(--green-bg);border:1px solid var(--green-border);color:#14532d;}
+.callout.note{background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350f;}
+.callout-icon{flex-shrink:0;font-size:15px;}
+
+/* ── Section divider ── */
+.section-divider{height:1px;background:var(--border2);margin:3rem 0;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">Agile Foundations</span>
+  <div style="width:120px;"></div>
+</nav>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="page-eyebrow">🌱 Learning Paths</div>
+    <h1>Agile <em>Foundations</em></h1>
+    <p>A concise introduction to the ideas, values, and frameworks that underpin modern agile ways of working — from the origins of the movement through to the Scrum framework used by teams worldwide.</p>
+  </div>
+
+  <!-- Table of contents -->
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">01</span><a href="#history">The History of Agile</a></li>
+      <li><span class="toc-num">02</span><a href="#manifesto">The Agile Manifesto</a></li>
+      <li><span class="toc-num">03</span><a href="#values">Core Values</a></li>
+      <li><span class="toc-num">04</span><a href="#principles">The 12 Principles</a></li>
+      <li><span class="toc-num">05</span><a href="#scrum">Introduction to Scrum</a></li>
+      <li><span class="toc-num">06</span><a href="#scrumguide">The Scrum Guide</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. History -->
+  <div class="section" id="history">
+    <span class="section-anchor" id="history-anchor"></span>
+    <div class="section-label label-history">📜 History</div>
+    <h2>The History of Agile</h2>
+    <p>Agile did not emerge overnight. It grew out of decades of frustration with the heavyweight, document-driven approaches to software development that dominated the 1970s, 80s, and 90s — most notably the Waterfall model, which required teams to fully define requirements before writing a single line of code.</p>
+    <p>By the 1990s, practitioners were experimenting with lighter, more adaptive approaches. Methodologies like Extreme Programming (XP), Scrum, DSDM, Crystal, and Feature-Driven Development (FDD) were gaining traction independently — all sharing a common philosophy: deliver working software early, collaborate closely with customers, and embrace change rather than resist it.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot">1970</div>
+        <div class="timeline-body">
+          <div class="timeline-year">1970s</div>
+          <div class="timeline-text"><strong>Waterfall dominates.</strong> Winston Royce's 1970 paper describes sequential software development — often cited as the origin of Waterfall, though Royce himself noted its risks.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">1986</div>
+        <div class="timeline-body">
+          <div class="timeline-year">1986</div>
+          <div class="timeline-text"><strong>The "rugby approach" emerges.</strong> Takeuchi and Nonaka publish "The New New Product Development Game" in Harvard Business Review — introducing the concept of cross-functional teams working in overlapping phases. This paper directly inspired the name "Scrum."</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">1995</div>
+        <div class="timeline-body">
+          <div class="timeline-year">1995</div>
+          <div class="timeline-text"><strong>Scrum is formalised.</strong> Ken Schwaber and Jeff Sutherland present Scrum at OOPSLA. Simultaneously, Kent Beck develops Extreme Programming (XP) with practices like pair programming, TDD, and continuous integration.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">2001</div>
+        <div class="timeline-body">
+          <div class="timeline-year">February 2001</div>
+          <div class="timeline-text"><strong>The Agile Manifesto is born.</strong> Seventeen software practitioners meet at the Snowbird ski resort in Utah and produce the Agile Manifesto — four values and twelve principles that would define a movement.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">2010</div>
+        <div class="timeline-body">
+          <div class="timeline-year">2010s</div>
+          <div class="timeline-text"><strong>Agile goes mainstream.</strong> Scrum and Kanban spread beyond software into marketing, HR, and operations. Scaled frameworks (SAFe, LeSS, Nexus) emerge to address enterprise adoption challenges.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot">2020</div>
+        <div class="timeline-body">
+          <div class="timeline-year">2020s</div>
+          <div class="timeline-text"><strong>Agile matures and reflects.</strong> The industry debates "cargo cult agile" and over-formalisation. A renewed focus on outcomes, team autonomy, and the spirit of the Manifesto over rigid process compliance.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 2. Manifesto -->
+  <div class="section" id="manifesto">
+    <span class="section-anchor" id="manifesto-anchor"></span>
+    <div class="section-label label-manifesto">📜 Manifesto</div>
+    <h2>The Agile Manifesto</h2>
+    <p>In February 2001, seventeen software practitioners gathered in Snowbird, Utah. They represented a range of lightweight methodologies — XP, Scrum, DSDM, Adaptive Software Development, Crystal, FDD, Pragmatic Programming, and more — yet found common ground in what they valued.</p>
+    <p>The result was a single page: the Agile Manifesto. It opens with a statement of intent and then articulates four value statements — each one not dismissing the right-hand side, but declaring that the left-hand side is valued <em>more</em>.</p>
+
+    <div class="quote-block">
+      We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:
+      <cite>— Preamble to the Agile Manifesto, 2001</cite>
+    </div>
+
+    <div class="manifesto-values">
+      <div class="manifesto-value">
+        <div class="manifesto-value-over"><span>Individuals and interactions</span></div>
+        <div class="manifesto-value-under">over processes and tools</div>
+      </div>
+      <div class="manifesto-value">
+        <div class="manifesto-value-over"><span>Working software</span></div>
+        <div class="manifesto-value-under">over comprehensive documentation</div>
+      </div>
+      <div class="manifesto-value">
+        <div class="manifesto-value-over"><span>Customer collaboration</span></div>
+        <div class="manifesto-value-under">over contract negotiation</div>
+      </div>
+      <div class="manifesto-value">
+        <div class="manifesto-value-over"><span>Responding to change</span></div>
+        <div class="manifesto-value-under">over following a plan</div>
+      </div>
+    </div>
+
+    <p>The Manifesto was signed by Kent Beck, Mike Beedle, Arie van Bennekum, Alistair Cockburn, Ward Cunningham, Martin Fowler, James Grenning, Jim Highsmith, Andrew Hunt, Ron Jeffries, Jon Kern, Brian Marick, Robert C. Martin, Steve Mellor, Ken Schwaber, Jeff Sutherland, and Dave Thomas.</p>
+
+    <div class="callout note">
+      <span class="callout-icon">⚠️</span>
+      <span>The Manifesto does not say processes, documentation, contracts, or plans have no value — only that the items on the left are valued <strong>more</strong>. This distinction matters.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 3. Core Values -->
+  <div class="section" id="values">
+    <span class="section-anchor" id="values-anchor"></span>
+    <div class="section-label label-values">💎 Values</div>
+    <h2>Core Values</h2>
+    <p>The four Manifesto values are not prescriptive rules — they are orientations. They guide decision-making when teams face trade-offs, helping them choose the path that better serves people and outcomes over process and paperwork.</p>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">Individuals & interactions</div>
+        <div class="value-desc">People and how they work together matter more than the tools and processes surrounding them.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">✅</div>
+        <div class="value-title">Working software</div>
+        <div class="value-desc">The primary measure of progress is software that actually works — not documents about software.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤲</div>
+        <div class="value-title">Customer collaboration</div>
+        <div class="value-desc">Ongoing partnership with customers produces better outcomes than negotiating requirements upfront and delivering months later.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🔄</div>
+        <div class="value-title">Responding to change</div>
+        <div class="value-desc">The ability to adapt to changing requirements — even late in development — is a competitive advantage, not a disruption.</div>
+      </div>
+    </div>
+
+    <p>Beyond the Manifesto, many agile frameworks build on five Scrum values — which bring the abstract principles of agile into the day-to-day culture of a team:</p>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">💪</div>
+        <div class="value-title">Commitment</div>
+        <div class="value-desc">Team members personally commit to achieving the goals of the Scrum Team.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🎯</div>
+        <div class="value-title">Focus</div>
+        <div class="value-desc">Everyone focuses on the work of the sprint and the goals of the Scrum Team.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🔓</div>
+        <div class="value-title">Openness</div>
+        <div class="value-desc">The team and stakeholders agree to be open about all the work and the challenges with performing it.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🙏</div>
+        <div class="value-title">Respect</div>
+        <div class="value-desc">Team members respect each other as capable, independent people.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🦁</div>
+        <div class="value-title">Courage</div>
+        <div class="value-desc">Team members have the courage to do the right thing and work on difficult problems.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 4. Principles -->
+  <div class="section" id="principles">
+    <span class="section-anchor" id="principles-anchor"></span>
+    <div class="section-label label-manifesto">🧭 Principles</div>
+    <h2>The 12 Principles</h2>
+    <p>Behind the four values sit twelve principles — published alongside the Manifesto in 2001. They translate the values into practical guidance for how agile teams should work, plan, collaborate, and improve.</p>
+
+    <ol class="principles-list">
+      <li>Our highest priority is to satisfy the customer through early and continuous delivery of valuable software.</li>
+      <li>Welcome changing requirements, even late in development. Agile processes harness change for the customer's competitive advantage.</li>
+      <li>Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale.</li>
+      <li>Business people and developers must work together daily throughout the project.</li>
+      <li>Build projects around motivated individuals. Give them the environment and support they need, and trust them to get the job done.</li>
+      <li>The most efficient and effective method of conveying information to and within a development team is face-to-face conversation.</li>
+      <li>Working software is the primary measure of progress.</li>
+      <li>Agile processes promote sustainable development. The sponsors, developers, and users should be able to maintain a constant pace indefinitely.</li>
+      <li>Continuous attention to technical excellence and good design enhances agility.</li>
+      <li>Simplicity — the art of maximising the amount of work not done — is essential.</li>
+      <li>The best architectures, requirements, and designs emerge from self-organising teams.</li>
+      <li>At regular intervals, the team reflects on how to become more effective, then tunes and adjusts its behaviour accordingly.</li>
+    </ol>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>Principles 1, 3, and 7 all point to the same idea: deliver working software, often, as the true measure of progress. If your team isn't regularly shipping working increments, that's the first thing to address.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 5. Scrum -->
+  <div class="section" id="scrum">
+    <span class="section-anchor" id="scrum-anchor"></span>
+    <div class="section-label label-scrum">🏃 Scrum</div>
+    <h2>Introduction to Scrum</h2>
+    <p>Scrum is the most widely adopted agile framework. It provides a lightweight structure for teams to deliver value iteratively through short cycles called <strong>sprints</strong> — typically one to four weeks long. Scrum does not prescribe specific engineering practices; instead it defines a set of roles, events, and artefacts that create transparency, enable inspection, and allow the team to adapt.</p>
+
+    <p>At its core, Scrum rests on three pillars: <strong>Transparency</strong> (the work and its status are visible to everyone), <strong>Inspection</strong> (the team regularly examines progress toward the sprint goal), and <strong>Adaptation</strong> (the team adjusts when inspection reveals problems).</p>
+
+    <p style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin:1.5rem 0 8px;">The three roles</p>
+    <div class="roles-grid">
+      <div class="role-card">
+        <div class="role-icon">🧭</div>
+        <div class="role-title">Product Owner</div>
+        <div class="role-desc">Owns the Product Backlog, defines priorities, and is accountable for maximising the value of the product.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">🛡️</div>
+        <div class="role-title">Scrum Master</div>
+        <div class="role-desc">Serves the team by coaching Scrum practices, removing impediments, and facilitating events.</div>
+      </div>
+      <div class="role-card">
+        <div class="role-icon">👩‍💻</div>
+        <div class="role-title">Developers</div>
+        <div class="role-desc">The people who do the work. Cross-functional — able to deliver a usable increment every sprint.</div>
+      </div>
+    </div>
+
+    <p style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin:1.5rem 0 8px;">The five events</p>
+    <div class="events-table-wrap">
+      <table class="events-table">
+        <thead><tr><th>Event</th><th>Purpose</th><th>Timebox</th></tr></thead>
+        <tbody>
+          <tr><td>The Sprint</td><td>The container for all other events. A fixed timebox during which a "Done" increment is created.</td><td>1–4 weeks</td></tr>
+          <tr><td>Sprint Planning</td><td>The team defines the sprint goal and selects work from the backlog to deliver.</td><td>≤ 8 hrs (4-week sprint)</td></tr>
+          <tr><td>Daily Scrum</td><td>A daily 15-minute event for developers to inspect progress and adapt the plan for the next 24 hours.</td><td>15 minutes</td></tr>
+          <tr><td>Sprint Review</td><td>The team presents the increment to stakeholders and gathers feedback to update the backlog.</td><td>≤ 4 hrs</td></tr>
+          <tr><td>Sprint Retrospective</td><td>The team inspects how it worked and identifies the most impactful improvements for the next sprint.</td><td>≤ 3 hrs</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:12px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);margin:1.5rem 0 8px;">The three artefacts</p>
+    <div class="artefacts-row">
+      <div class="artefact-card">
+        <div class="artefact-title">Product Backlog</div>
+        <div class="artefact-desc">An ordered list of everything that might be needed in the product. Owned by the Product Owner.</div>
+      </div>
+      <div class="artefact-card">
+        <div class="artefact-title">Sprint Backlog</div>
+        <div class="artefact-desc">The sprint goal, the selected backlog items, and the plan for delivering the increment. Owned by the developers.</div>
+      </div>
+      <div class="artefact-card">
+        <div class="artefact-title">Increment</div>
+        <div class="artefact-desc">The sum of all completed work during a sprint. Must meet the Definition of Done to be considered releasable.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 6. Scrum Guide -->
+  <div class="section" id="scrumguide">
+    <span class="section-anchor" id="scrumguide-anchor"></span>
+    <div class="section-label label-scrum">📗 The Scrum Guide</div>
+    <h2>The Scrum Guide</h2>
+    <p>The Scrum Guide is the official and definitive description of Scrum, written and maintained by its co-creators Ken Schwaber and Jeff Sutherland. First published in 2010 and updated periodically since, it is intentionally short — the 2020 version is just 13 pages — capturing only what is essential to Scrum and nothing more.</p>
+    <p>Schwaber and Sutherland deliberately keep the Scrum Guide minimal. They describe Scrum as a framework — a container within which teams apply their own processes, techniques, and practices. Anything not in the Scrum Guide is not Scrum, which means teams have considerable freedom in how they implement it.</p>
+
+    <div class="quote-block">
+      Scrum is a lightweight framework that helps people, teams and organisations generate value through adaptive solutions for complex problems.
+      <cite>— The Scrum Guide, 2020</cite>
+    </div>
+
+    <p>Key updates in the 2020 edition include: the Scrum Team replacing separate "Development Team" terminology, the sprint goal becoming a commitment of the Sprint Backlog, and a stronger emphasis on self-management over self-organisation.</p>
+
+    <div class="callout tip">
+      <span class="callout-icon">📗</span>
+      <span>The Scrum Guide is free. Read it directly at <a href="https://scrumguides.org/scrum-guide.html" target="_blank" rel="noopener" style="color:var(--green);font-weight:500;">scrumguides.org</a> — it takes about 30 minutes and is the single most valuable thing a new practitioner can read.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>

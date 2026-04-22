@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kanban Mastery — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;
+  --surface:rgba(255,255,255,0.82);
+  --surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.15);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --teal:#0d9488;--teal-bg:#d4f0ee;--teal-border:rgba(13,148,136,0.2);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(240,239,246,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+.page{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:3rem 2.5rem 6rem;}
+
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:20px;padding:4px 14px;margin-bottom:1.25rem;}
+.page-hero{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:44px;font-weight:400;letter-spacing:-1px;color:var(--text);margin-bottom:0.75rem;line-height:1.15;}
+.page-hero h1 em{font-style:italic;background:linear-gradient(135deg,#0d9488,#2563eb,#6c5ce7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:16px;color:var(--text2);font-weight:300;line-height:1.75;max-width:640px;}
+
+/* ── TOC ── */
+.toc{background:var(--surface);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:var(--radius);padding:18px 22px;margin-bottom:3rem;box-shadow:var(--shadow);}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li{display:flex;align-items:center;gap:10px;}
+.toc-list a{font-size:13px;font-weight:500;color:var(--primary);text-decoration:none;transition:opacity 0.15s;}
+.toc-list a:hover{opacity:0.7;}
+.toc-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);width:20px;flex-shrink:0;}
+
+/* ── Section ── */
+.section{margin-bottom:3.5rem;}
+.section-anchor{display:block;height:80px;margin-top:-80px;visibility:hidden;}
+.section-label{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.label-teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-border);}
+.label-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.label-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.label-purple{background:var(--primary-light);color:var(--primary);border:1px solid rgba(108,92,231,0.2);}
+.section h2{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;letter-spacing:-0.5px;color:var(--text);margin-bottom:0.75rem;line-height:1.2;}
+.section p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:1rem;}
+.section p:last-child{margin-bottom:0;}
+.section-divider{height:1px;background:var(--border2);margin:3rem 0;}
+
+/* ── Kanban board demo ── */
+.kanban-demo{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin:1.5rem 0;box-shadow:var(--shadow);overflow-x:auto;}
+.kanban-demo-title{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.kanban-board{display:flex;gap:10px;min-width:560px;}
+.kanban-col{flex:1;display:flex;flex-direction:column;gap:7px;}
+.kanban-col-header{padding:8px 12px;border-radius:9px;font-size:12px;font-weight:600;display:flex;justify-content:space-between;align-items:center;}
+.kanban-col-header .wip{font-size:10px;font-family:'DM Mono',monospace;opacity:0.7;}
+.kanban-col-header .wip-breach{color:var(--red);font-weight:700;opacity:1;}
+.kanban-card{padding:8px 10px;border-radius:8px;font-size:11px;line-height:1.4;color:var(--text);}
+.kanban-card.blocked{border:1.5px solid var(--red);position:relative;}
+.blocked-tag{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;color:var(--red);background:var(--red-bg);border-radius:4px;padding:1px 5px;margin-bottom:4px;}
+.kanban-empty{height:38px;border:1.5px dashed var(--border2);border-radius:8px;opacity:0.4;}
+
+/* ── Principles grid ── */
+.principles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin:1.5rem 0;}
+.principle-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:16px;box-shadow:var(--shadow);transition:transform 0.18s,box-shadow 0.18s;}
+.principle-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.principle-num{font-family:'DM Mono',monospace;font-size:11px;font-weight:600;color:var(--teal);margin-bottom:6px;}
+.principle-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.2px;}
+.principle-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* ── WIP section ── */
+.wip-explainer{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.5rem 0;}
+@media(max-width:580px){.wip-explainer{grid-template-columns:1fr;}}
+.wip-card{border-radius:12px;padding:16px;}
+.wip-card.good{background:var(--green-bg);border:1px solid var(--green-border);}
+.wip-card.bad{background:var(--red-bg);border:1px solid var(--red-border);}
+.wip-card-title{font-size:12px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.wip-card.good .wip-card-title{color:var(--green);}
+.wip-card.bad .wip-card-title{color:var(--red);}
+.wip-bars{display:flex;flex-direction:column;gap:5px;}
+.wip-bar-row{display:flex;align-items:center;gap:8px;}
+.wip-bar-label{font-size:10px;font-weight:500;width:60px;flex-shrink:0;color:inherit;opacity:0.8;}
+.wip-bar{height:8px;border-radius:4px;transition:width 0.3s;}
+
+.littles-law{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:18px 20px;margin:1.5rem 0;text-align:center;box-shadow:var(--shadow);}
+.littles-formula{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--text);margin-bottom:8px;letter-spacing:0.02em;}
+.littles-formula span{color:var(--primary);}
+.littles-sub{font-size:12px;color:var(--text2);line-height:1.6;}
+
+/* ── Metrics cards ── */
+.metrics-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:1.5rem 0;}
+.metric-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);}
+.metric-icon{font-size:18px;margin-bottom:6px;}
+.metric-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;letter-spacing:-0.2px;}
+.metric-formula{font-size:10px;font-family:'DM Mono',monospace;color:var(--teal);margin-bottom:6px;}
+.metric-desc{font-size:11px;color:var(--text2);line-height:1.5;}
+
+/* ── Events/practices ── */
+.practices-list{display:flex;flex-direction:column;gap:14px;margin-top:1.5rem;}
+.practice-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.practice-header{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;transition:background 0.12s;}
+.practice-header:hover{background:rgba(108,92,231,0.03);}
+.practice-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.practice-header-text{flex:1;}
+.practice-name{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
+.practice-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.practice-toggle{font-size:16px;color:var(--text3);transition:transform 0.2s;}
+.practice-card.open .practice-toggle{transform:rotate(180deg);}
+.practice-body{display:none;padding:16px 20px 18px;}
+.practice-card.open .practice-body{display:block;}
+.practice-purpose{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:14px;padding:12px 14px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--teal);}
+.tips-pitfalls{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:580px){.tips-pitfalls{grid-template-columns:1fr;}}
+.tips,.pitfalls{border-radius:10px;padding:12px 14px;}
+.tips{background:var(--green-bg);border:1px solid var(--green-border);}
+.pitfalls{background:var(--red-bg);border:1px solid var(--red-border);}
+.tips-title,.pitfalls-title{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.tips .tips-title{color:var(--green);}
+.pitfalls .pitfalls-title{color:var(--red);}
+.tip-list,.pitfall-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.tip-list li,.pitfall-list li{font-size:12px;line-height:1.45;display:flex;align-items:flex-start;gap:6px;}
+.tip-list li::before,.pitfall-list li::before{flex-shrink:0;font-size:11px;margin-top:2px;}
+.tips .tip-list li{color:#14532d;}
+.tips .tip-list li::before{content:'✓';color:var(--green);}
+.pitfalls .pitfall-list li{color:#7f1d1d;}
+.pitfalls .pitfall-list li::before{content:'✕';color:var(--red);}
+
+/* ── Callout ── */
+.callout{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border-radius:10px;margin:1.25rem 0;font-size:13px;line-height:1.6;}
+.callout.tip{background:var(--green-bg);border:1px solid var(--green-border);color:#14532d;}
+.callout.note{background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350f;}
+.callout.info{background:var(--blue-bg);border:1px solid var(--blue-border);color:#1e3a5f;}
+.callout.teal{background:var(--teal-bg);border:1px solid var(--teal-border);color:#0f4841;}
+.callout-icon{flex-shrink:0;font-size:15px;}
+
+/* ── Quote ── */
+.quote-block{border-left:4px solid var(--teal);padding:14px 20px;background:var(--teal-bg);border-radius:0 10px 10px 0;margin:1.25rem 0;font-size:14px;font-style:italic;color:var(--text);line-height:1.75;}
+.quote-block cite{display:block;margin-top:8px;font-size:12px;font-style:normal;font-weight:500;color:var(--text3);}
+
+/* ── Scrum vs Kanban ── */
+.compare-table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border2);margin:1.5rem 0;box-shadow:var(--shadow);}
+.compare-table{width:100%;border-collapse:collapse;font-size:12px;min-width:480px;background:var(--surface);}
+.compare-table thead tr{border-bottom:1px solid var(--border2);background:var(--surface2);}
+.compare-table th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);}
+.compare-table tbody tr{border-bottom:1px solid var(--border);}
+.compare-table tbody tr:last-child{border-bottom:none;}
+.compare-table tbody tr:hover{background:rgba(13,148,136,0.03);}
+.compare-table td{padding:10px 14px;color:var(--text2);vertical-align:top;line-height:1.5;}
+.compare-table td:first-child{font-weight:600;color:var(--text);white-space:nowrap;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">Kanban Mastery</span>
+  <div style="width:120px;"></div>
+</nav>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="page-eyebrow">🔄 Learning Paths</div>
+    <h1>Kanban <em>Mastery</em></h1>
+    <p>A practical guide to Kanban — from visualising your workflow and limiting work in progress, through to the practices and cadences that make it a powerful system for continuous delivery and improvement.</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">01</span><a href="#what">What is Kanban?</a></li>
+      <li><span class="toc-num">02</span><a href="#visualise">Visualising Flow</a></li>
+      <li><span class="toc-num">03</span><a href="#wip">WIP Limits</a></li>
+      <li><span class="toc-num">04</span><a href="#metrics">Flow Metrics</a></li>
+      <li><span class="toc-num">05</span><a href="#improvement">Continuous Improvement</a></li>
+      <li><span class="toc-num">06</span><a href="#practices">Common Kanban Practices &amp; Cadences</a></li>
+      <li><span class="toc-num">07</span><a href="#vsscrum">Kanban vs Scrum</a></li>
+    </ul>
+  </div>
+
+  <!-- ── 1. What is Kanban ── -->
+  <div class="section" id="what">
+    <span class="section-anchor"></span>
+    <div class="section-label label-teal">🔄 Overview</div>
+    <h2>What is Kanban?</h2>
+    <p>Kanban is a method for managing knowledge work with an emphasis on just-in-time delivery and continuous flow. Unlike Scrum, it prescribes no fixed roles, no sprints, and no timeboxes. Instead it asks a team to visualise their existing workflow, limit the amount of work in progress, and manage and improve flow over time.</p>
+    <p>The name comes from the Japanese word for "signboard" or "visual card." It originated in Toyota's manufacturing plants in the 1940s as a scheduling system that pulled work through a production line. David Anderson adapted these principles for knowledge work in the 2000s, formalising what is now known as the Kanban Method.</p>
+
+    <div class="quote-block">
+      Stop starting, start finishing.
+      <cite>— A core Kanban maxim</cite>
+    </div>
+
+    <p>Kanban is best understood through its six core practices — not rules imposed from outside, but disciplines that emerge from understanding flow:</p>
+
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-num">01</div>
+        <div class="principle-title">Visualise the workflow</div>
+        <div class="principle-desc">Make work visible. If you can see it, you can manage it.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">02</div>
+        <div class="principle-title">Limit WIP</div>
+        <div class="principle-desc">Reduce the number of items in progress at any one time to improve flow and reduce cycle time.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">03</div>
+        <div class="principle-title">Manage flow</div>
+        <div class="principle-desc">Monitor, measure, and report on flow to identify improvement opportunities.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">04</div>
+        <div class="principle-title">Make policies explicit</div>
+        <div class="principle-desc">Define and publish the rules of your system so everyone understands how work moves through it.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">05</div>
+        <div class="principle-title">Implement feedback loops</div>
+        <div class="principle-desc">Create regular cadences to inspect and adapt at multiple levels of the system.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">06</div>
+        <div class="principle-title">Improve collaboratively</div>
+        <div class="principle-desc">Use models and the scientific method to drive evolutionary improvement together.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 2. Visualising Flow ── -->
+  <div class="section" id="visualise">
+    <span class="section-anchor"></span>
+    <div class="section-label label-teal">👁️ Visualise</div>
+    <h2>Visualising Flow</h2>
+    <p>A Kanban board makes work visible. Each column represents a state in the workflow — from "To Do" through to "Done." Cards represent individual work items moving through those states. The board surfaces the real state of the system: what's moving, what's blocked, and where work is piling up.</p>
+    <p>Good boards reflect reality — not a sanitised version of it. Blocked items should be marked. Bottlenecks should be obvious. The goal is not a pretty board but an honest one.</p>
+
+    <div class="kanban-demo">
+      <div class="kanban-demo-title">Example Kanban board — WIP limits shown in brackets</div>
+      <div class="kanban-board">
+        <div class="kanban-col">
+          <div class="kanban-col-header" style="background:#e8e7f0;color:#6b6880;">
+            <span>To Do</span><span class="wip">∞</span>
+          </div>
+          <div class="kanban-card" style="background:#f5f4fc;border:1px solid var(--border2);">User profile page</div>
+          <div class="kanban-card" style="background:#f5f4fc;border:1px solid var(--border2);">Password reset flow</div>
+          <div class="kanban-card" style="background:#f5f4fc;border:1px solid var(--border2);">Email notifications</div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-col-header" style="background:#d5e8ff;color:#2563eb;">
+            <span>In Progress</span><span class="wip">2 / 2</span>
+          </div>
+          <div class="kanban-card" style="background:#e8f0ff;border:1px solid var(--blue-border);">Search functionality</div>
+          <div class="kanban-card blocked" style="background:#fff0f0;">
+            <div class="blocked-tag">🚫 Blocked</div>
+            API integration
+          </div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-col-header" style="background:#fff0d4;color:#d97706;">
+            <span>In Review</span><span class="wip wip-breach">3 / 2 ⚠</span>
+          </div>
+          <div class="kanban-card" style="background:#fffbf0;border:1px solid var(--amber-border);">Dashboard charts</div>
+          <div class="kanban-card" style="background:#fffbf0;border:1px solid var(--amber-border);">Export to CSV</div>
+          <div class="kanban-card" style="background:#fffbf0;border:1px solid var(--amber-border);">Mobile nav fix</div>
+        </div>
+        <div class="kanban-col">
+          <div class="kanban-col-header" style="background:#d4f0e5;color:#16a34a;">
+            <span>Done</span><span class="wip">✓</span>
+          </div>
+          <div class="kanban-card" style="background:#edf8f2;border:1px solid var(--green-border);">Login page</div>
+          <div class="kanban-card" style="background:#edf8f2;border:1px solid var(--green-border);">Sign up form</div>
+          <div class="kanban-empty"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-icon">⚠️</span>
+      <span>Notice "In Review" has 3 items against a WIP limit of 2 — this is a breach that should be immediately visible and discussed. The board doesn't hide problems; it surfaces them.</span>
+    </div>
+
+    <p>Beyond the basic board, teams often add <strong>swim lanes</strong> (horizontal rows for different work types or classes of service), <strong>explicit queue columns</strong> between active columns, and <strong>policies</strong> written directly on the board — such as the definition of "done" for each column transition.</p>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>Start with your actual workflow — not an idealised one. Map what work items actually go through, including rework loops and waiting states. You can always simplify once you understand the real flow.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 3. WIP Limits ── -->
+  <div class="section" id="wip">
+    <span class="section-anchor"></span>
+    <div class="section-label label-blue">🚦 WIP Limits</div>
+    <h2>WIP Limits</h2>
+    <p>Work in Progress (WIP) limits are the most powerful — and most resisted — practice in Kanban. They cap the number of items that can be in any given column or stage at one time. When a column is full, the team must finish something before starting something new.</p>
+
+    <div class="littles-law">
+      <div class="littles-formula"><span>Cycle Time</span> = WIP ÷ <span>Throughput</span></div>
+      <div class="littles-sub">Little's Law: reducing WIP directly reduces cycle time, even without increasing throughput. The maths is on your side.</div>
+    </div>
+
+    <div class="wip-explainer">
+      <div class="wip-card good">
+        <div class="wip-card-title">✓ Low WIP — healthy flow</div>
+        <div class="wip-bars">
+          <div class="wip-bar-row"><span class="wip-bar-label">To Do</span><div class="wip-bar" style="width:90%;background:rgba(22,163,74,0.3);"></div></div>
+          <div class="wip-bar-row"><span class="wip-bar-label">In Progress</span><div class="wip-bar" style="width:30%;background:#16a34a;"></div></div>
+          <div class="wip-bar-row"><span class="wip-bar-label">Review</span><div class="wip-bar" style="width:20%;background:#16a34a;"></div></div>
+          <div class="wip-bar-row"><span class="wip-bar-label">Done</span><div class="wip-bar" style="width:75%;background:rgba(22,163,74,0.3);"></div></div>
+        </div>
+        <p style="font-size:11px;color:#14532d;margin-top:10px;line-height:1.5;">Work flows through quickly. Items finish before new ones start. Blockers are visible and resolved fast.</p>
+      </div>
+      <div class="wip-card bad">
+        <div class="wip-card-title">✕ High WIP — congestion</div>
+        <div class="wip-bars">
+          <div class="wip-bar-row"><span class="wip-bar-label">To Do</span><div class="wip-bar" style="width:90%;background:rgba(220,38,38,0.25);"></div></div>
+          <div class="wip-bar-row"><span class="wip-bar-label">In Progress</span><div class="wip-bar" style="width:95%;background:#dc2626;"></div></div>
+          <div class="wip-bar-row"><span class="wip-bar-label">Review</span><div class="wip-bar" style="width:90%;background:#dc2626;"></div></div>
+          <div class="wip-bar-row"><span class="wip-bar-label">Done</span><div class="wip-bar" style="width:15%;background:rgba(220,38,38,0.25);"></div></div>
+        </div>
+        <p style="font-size:11px;color:#7f1d1d;margin-top:10px;line-height:1.5;">Everything is started, nothing is finished. Context switching kills focus. Cycle times balloon. Nobody knows what the priority is.</p>
+      </div>
+    </div>
+
+    <p>Setting WIP limits isn't an exact science. A common starting point is <strong>1–1.5 times the number of people</strong> working in that stage. Set limits that feel slightly uncomfortable — if nobody ever breaches them, they're too high.</p>
+
+    <div class="callout teal">
+      <span class="callout-icon">🔄</span>
+      <span>When a WIP limit is breached, the right response is to swarm on finishing existing work — not to raise the limit. A WIP breach is a signal that something needs attention, not a permission slip to keep starting.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 4. Flow Metrics ── -->
+  <div class="section" id="metrics">
+    <span class="section-anchor"></span>
+    <div class="section-label label-blue">📊 Metrics</div>
+    <h2>Flow Metrics</h2>
+    <p>Kanban is inherently data-driven. Rather than estimating future work in story points, Kanban teams measure historical flow data to make probabilistic forecasts. Four metrics form the core of flow-based measurement:</p>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-icon">⏱️</div>
+        <div class="metric-title">Cycle Time</div>
+        <div class="metric-formula">Start → Done</div>
+        <div class="metric-desc">How long it takes to complete one item once work begins. The primary metric for delivery predictability.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📬</div>
+        <div class="metric-title">Lead Time</div>
+        <div class="metric-formula">Request → Done</div>
+        <div class="metric-desc">Total elapsed time from request to delivery, including queue time. The metric customers care about.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📦</div>
+        <div class="metric-title">Throughput</div>
+        <div class="metric-formula">Items / time period</div>
+        <div class="metric-desc">How many items the team completes per week or sprint. Used for capacity forecasting without estimation.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🗂️</div>
+        <div class="metric-title">WIP</div>
+        <div class="metric-formula">Items in progress now</div>
+        <div class="metric-desc">The number of active items at any point. Reducing it is the fastest lever for improving cycle time.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>Use the <strong>85th percentile</strong> of cycle time when making delivery commitments — not the average. Averages lie. The 85th percentile means roughly 85% of similar items will complete within that time, giving you a reliable SLA to share with stakeholders.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 5. Continuous Improvement ── -->
+  <div class="section" id="improvement">
+    <span class="section-anchor"></span>
+    <div class="section-label label-green">🌱 Improvement</div>
+    <h2>Continuous Improvement in Kanban</h2>
+    <p>Kanban is an evolutionary method — it doesn't ask you to blow up your current process and start over. Instead it asks you to start with what you have, make it visible, and improve continuously from there. This is sometimes called a <strong>Kaizen</strong> mindset — small, incremental, sustained improvements over time.</p>
+    <p>Improvement in Kanban happens at two levels: operational (fixing day-to-day flow problems as they arise) and systemic (regularly stepping back to examine the whole system and make deliberate changes). Both require data, honest conversation, and a culture of experimentation.</p>
+
+    <div class="principles-grid">
+      <div class="principle-card">
+        <div class="principle-num">Start with what you have</div>
+        <div class="principle-title">Respect current process</div>
+        <div class="principle-desc">Don't discard existing roles, titles, or processes. Visualise them first, then improve them incrementally.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">Make problems visible</div>
+        <div class="principle-title">Surface blockers immediately</div>
+        <div class="principle-desc">A blocked card on the board is a gift — it tells you where the system is broken before it becomes a crisis.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">Use data to decide</div>
+        <div class="principle-title">Measure before changing</div>
+        <div class="principle-desc">Changes to WIP limits, workflow stages, or policies should be driven by flow data, not gut feel.</div>
+      </div>
+      <div class="principle-card">
+        <div class="principle-num">Experiment and learn</div>
+        <div class="principle-title">Run time-boxed experiments</div>
+        <div class="principle-desc">Treat process changes as hypotheses. Run them for 2–4 weeks, measure the impact, and decide whether to keep them.</div>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-icon">⚠️</span>
+      <span>The biggest improvement trap in Kanban is identifying the same bottleneck every week without taking action. If the blockers column is always full, that's systemic — it needs a root cause conversation, not just a daily acknowledgement.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 6. Practices & Cadences ── -->
+  <div class="section" id="practices">
+    <span class="section-anchor"></span>
+    <div class="section-label label-purple">📅 Practices</div>
+    <h2>Common Kanban Practices &amp; Cadences</h2>
+    <p>While Kanban has no mandatory events, it does recommend a set of regular cadences — feedback loops at different time horizons that keep the system healthy and improving. Teams can adopt as many or as few as they need.</p>
+
+    <div class="practices-list">
+
+      <!-- Daily Standup / Flow Review -->
+      <div class="practice-card open">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--green-bg);">☀️</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Daily Standup (Flow Focus)</div>
+            <div class="practice-sub">Daily · 15 minutes · Whole team</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-purpose">In Kanban the daily standup walks the board right-to-left — starting from the items nearest to done. The focus is on flow, not individual status reports. The team asks: what is blocking items from moving forward? What can we finish today?</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips</div>
+              <ul class="tip-list">
+                <li>Walk the board right-to-left — items closest to done get attention first</li>
+                <li>Focus on blocked items and WIP breaches, not individual updates</li>
+                <li>Keep it to 15 minutes — defer problem-solving to after</li>
+                <li>Use the board as the agenda, not a list of questions</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Pitfalls</div>
+              <ul class="pitfall-list">
+                <li>Reporting to a manager instead of coordinating as a team</li>
+                <li>Ignoring WIP breaches without discussing them</li>
+                <li>Walking left-to-right and spending all the time on "in progress"</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Replenishment Meeting -->
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--blue-bg);">📥</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Replenishment Meeting</div>
+            <div class="practice-sub">Weekly or bi-weekly · 30–60 minutes · PO / team lead + team</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-purpose">The replenishment meeting (also called a queue replenishment) is where the team pulls new work into the system. Items are selected based on priority, capacity, and downstream demand — not a fixed sprint commitment. This is the Kanban equivalent of sprint planning, but it happens continuously rather than at fixed intervals.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips</div>
+              <ul class="tip-list">
+                <li>Only pull in items that meet the Definition of Ready</li>
+                <li>Let downstream capacity drive pull — don't push work onto the team</li>
+                <li>Prioritise using a clear, visible criteria (value, risk, date, class of service)</li>
+                <li>Keep the meeting short by maintaining a well-refined ready queue</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Pitfalls</div>
+              <ul class="pitfall-list">
+                <li>Pulling in more work than capacity supports just to "fill the sprint"</li>
+                <li>Adding unrefined items that aren't truly ready</li>
+                <li>Skipping it and letting work self-assign informally</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kanban Review (Operations Review) -->
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--primary-light);">📊</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Operations Review</div>
+            <div class="practice-sub">Monthly · 60–90 minutes · Team + stakeholders</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-purpose">The Operations Review is a data-driven meeting where the team reviews flow metrics over a longer time horizon — typically the past month. It focuses on throughput trends, cycle time distribution, blocked item patterns, and whether the system is getting faster or slower. It's the Kanban equivalent of a Sprint Review but at a systemic level.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips</div>
+              <ul class="tip-list">
+                <li>Lead with data — cycle time scatter plots, throughput run charts, cumulative flow diagrams</li>
+                <li>Invite stakeholders who can act on systemic blockers</li>
+                <li>Focus on patterns and trends, not individual items</li>
+                <li>Identify one or two systemic improvements to pursue</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Pitfalls</div>
+              <ul class="pitfall-list">
+                <li>Running it as a status update rather than an improvement session</li>
+                <li>No metrics — just anecdotes and feelings about how the month went</li>
+                <li>Identifying problems but not assigning owners or actions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Delivery Review -->
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--amber-bg);">🤝</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Service Delivery Review</div>
+            <div class="practice-sub">Bi-weekly or monthly · 30–60 minutes · Team + customers/requesters</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-purpose">The Service Delivery Review focuses on the relationship between the team and its customers or upstream requesters. It reviews how well the team is meeting its service level expectations — are items completing within their SLAs? Are customers satisfied? Are requests clearly defined when they arrive? This is about the external interface of the system.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips</div>
+              <ul class="tip-list">
+                <li>Share cycle time data and SLA attainment with customers — transparency builds trust</li>
+                <li>Discuss item quality at intake — are requests arriving ready to work?</li>
+                <li>Use this to align on priorities and Classes of Service</li>
+                <li>Keep it collaborative — not a complaint session</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Pitfalls</div>
+              <ul class="pitfall-list">
+                <li>Letting it become a ticket-by-ticket status update</li>
+                <li>Not including actual customers or requesters</li>
+                <li>Focusing only on what went wrong rather than what to improve</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Retrospective -->
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--teal-bg);">🔍</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Retrospective (Kaizen Meeting)</div>
+            <div class="practice-sub">Regular cadence · 60 minutes · Team</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-purpose">Kanban teams still run retrospectives — sometimes called Kaizen meetings — to reflect on how the system is working and identify evolutionary improvements. Unlike Scrum retros which are sprint-bound, Kanban retros are triggered by data (e.g. a spike in cycle time, a class of WIP breaches) or run on a regular cadence. The focus is always on the system, not individuals.</div>
+          <div class="tips-pitfalls">
+            <div class="tips">
+              <div class="tips-title">✓ Tips</div>
+              <ul class="tip-list">
+                <li>Anchor the retro in flow data — don't let it become purely anecdotal</li>
+                <li>Focus on one or two root-cause experiments rather than a long action list</li>
+                <li>Use PhoenixRetro to facilitate and capture votes on the most important items</li>
+                <li>Track the outcome of past experiments before starting new ones</li>
+              </ul>
+            </div>
+            <div class="pitfalls">
+              <div class="pitfalls-title">✕ Pitfalls</div>
+              <ul class="pitfall-list">
+                <li>Running a retro with no data to anchor the conversation</li>
+                <li>Too many actions with no follow-through</li>
+                <li>Blaming individuals rather than examining the system</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 7. Kanban vs Scrum ── -->
+  <div class="section" id="vsscrum">
+    <span class="section-anchor"></span>
+    <div class="section-label label-teal">⚖️ Comparison</div>
+    <h2>Kanban vs Scrum</h2>
+    <p>Kanban and Scrum are both agile frameworks but they differ significantly in structure. Neither is universally better — the right choice depends on the nature of the work and the team. Many teams use elements of both (sometimes called "Scrumban").</p>
+
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Aspect</th><th>Scrum</th><th>Kanban</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cadence</td><td>Fixed sprints (1–4 weeks)</td><td>Continuous flow, no fixed sprints</td></tr>
+          <tr><td>Roles</td><td>Product Owner, Scrum Master, Developers</td><td>No prescribed roles</td></tr>
+          <tr><td>Planning</td><td>Sprint Planning at start of each sprint</td><td>Ongoing replenishment as capacity allows</td></tr>
+          <tr><td>Commitment</td><td>Sprint goal and sprint backlog</td><td>WIP limits only — no sprint commitment</td></tr>
+          <tr><td>Change mid-cycle</td><td>Protected during the sprint</td><td>Can add or reprioritise at any time</td></tr>
+          <tr><td>Estimation</td><td>Usually required (story points)</td><td>Optional — throughput-based forecasting preferred</td></tr>
+          <tr><td>Metrics</td><td>Velocity, burndown</td><td>Cycle time, throughput, WIP, CFD</td></tr>
+          <tr><td>Best for</td><td>Product development with regular feature releases</td><td>Operations, support, and continuous delivery teams</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <span>Many teams successfully combine both — using Scrum's sprint cadence for planning and review while applying Kanban's WIP limits and flow metrics internally. There's no rule against it, and the combination (Scrumban) can be very effective for teams that need structure <em>and</em> flow flexibility.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.practice-header').forEach(h=>{
+  h.addEventListener('click',()=>h.closest('.practice-card').classList.toggle('open'));
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>

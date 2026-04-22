@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>New Agile Devs — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;
+  --surface:rgba(255,255,255,0.82);
+  --surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);
+  --border2:rgba(110,100,180,0.25);
+  --text:#1a1826;
+  --text2:#6b6880;
+  --text3:#9e9bb5;
+  --primary:#6c5ce7;
+  --primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.15);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --teal:#0d9488;--teal-bg:#d4f0ee;--teal-border:rgba(13,148,136,0.2);
+  --coral:#c026d3;--coral-bg:#fbeaff;--coral-border:rgba(192,38,211,0.2);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(240,239,246,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+.page{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:3rem 2.5rem 6rem;}
+
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);border-radius:20px;padding:4px 14px;margin-bottom:1.25rem;}
+.page-hero{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:44px;font-weight:400;letter-spacing:-1px;color:var(--text);margin-bottom:0.75rem;line-height:1.15;}
+.page-hero h1 em{font-style:italic;background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:16px;color:var(--text2);font-weight:300;line-height:1.75;max-width:640px;}
+
+/* ── TOC ── */
+.toc{background:var(--surface);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:var(--radius);padding:18px 22px;margin-bottom:3rem;box-shadow:var(--shadow);}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li{display:flex;align-items:center;gap:10px;}
+.toc-list a{font-size:13px;font-weight:500;color:var(--primary);text-decoration:none;transition:opacity 0.15s;}
+.toc-list a:hover{opacity:0.7;}
+.toc-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);width:20px;flex-shrink:0;}
+
+/* ── Section ── */
+.section{margin-bottom:3.5rem;}
+.section-anchor{display:block;height:80px;margin-top:-80px;visibility:hidden;}
+.section-label{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.label-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.label-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.label-teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-border);}
+.label-purple{background:var(--primary-light);color:var(--primary);border:1px solid rgba(108,92,231,0.2);}
+.label-coral{background:var(--coral-bg);color:var(--coral);border:1px solid var(--coral-border);}
+.label-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.section h2{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;letter-spacing:-0.5px;color:var(--text);margin-bottom:0.75rem;line-height:1.2;}
+.section p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:1rem;}
+.section p:last-child{margin-bottom:0;}
+.section-divider{height:1px;background:var(--border2);margin:3rem 0;}
+
+/* ── Practice cards (accordion) ── */
+.practice-list{display:flex;flex-direction:column;gap:12px;margin-top:1.5rem;}
+.practice-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.practice-header{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;transition:background 0.12s;}
+.practice-header:hover{background:rgba(108,92,231,0.03);}
+.practice-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.practice-header-text{flex:1;}
+.practice-name{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-0.2px;}
+.practice-tag{font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-top:4px;display:inline-block;}
+.practice-toggle{font-size:16px;color:var(--text3);transition:transform 0.2s;}
+.practice-card.open .practice-toggle{transform:rotate(180deg);}
+.practice-body{display:none;padding:16px 20px 20px;}
+.practice-card.open .practice-body{display:block;}
+.practice-what{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:14px;padding:12px 14px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--primary);}
+
+/* ── Benefits list ── */
+.benefits-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:580px){.benefits-grid{grid-template-columns:1fr;}}
+.benefits-col,.guidance-col{border-radius:10px;padding:12px 14px;}
+.benefits-col{background:var(--green-bg);border:1px solid var(--green-border);}
+.guidance-col{background:var(--blue-bg);border:1px solid var(--blue-border);}
+.col-title{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.benefits-col .col-title{color:var(--green);}
+.guidance-col .col-title{color:var(--blue);}
+.item-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:12px;line-height:1.45;display:flex;align-items:flex-start;gap:6px;}
+.item-list li::before{flex-shrink:0;font-size:11px;margin-top:2px;}
+.benefits-col .item-list li{color:#14532d;}
+.benefits-col .item-list li::before{content:'✓';color:var(--green);}
+.guidance-col .item-list li{color:#1e3a5f;}
+.guidance-col .item-list li::before{content:'→';color:var(--blue);}
+
+/* ── Mindset cards ── */
+.mindset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin:1.5rem 0;}
+.mindset-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:16px;box-shadow:var(--shadow);transition:transform 0.18s,box-shadow 0.18s;}
+.mindset-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.mindset-icon{font-size:22px;margin-bottom:8px;}
+.mindset-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;letter-spacing:-0.2px;}
+.mindset-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* ── Callout ── */
+.callout{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border-radius:10px;margin:1.25rem 0;font-size:13px;line-height:1.6;}
+.callout.tip{background:var(--green-bg);border:1px solid var(--green-border);color:#14532d;}
+.callout.note{background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350f;}
+.callout.info{background:var(--blue-bg);border:1px solid var(--blue-border);color:#1e3a5f;}
+.callout.purple{background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);color:#3730a3;}
+.callout-icon{flex-shrink:0;font-size:15px;}
+
+/* ── Sprint checklist ── */
+.sprint-checklist{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:20px 22px;margin:1.5rem 0;box-shadow:var(--shadow);}
+.sprint-checklist-title{font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.checklist-phases{display:flex;flex-direction:column;gap:12px;}
+.phase{display:flex;flex-direction:column;gap:6px;}
+.phase-label{font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;width:fit-content;}
+.phase-items{list-style:none;display:flex;flex-direction:column;gap:4px;padding-left:4px;}
+.phase-items li{font-size:12px;color:var(--text2);display:flex;align-items:flex-start;gap:8px;line-height:1.45;}
+.phase-items li::before{content:'□';color:var(--text3);flex-shrink:0;font-size:13px;margin-top:-1px;}
+
+/* ── Quote ── */
+.quote-block{border-left:4px solid var(--primary);padding:14px 20px;background:var(--primary-light);border-radius:0 10px 10px 0;margin:1.25rem 0;font-size:14px;font-style:italic;color:var(--text);line-height:1.75;}
+.quote-block cite{display:block;margin-top:8px;font-size:12px;font-style:normal;font-weight:500;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">New Agile Devs</span>
+  <div style="width:120px;"></div>
+</nav>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="page-eyebrow">🌱 Learning Paths</div>
+    <h1>New <em>Agile Devs</em></h1>
+    <p>A practical guide for developers joining an agile team for the first time — covering the mindset shifts, collaboration practices, modern engineering techniques, and day-to-day habits that make a Scrum developer effective and valuable.</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">01</span><a href="#mindset">The Agile Developer Mindset</a></li>
+      <li><span class="toc-num">02</span><a href="#scrum">Your Role in Scrum</a></li>
+      <li><span class="toc-num">03</span><a href="#collaboration">Collaboration Practices</a></li>
+      <li><span class="toc-num">04</span><a href="#engineering">Modern Engineering Practices</a></li>
+      <li><span class="toc-num">05</span><a href="#quality">Quality as a Habit</a></li>
+      <li><span class="toc-num">06</span><a href="#stories">Working with User Stories</a></li>
+      <li><span class="toc-num">07</span><a href="#checklist">Sprint Day-by-Day Checklist</a></li>
+    </ul>
+  </div>
+
+  <!-- ── 1. Mindset ── -->
+  <div class="section" id="mindset">
+    <span class="section-anchor"></span>
+    <div class="section-label label-purple">🧠 Mindset</div>
+    <h2>The Agile Developer Mindset</h2>
+    <p>The biggest adjustment for developers new to agile isn't the process — it's the mindset. Agile development asks you to shift from delivering perfect code in isolation to delivering working software collaboratively, early, and often. The goal is outcomes over output, and learning over certainty.</p>
+
+    <div class="quote-block">
+      Done is better than perfect, but done means truly done — tested, reviewed, and ready to ship.
+    </div>
+
+    <div class="mindset-grid">
+      <div class="mindset-card">
+        <div class="mindset-icon">🔄</div>
+        <div class="mindset-title">Embrace iteration</div>
+        <div class="mindset-desc">You won't get it right first time — and that's the plan. Build something, get feedback, improve it. Repeat.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">🤝</div>
+        <div class="mindset-title">Team over individual</div>
+        <div class="mindset-desc">The sprint goal belongs to the whole team. Helping a colleague finish their story is more valuable than starting a new one of your own.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">📣</div>
+        <div class="mindset-title">Communicate early</div>
+        <div class="mindset-desc">Raise blockers the moment they appear. A problem hidden for two days becomes a two-day delay. Surface it immediately.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">✅</div>
+        <div class="mindset-title">Own the Definition of Done</div>
+        <div class="mindset-desc">The DoD is your quality contract. "Almost done" is not done. Never leave quality to someone else downstream.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">🙋</div>
+        <div class="mindset-title">Ask, don't assume</div>
+        <div class="mindset-desc">If a story is unclear, ask the Product Owner or business — don't build what you think they mean and find out at the review it was wrong.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">🌱</div>
+        <div class="mindset-title">Improve constantly</div>
+        <div class="mindset-desc">Every retrospective is an opportunity to get better. Bring observations, not just complaints — and follow through on actions.</div>
+      </div>
+    </div>
+
+    <div class="callout purple">
+      <span class="callout-icon">💡</span>
+      <span>The transition from individual contributor to agile team member is the hardest part of joining an agile team. Your worth is no longer measured by your personal output alone — it's measured by what the team ships together.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 2. Your role in Scrum ── -->
+  <div class="section" id="scrum">
+    <span class="section-anchor"></span>
+    <div class="section-label label-blue">🏃 Scrum</div>
+    <h2>Your Role in Scrum</h2>
+    <p>As a developer in Scrum, you're not just a coder — you're an accountable member of a self-managing team. The Scrum Guide calls this the "Developers" accountability, and it carries real expectations beyond writing code.</p>
+
+    <div class="practice-list">
+      <div class="practice-card open">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--primary-light);">📋</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Sprint Planning</div>
+            <div class="practice-tag" style="background:var(--primary-light);color:var(--primary);">Your contribution matters here</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">Sprint Planning is not just for the Scrum Master and Product Owner. As a developer, you own the "how" — you decide how to break stories down into tasks, how to approach technical solutions, and whether the stories are truly ready to build. Speak up if a story isn't clear enough to start.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ What to bring</div>
+              <ul class="item-list">
+                <li>Questions about unclear acceptance criteria</li>
+                <li>Awareness of your actual capacity (leave buffer for interruptions)</li>
+                <li>Technical dependencies that might block progress</li>
+                <li>Suggestions for how to split large stories</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Watch out for</div>
+              <ul class="item-list">
+                <li>Agreeing to stories you don't understand</li>
+                <li>Over-committing because it feels like the right thing to do</li>
+                <li>Not raising technical risks until mid-sprint</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--green-bg);">☀️</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Daily Scrum</div>
+            <div class="practice-tag" style="background:var(--green-bg);color:var(--green);">Every day</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">The Daily Scrum is for the team to coordinate, not to report to a manager. It's your chance to flag blockers early, offer help to teammates who are stuck, and align on what will actually move the sprint goal forward today.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Be effective</div>
+              <ul class="item-list">
+                <li>Focus on the sprint goal, not just your task list</li>
+                <li>Mention blockers the moment they arise — don't wait</li>
+                <li>Offer to help if a colleague is stuck on something related to your skills</li>
+                <li>Keep it to 15 minutes — park long technical discussions for after</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Watch out for</div>
+              <ul class="item-list">
+                <li>Treating it as a status report ("I worked on X yesterday, I'll do Y today")</li>
+                <li>Not raising blockers because you think you can resolve them yourself</li>
+                <li>Dominating the time with technical detail</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--blue-bg);">🎤</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Sprint Review</div>
+            <div class="practice-tag" style="background:var(--blue-bg);color:var(--blue);">Show your work</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">The Sprint Review is your team's showcase — and as a developer, you should be the one demonstrating the software you built. Stakeholders want to see working software, not slides. Their feedback directly shapes what goes into the next sprint.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ How to demo well</div>
+              <ul class="item-list">
+                <li>Demo real working software in the actual environment</li>
+                <li>Tell the story — "a user would do this, and now they can…"</li>
+                <li>Invite questions and be genuinely open to feedback</li>
+                <li>Don't demo things that don't meet the Definition of Done</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Watch out for</div>
+              <ul class="item-list">
+                <li>Demoing from a local dev environment that doesn't reflect production</li>
+                <li>Getting defensive about feedback from stakeholders</li>
+                <li>Letting the PO do all the talking while you stay quiet</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--amber-bg);">🔍</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Sprint Retrospective</div>
+            <div class="practice-tag" style="background:var(--amber-bg);color:var(--amber);">Your voice matters</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">The Retrospective is one of the most valuable events in Scrum — but only if developers actively participate. You see the day-to-day technical reality that others don't. Your observations about what slowed you down or what made the sprint smoother are exactly what the team needs to improve.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ How to contribute</div>
+              <ul class="item-list">
+                <li>Come prepared with specific observations, not just feelings</li>
+                <li>Focus on process and systems, not on individual people</li>
+                <li>Volunteer to own an action item — follow-through builds trust</li>
+                <li>Raise technical debt as a team topic, not just a developer concern</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Watch out for</div>
+              <ul class="item-list">
+                <li>Staying quiet because it "feels awkward"</li>
+                <li>Venting without suggesting an improvement</li>
+                <li>Ignoring action items from the previous retro</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 3. Collaboration ── -->
+  <div class="section" id="collaboration">
+    <span class="section-anchor"></span>
+    <div class="section-label label-teal">🤝 Collaboration</div>
+    <h2>Collaboration Practices</h2>
+    <p>Modern agile development is fundamentally collaborative. The best teams don't work in parallel silos — they actively share context, review each other's work, and make decisions together. These practices directly improve code quality, reduce rework, and spread knowledge across the team.</p>
+
+    <div class="practice-list">
+
+      <div class="practice-card open">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--teal-bg);">👥</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Pair Programming</div>
+            <div class="practice-tag" style="background:var(--teal-bg);color:var(--teal);">Engineering practice</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">Two developers work together at one workstation — one drives (writes code) while the other navigates (reviews, thinks ahead, spots issues). Roles switch regularly. Originally an XP practice, pairing is widely adopted in agile teams for complex problems, onboarding, and critical code paths.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits</div>
+              <ul class="item-list">
+                <li>Produces higher quality code with fewer defects</li>
+                <li>Spreads knowledge — no single person owns a system</li>
+                <li>New developers onboard faster when pairing with experienced colleagues</li>
+                <li>Catches bugs in real time rather than in review</li>
+                <li>Reduces interruptions — one person can field them while the other maintains flow</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Modern best practice</div>
+              <ul class="item-list">
+                <li>Use for complex stories, unfamiliar codebases, or high-risk changes</li>
+                <li>Remote pairing works well with screen sharing + voice — tools like VS Code Live Share help</li>
+                <li>Switch driver every 25–30 minutes to keep both engaged</li>
+                <li>Don't pair on everything — use judgment about when the overhead is worth it</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--coral-bg);">🐝</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Mob / Ensemble Programming</div>
+            <div class="practice-tag" style="background:var(--coral-bg);color:var(--coral);">Whole team practice</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">The whole team works on one thing at a time — one keyboard, one screen, rotating the driver every few minutes while the rest of the team navigates. Popularised by Woody Zuill, ensemble programming is especially powerful for architectural decisions, learning sessions, and solving the most complex problems together.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits</div>
+              <ul class="item-list">
+                <li>Entire team builds shared understanding of the codebase</li>
+                <li>Decisions are made collectively — less revisiting later</li>
+                <li>Ideal for onboarding — new devs learn by doing in a safe environment</li>
+                <li>Dramatically reduces handoff delays and WIP</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Modern best practice</div>
+              <ul class="item-list">
+                <li>Use for high-value, high-complexity stories or architectural spikes</li>
+                <li>Rotate the driver every 4–7 minutes with a strict timer</li>
+                <li>Navigator rule: "speak to the highest abstraction the driver can handle"</li>
+                <li>Works well remotely with a shared screen and a clear rotation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--primary-light);">🔍</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Code Review</div>
+            <div class="practice-tag" style="background:var(--primary-light);color:var(--primary);">Quality gate</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">Code review (also called peer review or PR review) is the practice of having at least one other developer review your code before it is merged. In modern agile teams this is typically done via pull/merge requests in Git. It's a key component of most Definitions of Done and one of the most effective quality practices available.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits</div>
+              <ul class="item-list">
+                <li>Catches bugs, logic errors, and security issues before production</li>
+                <li>Spreads codebase knowledge across the team</li>
+                <li>Enforces coding standards consistently</li>
+                <li>Provides learning opportunities for both reviewer and author</li>
+                <li>Creates a natural checkpoint before merging</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Modern best practice</div>
+              <ul class="item-list">
+                <li>Keep PRs small — under 400 lines of changed code if possible</li>
+                <li>Review within 24 hours — stale PRs are a flow killer</li>
+                <li>Comment on the code, not the coder — "this function could be clearer" not "why did you do it this way"</li>
+                <li>Automate what you can (linting, formatting, tests) so human review focuses on logic and design</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--blue-bg);">🔄</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Backlog Refinement</div>
+            <div class="practice-tag" style="background:var(--blue-bg);color:var(--blue);">Collaboration event</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">Backlog refinement (or grooming) is when the team reviews upcoming stories with the Product Owner — clarifying requirements, splitting large items, identifying dependencies, and estimating. It's not an official Scrum event but it's critical for keeping Sprint Planning short and keeping stories in a ready state.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits</div>
+              <ul class="item-list">
+                <li>Prevents surprise scope or unclear requirements at sprint planning</li>
+                <li>Developers surface technical unknowns early — reducing mid-sprint risk</li>
+                <li>Stories that reach sprint planning are truly ready to build</li>
+                <li>Keeps developers connected to the product vision, not just the code</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Modern best practice</div>
+              <ul class="item-list">
+                <li>Run it 1–2 times per sprint, not just before sprint planning</li>
+                <li>Developers should lead the technical questioning — the PO isn't expected to know the implementation</li>
+                <li>Use the Three Amigos technique: dev, tester, and PO discuss each story together</li>
+                <li>Challenge stories that can't be completed in one sprint</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 4. Engineering Practices ── -->
+  <div class="section" id="engineering">
+    <span class="section-anchor"></span>
+    <div class="section-label label-green">⚙️ Engineering</div>
+    <h2>Modern Engineering Practices</h2>
+    <p>Agile delivery only works sustainably if the engineering practices support it. Teams that adopt these practices consistently ship faster, with higher quality and lower risk. These are not optional extras — they are the technical foundation of agile.</p>
+
+    <div class="practice-list">
+
+      <div class="practice-card open">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--green-bg);">🧪</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Test-Driven Development (TDD)</div>
+            <div class="practice-tag" style="background:var(--green-bg);color:var(--green);">XP practice · Widely adopted</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">TDD is a development technique where you write a failing test first, then write just enough production code to make it pass, then refactor. The cycle is: Red → Green → Refactor. It sounds counterintuitive but it produces simpler designs, higher coverage, and code that is inherently testable.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits</div>
+              <ul class="item-list">
+                <li>Built-in test coverage — code is tested by design</li>
+                <li>Forces simpler, more modular designs (hard to test = hard to change)</li>
+                <li>Catches regressions immediately when you change existing code</li>
+                <li>Documentation through tests — tests describe expected behaviour</li>
+                <li>Reduces debugging time significantly</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Getting started</div>
+              <ul class="item-list">
+                <li>Start with unit tests for business logic — not UI or infrastructure</li>
+                <li>One assertion per test where possible — keeps failures obvious</li>
+                <li>Red-Green-Refactor: don't skip the refactor step</li>
+                <li>The test should read like a specification of what the code should do</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--blue-bg);">🚀</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Continuous Integration / Continuous Delivery (CI/CD)</div>
+            <div class="practice-tag" style="background:var(--blue-bg);color:var(--blue);">DevOps practice · Industry standard</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">CI means merging code to the main branch frequently (at least daily) with automated build and test pipelines running on every commit. CD extends this by automating the deployment pipeline so that working software can be released to production at any time — with confidence. Together they eliminate "integration hell" and make every sprint potentially shippable.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits</div>
+              <ul class="item-list">
+                <li>Integration problems are found within hours, not at end of sprint</li>
+                <li>Every commit is verified — broken builds are fixed immediately</li>
+                <li>Reduces the fear of releasing — smaller, frequent releases are safer</li>
+                <li>Enables truly "Done" increments every sprint</li>
+                <li>Supports DORA metrics — the gold standard for engineering performance</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Modern best practice</div>
+              <ul class="item-list">
+                <li>Treat a broken build as the team's highest priority — fix before starting new work</li>
+                <li>Keep the pipeline fast — under 10 minutes for the key feedback loop</li>
+                <li>Use feature flags to merge code that isn't ready for users yet</li>
+                <li>Every developer should understand the pipeline, not just the DevOps engineer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--amber-bg);">♻️</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Refactoring & Technical Debt Management</div>
+            <div class="practice-tag" style="background:var(--amber-bg);color:var(--amber);">Sustainability practice</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">Refactoring is improving the internal structure of code without changing its external behaviour. It's an ongoing discipline, not a one-off project. Technical debt is the accumulated cost of shortcuts — it slows the team down and makes future changes riskier. Agile teams track and manage it deliberately rather than pretending it doesn't exist.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits</div>
+              <ul class="item-list">
+                <li>Maintains the team's ability to deliver at pace sprint after sprint</li>
+                <li>Reduces the cost and risk of future changes</li>
+                <li>Prevents the codebase from becoming unmaintainable over time</li>
+                <li>Makes onboarding new developers significantly easier</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Modern best practice</div>
+              <ul class="item-list">
+                <li>Boy Scout Rule: leave the code a little cleaner than you found it</li>
+                <li>Refactor as part of normal development — not in big separate sprints</li>
+                <li>Raise significant tech debt in the backlog — give it visibility with the PO</li>
+                <li>Track debt explicitly — a tech debt backlog makes it negotiable, not invisible</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--coral-bg);">🌿</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Trunk-Based Development & Feature Flags</div>
+            <div class="practice-tag" style="background:var(--coral-bg);color:var(--coral);">CI enabler</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">Trunk-based development means all developers commit to a single shared branch (main/trunk) frequently — at least once a day. Long-lived feature branches are avoided because they cause merge conflicts and delay integration. Feature flags (also called feature toggles) let you merge incomplete features to main while controlling when they're visible to users.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits</div>
+              <ul class="item-list">
+                <li>Eliminates large, painful merge conflicts</li>
+                <li>Every developer is always working on the latest codebase</li>
+                <li>Feature flags enable dark launching and A/B testing</li>
+                <li>Faster feedback from CI — integration problems surface immediately</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Modern best practice</div>
+              <ul class="item-list">
+                <li>Short-lived branches (hours to a day) are fine — multi-week branches are not</li>
+                <li>Keep feature flags clean — remove them once a feature is fully released</li>
+                <li>Use branch by abstraction for large architectural changes</li>
+                <li>If you're afraid to merge, that's a signal your changes are too large</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 5. Quality ── -->
+  <div class="section" id="quality">
+    <span class="section-anchor"></span>
+    <div class="section-label label-coral">🎯 Quality</div>
+    <h2>Quality as a Habit</h2>
+    <p>In agile, quality is not a phase at the end — it's built into every step. The concept of "shift left" means bringing testing, security, and quality checks earlier in the development process rather than leaving them to a QA team at the end of the sprint.</p>
+
+    <div class="mindset-grid">
+      <div class="mindset-card">
+        <div class="mindset-icon">⬅️</div>
+        <div class="mindset-title">Shift left testing</div>
+        <div class="mindset-desc">Write tests while developing, not after. The earlier a bug is found, the cheaper it is to fix. Production bugs cost 10–100x more than bugs caught in development.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">📝</div>
+        <div class="mindset-title">Definition of Done</div>
+        <div class="mindset-desc">The DoD is your quality contract. If it says code-reviewed and tested, that means every story, every sprint — no exceptions, no matter the deadline pressure.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">🤖</div>
+        <div class="mindset-title">Automate the boring bits</div>
+        <div class="mindset-desc">Linting, formatting, unit tests, and security scans should run automatically on every commit. Free up human review time for what matters — logic and design.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">🔐</div>
+        <div class="mindset-title">Security by default</div>
+        <div class="mindset-desc">Consider security implications as you build — not after. Secure coding practices (input validation, least privilege, no secrets in code) should be second nature.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">♿</div>
+        <div class="mindset-title">Accessibility awareness</div>
+        <div class="mindset-desc">Build accessible software from the start. Retrofitting accessibility is significantly more expensive than designing for it from day one.</div>
+      </div>
+      <div class="mindset-card">
+        <div class="mindset-icon">📊</div>
+        <div class="mindset-title">Monitor in production</div>
+        <div class="mindset-desc">Your responsibility doesn't end at "Done." Understand how your code performs in production. Alerts, logs, and dashboards are part of the product, not an afterthought.</div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>If your team is regularly accumulating escaped defects or finding bugs in UAT that should have been caught earlier — that's a signal to invest in shift-left practices. See the <a href="dor-dod.html" style="color:var(--green);font-weight:500;">DoR &amp; DoD Examples</a> for testing criteria to add to your Definition of Done.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 6. User Stories ── -->
+  <div class="section" id="stories">
+    <span class="section-anchor"></span>
+    <div class="section-label label-amber">📖 User Stories</div>
+    <h2>Working with User Stories</h2>
+    <p>User stories are the primary unit of work for most agile teams. As a developer, you need to read them critically — not just execute them. A story that doesn't meet the Definition of Ready wastes sprint capacity and introduces mid-sprint surprises.</p>
+
+    <div class="practice-list">
+      <div class="practice-card open">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--amber-bg);">📐</div>
+          <div class="practice-header-text">
+            <div class="practice-name">INVEST — What makes a good story</div>
+            <div class="practice-tag" style="background:var(--amber-bg);color:var(--amber);">Story quality framework</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">Before a story enters a sprint, check it against INVEST: Independent, Negotiable, Valuable, Estimable, Small, Testable. If a story fails any of these criteria, raise it in refinement — don't wait until planning or mid-sprint.</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Story quality signals</div>
+              <ul class="item-list">
+                <li><strong>I</strong>ndependent — can be built without waiting for another story</li>
+                <li><strong>N</strong>egotiable — details are up for discussion, not fixed</li>
+                <li><strong>V</strong>aluable — delivers something to a user or the business</li>
+                <li><strong>E</strong>stimable — you can roughly size it</li>
+                <li><strong>S</strong>mall — fits in a sprint without dominating it</li>
+                <li><strong>T</strong>estable — you can verify it's done</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Developer questions to ask</div>
+              <ul class="item-list">
+                <li>"What does done look like from the user's perspective?"</li>
+                <li>"Are there any technical dependencies we haven't surfaced?"</li>
+                <li>"Can this be split into smaller deliverable slices?"</li>
+                <li>"Do we have all the design assets and data we need to start?"</li>
+                <li>"What could go wrong technically — and how do we plan for it?"</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="practice-card">
+        <div class="practice-header">
+          <div class="practice-icon" style="background:var(--green-bg);">✂️</div>
+          <div class="practice-header-text">
+            <div class="practice-name">Story Splitting</div>
+            <div class="practice-tag" style="background:var(--green-bg);color:var(--green);">Sizing technique</div>
+          </div>
+          <div class="practice-toggle">⌄</div>
+        </div>
+        <div class="practice-body">
+          <div class="practice-what">Large stories ("epics") that can't be completed in a sprint need to be split into smaller, independently deliverable slices. Splitting by workflow step, data variation, or business rule is usually more effective than splitting by technical layer (don't do "front-end story" and "back-end story" — that's not independently deliverable).</div>
+          <div class="benefits-grid">
+            <div class="benefits-col">
+              <div class="col-title">✓ Benefits of small stories</div>
+              <ul class="item-list">
+                <li>Faster feedback — something shippable every day or two</li>
+                <li>Lower risk — smaller changes are easier to test and revert</li>
+                <li>More accurate estimation — easier to size small things</li>
+                <li>Better flow — work moves through the board faster</li>
+              </ul>
+            </div>
+            <div class="guidance-col">
+              <div class="col-title">→ Good splitting patterns</div>
+              <ul class="item-list">
+                <li>By workflow step: "user can view" before "user can edit"</li>
+                <li>By data variation: "for domestic addresses" before "international"</li>
+                <li>Happy path first: "successful payment" before "error handling"</li>
+                <li>See the Story Splitting guide in External Links for full patterns</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ── 7. Sprint checklist ── -->
+  <div class="section" id="checklist">
+    <span class="section-anchor"></span>
+    <div class="section-label label-purple">✅ Checklist</div>
+    <h2>Sprint Day-by-Day Checklist</h2>
+    <p>A practical reference for what a developer should be thinking about at each phase of the sprint.</p>
+
+    <div class="sprint-checklist">
+      <div class="sprint-checklist-title">Developer sprint checklist</div>
+      <div class="checklist-phases">
+
+        <div class="phase">
+          <div class="phase-label" style="background:var(--primary-light);color:var(--primary);">Sprint Planning</div>
+          <ul class="phase-items">
+            <li>Confirm all stories meet the Definition of Ready before accepting them</li>
+            <li>Ask questions about acceptance criteria you don't fully understand</li>
+            <li>Raise technical risks or dependencies you can already see</li>
+            <li>Agree on the sprint goal as a team — not just a task list</li>
+            <li>Be realistic about capacity — account for meetings, reviews, and interruptions</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label" style="background:var(--green-bg);color:var(--green);">During the Sprint</div>
+          <ul class="phase-items">
+            <li>Attend the Daily Scrum and flag blockers the same day they arise</li>
+            <li>Update the board — if a card hasn't moved in 24 hours, explain why</li>
+            <li>Finish before starting — help teammates close open stories before picking up new ones</li>
+            <li>Write or update tests as you build, not as an afterthought</li>
+            <li>Keep PRs small and review others' PRs within 24 hours</li>
+            <li>Communicate early if a story is turning out bigger than estimated</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label" style="background:var(--blue-bg);color:var(--blue);">End of Sprint</div>
+          <ul class="phase-items">
+            <li>Verify every story you completed meets the full Definition of Done</li>
+            <li>Prepare a demo of what you built — in the real environment, not local</li>
+            <li>Bring specific observations to the retrospective — not just "it was fine"</li>
+            <li>Don't carry unfinished stories silently into the next sprint — flag them</li>
+            <li>Note anything you learned this sprint that would improve the next</li>
+          </ul>
+        </div>
+
+        <div class="phase">
+          <div class="phase-label" style="background:var(--amber-bg);color:var(--amber);">Ongoing</div>
+          <ul class="phase-items">
+            <li>Participate in backlog refinement — ask technical questions early</li>
+            <li>Raise technical debt items in the backlog — don't just absorb them silently</li>
+            <li>Keep the CI pipeline green — treat a broken build as the team's top priority</li>
+            <li>Follow the team's branching and commit message conventions</li>
+            <li>Share knowledge — document decisions, update wikis, run mini knowledge-shares</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <span>New to the team? Ask your Scrum Master for the team's working agreement, Definition of Done, and branching conventions on your first day. See the <a href="team-agreement.html" style="color:var(--blue);font-weight:500;">Team Agreement Example</a> for what a good working agreement looks like.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.practice-header').forEach(h=>{
+  h.addEventListener('click',()=>h.closest('.practice-card').classList.toggle('open'));
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>

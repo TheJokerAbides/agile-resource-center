@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>User Story Mapping — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;--surface:rgba(255,255,255,0.82);--surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);--border2:rgba(110,100,180,0.25);
+  --text:#1a1826;--text2:#6b6880;--text3:#9e9bb5;
+  --primary:#6c5ce7;--primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.15);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --teal:#0d9488;--teal-bg:#d4f0ee;--teal-border:rgba(13,148,136,0.2);
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(240,239,246,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+.page{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:3rem 2.5rem 6rem;}
+
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);background:var(--teal-bg);border:1px solid var(--teal-border);border-radius:20px;padding:4px 14px;margin-bottom:1.25rem;}
+.page-hero{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:44px;font-weight:400;letter-spacing:-1px;color:var(--text);margin-bottom:0.75rem;line-height:1.15;}
+.page-hero h1 em{font-style:italic;background:linear-gradient(135deg,#0d9488,#2563eb,#6c5ce7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:16px;color:var(--text2);font-weight:300;line-height:1.75;max-width:640px;}
+
+.toc{background:var(--surface);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:var(--radius);padding:18px 22px;margin-bottom:3rem;box-shadow:var(--shadow);}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li{display:flex;align-items:center;gap:10px;}
+.toc-list a{font-size:13px;font-weight:500;color:var(--primary);text-decoration:none;transition:opacity 0.15s;}
+.toc-list a:hover{opacity:0.7;}
+.toc-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);width:20px;flex-shrink:0;}
+
+.section{margin-bottom:3.5rem;}
+.section-anchor{display:block;height:80px;margin-top:-80px;visibility:hidden;}
+.section-label{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.label-teal{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-border);}
+.label-purple{background:var(--primary-light);color:var(--primary);border:1px solid rgba(108,92,231,0.2);}
+.label-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.label-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.label-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.section h2{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;letter-spacing:-0.5px;color:var(--text);margin-bottom:0.75rem;line-height:1.2;}
+.section p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:1rem;}
+.section p:last-child{margin-bottom:0;}
+.section-divider{height:1px;background:var(--border2);margin:3rem 0;}
+
+/* Story map diagram */
+.map-diagram{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:20px;margin:1.5rem 0;box-shadow:var(--shadow);overflow-x:auto;}
+.map-diagram-title{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
+.map-activities-row{display:flex;gap:8px;margin-bottom:6px;min-width:680px;}
+.map-activity{flex:1;padding:10px 12px;border-radius:9px;font-size:12px;font-weight:600;text-align:center;background:linear-gradient(135deg,rgba(108,92,231,0.12),rgba(192,38,211,0.08));border:1px solid rgba(108,92,231,0.25);color:var(--primary);}
+.map-divider-line{height:2px;background:var(--border2);margin:8px 0;position:relative;min-width:680px;}
+.map-divider-line::before{content:'user journey backbone';position:absolute;left:50%;transform:translateX(-50%);top:-9px;font-size:9px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);background:var(--bg);padding:0 8px;}
+.map-tasks-row{display:flex;gap:8px;margin-bottom:4px;min-width:680px;}
+.map-task{flex:1;padding:8px 10px;border-radius:8px;font-size:11px;text-align:center;background:var(--blue-bg);border:1px solid var(--blue-border);color:var(--blue);font-weight:500;}
+.map-release-band{border:1.5px dashed var(--border2);border-radius:10px;padding:8px 12px;margin:8px 0;min-width:680px;}
+.map-release-label{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;}
+.map-stories-row{display:flex;gap:8px;}
+.map-story{flex:1;padding:7px 9px;border-radius:7px;font-size:10px;text-align:center;min-height:36px;display:flex;align-items:center;justify-content:center;}
+.story-mvp{background:var(--green-bg);border:1px solid var(--green-border);color:#14532d;}
+.story-v2{background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350f;}
+.story-v3{background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);color:var(--primary);}
+.story-empty{background:transparent;border:none;}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:14px;margin:1.5rem 0;}
+.step{display:flex;gap:16px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);transition:transform 0.18s,box-shadow 0.18s;}
+.step:hover{transform:translateX(3px);box-shadow:var(--shadow-lg);}
+.step-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;font-family:'DM Mono',monospace;flex-shrink:0;background:var(--primary-light);color:var(--primary);}
+.step-body{flex:1;}
+.step-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.6;}
+.step-tip{font-size:12px;color:var(--text3);margin-top:6px;font-style:italic;}
+
+/* Two col */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.25rem 0;}
+@media(max-width:580px){.two-col{grid-template-columns:1fr;}}
+.col-card{border-radius:10px;padding:14px 16px;}
+.col-green{background:var(--green-bg);border:1px solid var(--green-border);}
+.col-amber{background:var(--amber-bg);border:1px solid var(--amber-border);}
+.col-blue{background:var(--blue-bg);border:1px solid var(--blue-border);}
+.col-red{background:var(--red-bg);border:1px solid var(--red-border);}
+.col-teal{background:var(--teal-bg);border:1px solid var(--teal-border);}
+.col-title{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.col-green .col-title{color:var(--green);}
+.col-amber .col-title{color:var(--amber);}
+.col-blue .col-title{color:var(--blue);}
+.col-red .col-title{color:var(--red);}
+.col-teal .col-title{color:var(--teal);}
+.item-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:12px;line-height:1.45;display:flex;align-items:flex-start;gap:6px;}
+.item-list li::before{flex-shrink:0;font-size:11px;margin-top:2px;}
+.col-green .item-list li{color:#14532d;}
+.col-green .item-list li::before{content:'✓';color:var(--green);}
+.col-amber .item-list li{color:#78350f;}
+.col-amber .item-list li::before{content:'→';color:var(--amber);}
+.col-blue .item-list li{color:#1e3a5f;}
+.col-blue .item-list li::before{content:'→';color:var(--blue);}
+.col-red .item-list li{color:#7f1d1d;}
+.col-red .item-list li::before{content:'✕';color:var(--red);}
+.col-teal .item-list li{color:#0f4841;}
+.col-teal .item-list li::before{content:'→';color:var(--teal);}
+
+/* Callout */
+.callout{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border-radius:10px;margin:1.25rem 0;font-size:13px;line-height:1.6;}
+.callout.tip{background:var(--green-bg);border:1px solid var(--green-border);color:#14532d;}
+.callout.note{background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350f;}
+.callout.info{background:var(--blue-bg);border:1px solid var(--blue-border);color:#1e3a5f;}
+.callout-icon{flex-shrink:0;font-size:15px;}
+
+/* Quote */
+.quote-block{border-left:4px solid var(--teal);padding:14px 20px;background:var(--teal-bg);border-radius:0 10px 10px 0;margin:1.25rem 0;font-size:14px;font-style:italic;color:var(--text);line-height:1.75;}
+.quote-block cite{display:block;margin-top:8px;font-size:12px;font-style:normal;font-weight:500;color:var(--text3);}
+
+/* Personas */
+.personas-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:1.25rem 0;}
+.persona-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:14px;text-align:center;box-shadow:var(--shadow);}
+.persona-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto 8px;}
+.persona-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.persona-role{font-size:11px;color:var(--text3);}
+.persona-goal{font-size:11px;color:var(--text2);margin-top:6px;line-height:1.4;font-style:italic;}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">User Story Mapping</span>
+  <div style="width:120px;"></div>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-eyebrow">🗺️ Resources</div>
+    <h1>User Story <em>Mapping</em></h1>
+    <p>A visual technique for understanding how users experience your product end-to-end — and for slicing that experience into meaningful releases. Developed by Jeff Patton, story mapping turns a flat backlog into a shared picture of user value.</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">01</span><a href="#what">What is Story Mapping?</a></li>
+      <li><span class="toc-num">02</span><a href="#anatomy">Anatomy of a Story Map</a></li>
+      <li><span class="toc-num">03</span><a href="#howto">How to Run a Story Mapping Session</a></li>
+      <li><span class="toc-num">04</span><a href="#mvp">Identifying the MVP Slice</a></li>
+      <li><span class="toc-num">05</span><a href="#personas">Working with User Personas</a></li>
+      <li><span class="toc-num">06</span><a href="#tips">Tips, Anti-patterns &amp; Common Mistakes</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. What -->
+  <div class="section" id="what">
+    <span class="section-anchor"></span>
+    <div class="section-label label-teal">🗺️ Overview</div>
+    <h2>What is Story Mapping?</h2>
+    <p>User story mapping is a product planning technique developed by Jeff Patton. It arranges user stories along two dimensions: <strong>horizontally</strong> across the user's journey (from left to right), and <strong>vertically</strong> by priority (most important at the top). The result is a visual map of everything the system needs to do, organised around what users actually do.</p>
+    <p>A flat backlog is just a ranked list — it tells you what to build next, but loses all context about why and for whom. A story map restores that context. It makes the user narrative visible, reveals gaps in thinking, and creates the shared understanding teams need to make good prioritisation decisions.</p>
+
+    <div class="quote-block">
+      The goal of story mapping is shared understanding — not a document.
+      <cite>— Jeff Patton, User Story Mapping (2014)</cite>
+    </div>
+
+    <div class="two-col">
+      <div class="col-teal">
+        <div class="col-title">→ When to use story mapping</div>
+        <ul class="item-list">
+          <li>Starting a new product or major feature from scratch</li>
+          <li>Planning a release and deciding what's in vs. out</li>
+          <li>Aligning a team on scope after requirements have drifted</li>
+          <li>Onboarding new team members to a complex domain</li>
+          <li>Breaking down a large epic into deliverable user stories</li>
+          <li>Facilitating a discovery workshop with stakeholders</li>
+        </ul>
+      </div>
+      <div class="col-blue">
+        <div class="col-title">→ What you'll end up with</div>
+        <ul class="item-list">
+          <li>A shared visual of the full user experience</li>
+          <li>A clear MVP slice — the minimum needed for real user value</li>
+          <li>Subsequent release slices with increasing capability</li>
+          <li>A backlog that reflects user value, not just feature lists</li>
+          <li>Team alignment on scope, priority, and what's intentionally out</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 2. Anatomy -->
+  <div class="section" id="anatomy">
+    <span class="section-anchor"></span>
+    <div class="section-label label-blue">🧩 Structure</div>
+    <h2>Anatomy of a Story Map</h2>
+    <p>A story map has three layers, reading from top to bottom. Understanding each layer is key to building a useful map.</p>
+
+    <div class="two-col" style="margin-bottom:1.5rem;">
+      <div class="col-card col-teal">
+        <div class="col-title">Layer 1 — Activities (Backbone)</div>
+        <ul class="item-list">
+          <li>High-level user goals or jobs to be done</li>
+          <li>Usually 3–8 activities across the whole map</li>
+          <li>Examples: "Register account", "Browse products", "Checkout"</li>
+          <li>These form the top row — the user journey backbone</li>
+        </ul>
+      </div>
+      <div class="col-card col-blue">
+        <div class="col-title">Layer 2 — Tasks (Walking skeleton)</div>
+        <ul class="item-list">
+          <li>The steps a user takes within each activity</li>
+          <li>Still high level — not implementation detail</li>
+          <li>Examples under "Checkout": "Enter address", "Choose payment", "Confirm order"</li>
+          <li>These form the second row — the walking skeleton</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="map-diagram">
+      <div class="map-diagram-title">Example story map structure — e-commerce checkout flow</div>
+
+      <div class="map-activities-row">
+        <div class="map-activity">Browse</div>
+        <div class="map-activity">Add to Cart</div>
+        <div class="map-activity">Checkout</div>
+        <div class="map-activity">Confirmation</div>
+      </div>
+
+      <div class="map-divider-line"></div>
+
+      <div class="map-tasks-row">
+        <div class="map-task">Search products</div>
+        <div class="map-task">Add item</div>
+        <div class="map-task">Enter address</div>
+        <div class="map-task">View order</div>
+      </div>
+      <div class="map-tasks-row" style="margin-bottom:12px;">
+        <div class="map-task">Filter results</div>
+        <div class="map-task">View cart</div>
+        <div class="map-task">Choose payment</div>
+        <div class="map-task">Email receipt</div>
+      </div>
+
+      <div class="map-release-band">
+        <div class="map-release-label">🟢 MVP — Release 1</div>
+        <div class="map-stories-row">
+          <div class="map-story story-mvp">Basic search</div>
+          <div class="map-story story-mvp">Add single item</div>
+          <div class="map-story story-mvp">Delivery address</div>
+          <div class="map-story story-mvp">Order number</div>
+        </div>
+      </div>
+
+      <div class="map-release-band" style="margin-top:8px;">
+        <div class="map-release-label">🟡 Release 2</div>
+        <div class="map-stories-row">
+          <div class="map-story story-v2">Filter by category</div>
+          <div class="map-story story-v2">Quantity picker</div>
+          <div class="map-story story-v2">Saved addresses</div>
+          <div class="map-story story-v2">Email receipt</div>
+        </div>
+      </div>
+
+      <div class="map-release-band" style="margin-top:8px;">
+        <div class="map-release-label">🔵 Release 3</div>
+        <div class="map-stories-row">
+          <div class="map-story story-v3">AI recommendations</div>
+          <div class="map-story story-v3">Wishlist</div>
+          <div class="map-story story-v3">One-click checkout</div>
+          <div class="map-story story-v3">Order tracking</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>The horizontal axis represents time in the user's experience — not priority or development sequence. Priority runs vertically. This distinction is what makes story maps so powerful for planning.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 3. How to run -->
+  <div class="section" id="howto">
+    <span class="section-anchor"></span>
+    <div class="section-label label-purple">👥 Facilitation</div>
+    <h2>How to Run a Story Mapping Session</h2>
+    <p>A story mapping session works best as a workshop — bringing together the Product Owner, developers, a UX designer, and key stakeholders for 2–4 hours. The goal is shared understanding, not a perfect document on the first attempt.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Frame the user and the outcome</div>
+          <div class="step-desc">Start by agreeing who you're mapping for and what outcome they're trying to achieve. Write it on the board before anything else: "As a [type of user], I want to [achieve goal] so that [outcome]." This keeps the whole map anchored in user value.</div>
+          <div class="step-tip">Tip: If you have multiple user types, create a separate map for each — don't try to merge them into one.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Write the user narrative — activities first</div>
+          <div class="step-desc">Ask "what does the user do first?" and place that activity on the far left. Keep adding activities left-to-right until you've covered the full journey. Don't go into detail yet — stay at the high level. You should end up with 4–8 activity cards spanning the top row.</div>
+          <div class="step-tip">Tip: Use a different colour card for activities vs tasks — it keeps the layers visually distinct.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-title">Decompose activities into tasks</div>
+          <div class="step-desc">Under each activity, add the tasks the user performs to complete it. Keep tasks user-focused ("user enters their delivery address") not implementation-focused ("POST to /api/address"). Tasks form the walking skeleton — the minimum path through the experience.</div>
+          <div class="step-tip">Tip: One sticky per task. Aim for 3–6 tasks per activity to start — you can always add more.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <div class="step-title">Add user stories below tasks</div>
+          <div class="step-desc">Below each task, add the user stories that make it possible — variations, edge cases, and enhancements. Place the most important stories nearest to the top. This is where the vertical axis becomes meaningful: stories near the top are essential; stories further down are enhancements.</div>
+          <div class="step-tip">Tip: Don't try to write every possible story upfront — get the top slice right first.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <div class="step-title">Draw release slices horizontally</div>
+          <div class="step-desc">Draw a horizontal line across the map to define your MVP — everything above the line must be in the first release; everything below can wait. Repeat for subsequent releases. Each slice should represent a coherent, usable experience — not just a collection of features.</div>
+          <div class="step-tip">Tip: A slice should answer: "Can a real user do something valuable with just this?" If not, the slice is too thin.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="step-title">Validate and refine</div>
+          <div class="step-desc">Walk through the map as the user: "I open the app... I do this... then this... then this." Does the journey make sense? Are there gaps? Is anything above the MVP line that doesn't need to be there? This walkthrough often surfaces missing stories and misaligned assumptions.</div>
+          <div class="step-tip">Tip: Invite someone who wasn't involved in creating the map to walk through it — fresh eyes find gaps the creators miss.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 4. MVP -->
+  <div class="section" id="mvp">
+    <span class="section-anchor"></span>
+    <div class="section-label label-green">🎯 MVP Slicing</div>
+    <h2>Identifying the MVP Slice</h2>
+    <p>The MVP (Minimum Viable Product) slice is the most important and most misunderstood output of story mapping. The MVP is not the smallest thing you can build — it's the smallest thing that delivers a complete, valuable experience for a real user.</p>
+    <p>Jeff Patton's framing: think of releases like the layers of a cake. Each layer should be a complete, edible slice — not just the flour from the bottom (infrastructure), or just the icing from the top (UI). The MVP is the thinnest complete cake you can bake.</p>
+
+    <div class="two-col">
+      <div class="col-green">
+        <div class="col-title">✓ A good MVP slice</div>
+        <ul class="item-list">
+          <li>Covers the entire user journey end-to-end, even minimally</li>
+          <li>Allows real users to achieve their core goal</li>
+          <li>Can be tested with real users to generate learning</li>
+          <li>Intentionally excludes nice-to-haves and edge cases</li>
+          <li>The team can genuinely say "this is usable, not embarrassing"</li>
+        </ul>
+      </div>
+      <div class="col-red">
+        <div class="col-title">✕ Common MVP mistakes</div>
+        <ul class="item-list">
+          <li>Treating MVP as "everything we can build in the first sprint"</li>
+          <li>Building the infrastructure layer without any user-facing functionality</li>
+          <li>Calling it MVP when it's actually a proof of concept or tech spike</li>
+          <li>Including every edge case because stakeholders are nervous</li>
+          <li>Defining MVP by what the team can deliver, not by what users need</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-icon">💡</span>
+      <span>The real test of an MVP: "Can we put this in front of a real user and learn whether we're solving the right problem?" If the answer is no, the slice is too thin. If you can't remove anything, it's too thick.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 5. Personas -->
+  <div class="section" id="personas">
+    <span class="section-anchor"></span>
+    <div class="section-label label-teal">👤 Personas</div>
+    <h2>Working with User Personas</h2>
+    <p>A story map without a specific user in mind becomes a feature list. Personas keep the map anchored in real user behaviour, goals, and frustrations. They don't need to be elaborate — even a simple one-liner helps the team make better decisions.</p>
+
+    <div class="personas-row">
+      <div class="persona-card">
+        <div class="persona-avatar" style="background:var(--blue-bg);">👩‍💼</div>
+        <div class="persona-name">Sarah</div>
+        <div class="persona-role">First-time buyer</div>
+        <div class="persona-goal">"I want to find and buy a gift quickly without creating an account."</div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-avatar" style="background:var(--green-bg);">🧑‍💻</div>
+        <div class="persona-name">Marcus</div>
+        <div class="persona-role">Power user</div>
+        <div class="persona-goal">"I buy regularly and want a fast, frictionless repeat-purchase experience."</div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-avatar" style="background:var(--amber-bg);">👴</div>
+        <div class="persona-name">David</div>
+        <div class="persona-role">Occasional buyer</div>
+        <div class="persona-goal">"I need clear guidance — I'm not confident with technology and need reassurance at every step."</div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-avatar" style="background:var(--primary-light);">👩‍🦱</div>
+        <div class="persona-name">Priya</div>
+        <div class="persona-role">Mobile-first user</div>
+        <div class="persona-goal">"I do everything on my phone. If it doesn't work well on mobile, I'll go elsewhere."</div>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <span>When the team disagrees about whether a feature belongs in the MVP, ask: "Which persona needs this, and can that persona achieve their goal without it?" This cuts through opinion and anchors the decision in user value.</span>
+    </div>
+
+    <p>If your product serves multiple very different personas, consider building separate story maps for each — then look for overlap when planning releases. A story that's critical for Persona A but irrelevant for Persona B will surface the need for different user journeys or feature flags.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 6. Tips -->
+  <div class="section" id="tips">
+    <span class="section-anchor"></span>
+    <div class="section-label label-amber">💡 Practical guidance</div>
+    <h2>Tips, Anti-patterns &amp; Common Mistakes</h2>
+
+    <div class="two-col">
+      <div class="col-green">
+        <div class="col-title">✓ What makes a great story map</div>
+        <ul class="item-list">
+          <li>Built with the whole team in the room — shared understanding is the output, not the document</li>
+          <li>User-focused language throughout — "user does X", not "system stores Y"</li>
+          <li>Clear release slices with a meaningful user outcome at each level</li>
+          <li>Updated as understanding evolves — it's a living artefact</li>
+          <li>Physical cards on a wall if possible — easier to move and discuss than digital tools</li>
+          <li>Anchored to specific personas — not a generic "the user"</li>
+        </ul>
+      </div>
+      <div class="col-red">
+        <div class="col-title">✕ Anti-patterns to avoid</div>
+        <ul class="item-list">
+          <li>One person builds it alone and presents it to the team — defeats the purpose</li>
+          <li>Activities defined in tech terms ("API calls", "database writes")</li>
+          <li>Release slices drawn by team capacity rather than user value</li>
+          <li>Map abandoned after the planning session — it should be referenced regularly</li>
+          <li>Too many activities — if you have more than 8–10, you're mixing abstraction levels</li>
+          <li>MVP containing "just in case" stories — ruthlessly cut anything not essential</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>The most valuable thing about story mapping isn't the map — it's the conversation that happens while building it. Teams that build maps together arrive at a depth of shared understanding that no document can replicate. Protect the process, not just the output.</span>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">📖</span>
+      <span>For a deeper dive into story mapping techniques including impact mapping and opportunity solution trees, Jeff Patton's book <em>User Story Mapping</em> (O'Reilly, 2014) is the definitive reference — and it's an easy, illustrated read. Also see the <a href="index.html#links" style="color:var(--blue);font-weight:500;">Story Splitting guide</a> in External Links for patterns on breaking stories down once the map is built.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>

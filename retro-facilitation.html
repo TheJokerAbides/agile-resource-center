@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Retrospective Facilitation Guide — Agile Resource Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f0eff6;--surface:rgba(255,255,255,0.82);--surface2:rgba(255,255,255,0.5);
+  --border:rgba(110,100,180,0.15);--border2:rgba(110,100,180,0.25);
+  --text:#1a1826;--text2:#6b6880;--text3:#9e9bb5;
+  --primary:#6c5ce7;--primary-light:#ede9ff;
+  --green:#16a34a;--green-bg:#d4f0e5;--green-border:rgba(22,163,74,0.2);
+  --red:#dc2626;--red-bg:#ffd5d5;--red-border:rgba(220,38,38,0.15);
+  --amber:#d97706;--amber-bg:#fff0d4;--amber-border:rgba(217,119,6,0.2);
+  --blue:#2563eb;--blue-bg:#d5e8ff;--blue-border:rgba(37,99,235,0.2);
+  --purple:#7c3aed;--purple-bg:#ede9ff;
+  --shadow:0 2px 12px rgba(80,60,160,0.08),0 1px 3px rgba(80,60,160,0.05);
+  --shadow-lg:0 8px 32px rgba(80,60,160,0.12),0 2px 8px rgba(80,60,160,0.07);
+  --radius:14px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.7;}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0;}
+
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:62px;background:rgba(240,239,246,0.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);}
+.back-link{font-size:13px;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid var(--border2);background:var(--surface);transition:all 0.15s;}
+.back-link:hover{color:var(--primary);border-color:var(--primary);}
+.nav-title{font-size:14px;font-weight:500;color:var(--text2);}
+
+.page{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:3rem 2.5rem 6rem;}
+
+.page-eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);border-radius:20px;padding:4px 14px;margin-bottom:1.25rem;}
+.page-hero{margin-bottom:3rem;padding-bottom:2.5rem;border-bottom:1px solid var(--border2);}
+.page-hero h1{font-family:'DM Serif Display',serif;font-size:44px;font-weight:400;letter-spacing:-1px;color:var(--text);margin-bottom:0.75rem;line-height:1.15;}
+.page-hero h1 em{font-style:italic;background:linear-gradient(135deg,#f97316 0%,#c026d3 50%,#6c5ce7 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.page-hero p{font-size:16px;color:var(--text2);font-weight:300;line-height:1.75;max-width:640px;}
+
+.toc{background:var(--surface);backdrop-filter:blur(8px);border:1px solid var(--border2);border-radius:var(--radius);padding:18px 22px;margin-bottom:3rem;box-shadow:var(--shadow);}
+.toc-title{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:4px;}
+.toc-list li{display:flex;align-items:center;gap:10px;}
+.toc-list a{font-size:13px;font-weight:500;color:var(--primary);text-decoration:none;transition:opacity 0.15s;}
+.toc-list a:hover{opacity:0.7;}
+.toc-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);width:20px;flex-shrink:0;}
+
+.section{margin-bottom:3.5rem;}
+.section-anchor{display:block;height:80px;margin-top:-80px;visibility:hidden;}
+.section-label{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.label-purple{background:var(--primary-light);color:var(--primary);border:1px solid rgba(108,92,231,0.2);}
+.label-green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.label-blue{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-border);}
+.label-amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+.label-red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border);}
+.section h2{font-family:'DM Serif Display',serif;font-size:30px;font-weight:400;letter-spacing:-0.5px;color:var(--text);margin-bottom:0.75rem;line-height:1.2;}
+.section p{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:1rem;}
+.section p:last-child{margin-bottom:0;}
+.section-divider{height:1px;background:var(--border2);margin:3rem 0;}
+
+/* Phase steps */
+.phases{display:flex;flex-direction:column;gap:14px;margin:1.5rem 0;}
+.phase{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
+.phase-header{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;user-select:none;transition:background 0.12s;border-bottom:1px solid var(--border);}
+.phase-header:hover{background:rgba(108,92,231,0.03);}
+.phase-num{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;font-family:'DM Mono',monospace;flex-shrink:0;}
+.phase-header-text{flex:1;}
+.phase-name{font-size:15px;font-weight:600;color:var(--text);}
+.phase-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+.phase-toggle{font-size:16px;color:var(--text3);transition:transform 0.2s;}
+.phase.open .phase-toggle{transform:rotate(180deg);}
+.phase-body{display:none;padding:16px 20px 20px;}
+.phase.open .phase-body{display:block;}
+.phase-purpose{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:14px;padding:12px 14px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--primary);}
+
+/* Two-col tips */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:580px){.two-col{grid-template-columns:1fr;}}
+.col-green{background:var(--green-bg);border:1px solid var(--green-border);border-radius:10px;padding:12px 14px;}
+.col-amber{background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:10px;padding:12px 14px;}
+.col-blue{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:10px;padding:12px 14px;}
+.col-red{background:var(--red-bg);border:1px solid var(--red-border);border-radius:10px;padding:12px 14px;}
+.col-title{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:8px;}
+.col-green .col-title{color:var(--green);}
+.col-amber .col-title{color:var(--amber);}
+.col-blue .col-title{color:var(--blue);}
+.col-red .col-title{color:var(--red);}
+.item-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.item-list li{font-size:12px;line-height:1.45;display:flex;align-items:flex-start;gap:6px;}
+.item-list li::before{flex-shrink:0;font-size:11px;margin-top:2px;}
+.col-green .item-list li{color:#14532d;}
+.col-green .item-list li::before{content:'✓';color:var(--green);}
+.col-amber .item-list li{color:#78350f;}
+.col-amber .item-list li::before{content:'→';color:var(--amber);}
+.col-blue .item-list li{color:#1e3a5f;}
+.col-blue .item-list li::before{content:'→';color:var(--blue);}
+.col-red .item-list li{color:#7f1d1d;}
+.col-red .item-list li::before{content:'✕';color:var(--red);}
+
+/* Techniques grid */
+.techniques-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:1.5rem 0;}
+.technique-card{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:16px;box-shadow:var(--shadow);transition:transform 0.18s,box-shadow 0.18s;}
+.technique-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.technique-icon{font-size:20px;margin-bottom:8px;}
+.technique-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;letter-spacing:-0.2px;}
+.technique-type{font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:2px 7px;border-radius:20px;display:inline-block;margin-bottom:6px;}
+.technique-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+
+/* Callout */
+.callout{display:flex;align-items:flex-start;gap:10px;padding:14px 16px;border-radius:10px;margin:1.25rem 0;font-size:13px;line-height:1.6;}
+.callout.tip{background:var(--green-bg);border:1px solid var(--green-border);color:#14532d;}
+.callout.note{background:var(--amber-bg);border:1px solid var(--amber-border);color:#78350f;}
+.callout.info{background:var(--blue-bg);border:1px solid var(--blue-border);color:#1e3a5f;}
+.callout.warning{background:var(--red-bg);border:1px solid var(--red-border);color:#7f1d1d;}
+.callout-icon{flex-shrink:0;font-size:15px;}
+
+/* Safety ladder */
+.safety-ladder{display:flex;flex-direction:column;gap:6px;margin:1.25rem 0;}
+.safety-rung{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;font-size:13px;}
+.safety-num{font-family:'DM Mono',monospace;font-size:12px;font-weight:600;width:24px;flex-shrink:0;}
+.safety-label{font-weight:600;color:var(--text);min-width:90px;}
+.safety-desc{font-size:12px;color:var(--text2);flex:1;}
+
+/* Quote */
+.quote-block{border-left:4px solid var(--primary);padding:14px 20px;background:var(--primary-light);border-radius:0 10px 10px 0;margin:1.25rem 0;font-size:14px;font-style:italic;color:var(--text);line-height:1.75;}
+.quote-block cite{display:block;margin-top:8px;font-size:12px;font-style:normal;font-weight:500;color:var(--text3);}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="back-link">← Agile Resource Center</a>
+  <span class="nav-title">Retrospective Facilitation Guide</span>
+  <div style="width:140px;"></div>
+</nav>
+
+<div class="page">
+  <div class="page-hero">
+    <div class="page-eyebrow">📋 Resources</div>
+    <h1>Retrospective <em>Facilitation Guide</em></h1>
+    <p>A practical, step-by-step guide to facilitating retrospectives that actually lead to change — covering preparation, the five phases, safety, common formats, and the mistakes that make retros feel like a waste of time.</p>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">On this page</div>
+    <ul class="toc-list">
+      <li><span class="toc-num">01</span><a href="#why">Why Retros Fail</a></li>
+      <li><span class="toc-num">02</span><a href="#safety">Psychological Safety First</a></li>
+      <li><span class="toc-num">03</span><a href="#prepare">Preparation</a></li>
+      <li><span class="toc-num">04</span><a href="#phases">The Five Phases</a></li>
+      <li><span class="toc-num">05</span><a href="#formats">Formats &amp; Techniques</a></li>
+      <li><span class="toc-num">06</span><a href="#actions">Turning Talk into Action</a></li>
+      <li><span class="toc-num">07</span><a href="#remote">Remote Retrospectives</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. Why retros fail -->
+  <div class="section" id="why">
+    <span class="section-anchor"></span>
+    <div class="section-label label-red">⚠️ Common pitfalls</div>
+    <h2>Why Retros Fail</h2>
+    <p>Most teams have sat through a retrospective that felt pointless — the same complaints raised, the same platitudes offered, the same action items written down and forgotten. Understanding why retros fail is the first step to running better ones.</p>
+    <div class="two-col">
+      <div class="col-red">
+        <div class="col-title">✕ The most common failure modes</div>
+        <ul class="item-list">
+          <li>No follow-up on previous action items — trust erodes fast</li>
+          <li>The same format every sprint — people disengage</li>
+          <li>Management in the room — honest conversation shuts down</li>
+          <li>Venting without root cause analysis or actions</li>
+          <li>Actions assigned to no one — "the team" isn't a person</li>
+          <li>Cancelled when the sprint went well ("nothing to discuss")</li>
+          <li>Running long with no time discipline — energy drops</li>
+          <li>Facilitator also participating as a team member</li>
+        </ul>
+      </div>
+      <div class="col-green">
+        <div class="col-title">✓ Signs of a healthy retro</div>
+        <ul class="item-list">
+          <li>People say things they don't normally say in other meetings</li>
+          <li>Actions are specific, named, and followed up next sprint</li>
+          <li>The team leaves energised, not drained</li>
+          <li>Format changes regularly — it doesn't feel rote</li>
+          <li>Issues get resolved over time — not recycled indefinitely</li>
+          <li>Everyone contributes — not just the loudest voices</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout note">
+      <span class="callout-icon">⚠️</span>
+      <span>If the team is raising the same issue three sprints in a row, the actions from previous retros aren't working — not because the team isn't trying, but because the root cause hasn't been addressed. Escalate it. Don't let it sit in retro notes indefinitely.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 2. Safety -->
+  <div class="section" id="safety">
+    <span class="section-anchor"></span>
+    <div class="section-label label-purple">🛡️ Foundation</div>
+    <h2>Psychological Safety First</h2>
+    <p>A retrospective is only as valuable as the honesty it generates. If people don't feel safe raising real issues — because they fear judgment, blame, or political consequences — they'll offer safe, surface-level observations and the retro becomes a formality.</p>
+    <p>The <strong>Safety Check</strong> (attributed to Norman Kerth) is a simple way to measure how safe the team feels before the retro starts. Ask each person to anonymously rate their safety on a scale of 1–5:</p>
+
+    <div class="safety-ladder">
+      <div class="safety-rung" style="background:var(--red-bg);"><span class="safety-num" style="color:var(--red);">1</span><span class="safety-label" style="color:var(--red);">Not safe</span><span class="safety-desc">I'll smile and go along with whatever is said but won't contribute.</span></div>
+      <div class="safety-rung" style="background:#fff3e0;"><span class="safety-num" style="color:var(--amber);">2</span><span class="safety-label" style="color:var(--amber);">Guarded</span><span class="safety-desc">I'll talk about some things but will avoid topics that might get me in trouble.</span></div>
+      <div class="safety-rung" style="background:#fff8e1;"><span class="safety-num" style="color:#b45309;">3</span><span class="safety-label" style="color:#b45309;">Mixed</span><span class="safety-desc">I can talk about most things but some issues require a more private setting.</span></div>
+      <div class="safety-rung" style="background:#ecfdf5;"><span class="safety-num" style="color:var(--green);">4</span><span class="safety-label" style="color:var(--green);">Safe</span><span class="safety-desc">I can talk about most things with the group — only a few things need to stay private.</span></div>
+      <div class="safety-rung" style="background:var(--green-bg);"><span class="safety-num" style="color:var(--green);">5</span><span class="safety-label" style="color:var(--green);">Very safe</span><span class="safety-desc">I feel completely safe — I can say anything that's on my mind.</span></div>
+    </div>
+
+    <p>If the average is below 3, consider addressing the underlying cause before proceeding with a standard retro — a 1-on-1 or smaller group conversation may be more effective.</p>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>Prime directive: <em>"Regardless of what we discover, we understand and truly believe that everyone did the best job they could, given what they knew at the time, their skills and abilities, the resources available, and the situation at hand."</em> — Norman Kerth. Read this aloud at the start. It sets the tone.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 3. Prepare -->
+  <div class="section" id="prepare">
+    <span class="section-anchor"></span>
+    <div class="section-label label-blue">📐 Preparation</div>
+    <h2>Preparation</h2>
+    <p>A well-facilitated retrospective starts before the meeting begins. Ten minutes of preparation saves thirty minutes of confusion and produces far better outcomes.</p>
+    <div class="two-col">
+      <div class="col-blue">
+        <div class="col-title">→ Before the retro</div>
+        <ul class="item-list">
+          <li>Review action items from the previous retro — know which were completed</li>
+          <li>Choose a format appropriate to the team's current state and energy</li>
+          <li>Set up the board (PhoenixRetro, sticky notes, or whiteboard)</li>
+          <li>Block the time — 60–90 mins for a two-week sprint, 30 for mini-retros</li>
+          <li>Confirm who is attending — no managers unless agreed by the whole team</li>
+          <li>Consider gathering data: sprint metrics, blockers log, incident count</li>
+        </ul>
+      </div>
+      <div class="col-green">
+        <div class="col-title">✓ Facilitator mindset</div>
+        <ul class="item-list">
+          <li>Your job is to guide the process, not drive the content</li>
+          <li>Stay neutral — don't advocate for your own views</li>
+          <li>Watch for quiet people — draw them in gently</li>
+          <li>Watch the energy — know when to speed up or slow down</li>
+          <li>If you're a team member too, consider having someone else facilitate</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 4. Five Phases -->
+  <div class="section" id="phases">
+    <span class="section-anchor"></span>
+    <div class="section-label label-purple">📅 Structure</div>
+    <h2>The Five Phases</h2>
+    <p>Esther Derby and Diana Larsen's framework from <em>Agile Retrospectives</em> (2006) breaks every retrospective into five phases. Not every retro needs all five in depth, but skipping phases — especially Set the Stage and Close — is a common cause of poor outcomes.</p>
+
+    <div class="phases">
+
+      <div class="phase open">
+        <div class="phase-header">
+          <div class="phase-num" style="background:var(--primary-light);color:var(--primary);">1</div>
+          <div class="phase-header-text">
+            <div class="phase-name">Set the Stage</div>
+            <div class="phase-sub">5–10 minutes · Creates focus and safety</div>
+          </div>
+          <div class="phase-toggle">⌄</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-purpose">The opening phase gets everyone present, sets expectations, and establishes psychological safety. It reminds the team of the purpose of the retro and the working agreement for the session. Never skip this — even a two-minute check-in changes the energy of the room.</div>
+          <div class="two-col">
+            <div class="col-green">
+              <div class="col-title">✓ Activities</div>
+              <ul class="item-list">
+                <li>Read the Prime Directive aloud</li>
+                <li>Run a safety check (1–5 anonymous vote)</li>
+                <li>Quick check-in: one word describing how you feel right now</li>
+                <li>State the goal of this specific retro ("today we're focusing on…")</li>
+              </ul>
+            </div>
+            <div class="col-amber">
+              <div class="col-title">→ Watch for</div>
+              <ul class="item-list">
+                <li>People already on their laptops — bring them back</li>
+                <li>Low safety scores — address before proceeding</li>
+                <li>Jumping straight to problems — enforce the stage</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header">
+          <div class="phase-num" style="background:var(--blue-bg);color:var(--blue);">2</div>
+          <div class="phase-header-text">
+            <div class="phase-name">Gather Data</div>
+            <div class="phase-sub">10–15 minutes · Facts and feelings about the sprint</div>
+          </div>
+          <div class="phase-toggle">⌄</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-purpose">Before the team can improve, they need a shared picture of what actually happened. This phase gathers both objective data (what events occurred, metrics, blockers) and subjective data (how people felt). Different perspectives are surfaced — including things the facilitator may not know about.</div>
+          <div class="two-col">
+            <div class="col-green">
+              <div class="col-title">✓ Activities</div>
+              <ul class="item-list">
+                <li>Timeline: plot key events from the sprint on a shared timeline</li>
+                <li>Team Radar: rate dimensions like collaboration, quality, and process</li>
+                <li>Mad / Sad / Glad: emotional data alongside factual data</li>
+                <li>Metrics review: velocity, escaped defects, blockers count</li>
+              </ul>
+            </div>
+            <div class="col-amber">
+              <div class="col-title">→ Watch for</div>
+              <ul class="item-list">
+                <li>Only surfacing negatives — positive data matters too</li>
+                <li>People filtering themselves — encourage all observations</li>
+                <li>Jumping to solutions before understanding what happened</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header">
+          <div class="phase-num" style="background:var(--green-bg);color:var(--green);">3</div>
+          <div class="phase-header-text">
+            <div class="phase-name">Generate Insights</div>
+            <div class="phase-sub">15–20 minutes · Understanding why, not just what</div>
+          </div>
+          <div class="phase-toggle">⌄</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-purpose">This is the most intellectually demanding phase — moving from "what happened" to "why it happened." The team analyses patterns in the data, identifies root causes, and surfaces the systemic issues behind surface-level symptoms. Without this phase, actions treat symptoms rather than causes.</div>
+          <div class="two-col">
+            <div class="col-green">
+              <div class="col-title">✓ Activities</div>
+              <ul class="item-list">
+                <li>5 Whys: ask "why?" five times to find the root cause</li>
+                <li>Fishbone diagram: map causes across people, process, tools, environment</li>
+                <li>Dot voting: identify the highest-priority issues to focus on</li>
+                <li>Affinity grouping: cluster related observations into themes</li>
+              </ul>
+            </div>
+            <div class="col-amber">
+              <div class="col-title">→ Watch for</div>
+              <ul class="item-list">
+                <li>Staying at symptom level — push for root causes</li>
+                <li>Blaming individuals — redirect to systems and processes</li>
+                <li>One voice dominating the analysis — facilitate equal contribution</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header">
+          <div class="phase-num" style="background:var(--amber-bg);color:var(--amber);">4</div>
+          <div class="phase-header-text">
+            <div class="phase-name">Decide What to Do</div>
+            <div class="phase-sub">10–15 minutes · Concrete, owned actions</div>
+          </div>
+          <div class="phase-toggle">⌄</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-purpose">The insight phase generates understanding — this phase converts it into commitments. The team selects the most impactful improvements and defines specific, owned actions. Quality over quantity: one well-defined action that actually gets done is worth more than five that don't.</div>
+          <div class="two-col">
+            <div class="col-green">
+              <div class="col-title">✓ Activities</div>
+              <ul class="item-list">
+                <li>SMART actions: Specific, Measurable, Achievable, Relevant, Time-bound</li>
+                <li>Prioritise to 1–3 actions maximum — more than that rarely get done</li>
+                <li>Assign a named owner to each action — not "the team"</li>
+                <li>Add actions to the sprint backlog or team board — make them visible</li>
+              </ul>
+            </div>
+            <div class="col-amber">
+              <div class="col-title">→ Watch for</div>
+              <ul class="item-list">
+                <li>Agreeing to actions that require someone outside the team to change</li>
+                <li>Vague actions: "improve communication" — what does that mean?</li>
+                <li>No owner assigned — it won't happen</li>
+                <li>Too many actions — narrow focus produces better results</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header">
+          <div class="phase-num" style="background:var(--red-bg);color:var(--red);">5</div>
+          <div class="phase-header-text">
+            <div class="phase-name">Close the Retrospective</div>
+            <div class="phase-sub">5–10 minutes · Appreciation and feedback</div>
+          </div>
+          <div class="phase-toggle">⌄</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-purpose">The closing phase grounds the team, celebrates what was surfaced, and gives the facilitator feedback on the retro itself. It's often skipped — which means the team leaves on whatever emotional note the actions discussion ended on, rather than on a constructive, energised note.</div>
+          <div class="two-col">
+            <div class="col-green">
+              <div class="col-title">✓ Activities</div>
+              <ul class="item-list">
+                <li>Appreciation round: each person thanks one teammate for something specific</li>
+                <li>Retro on the retro: one word or emoji to describe the session</li>
+                <li>ROTI (Return on Time Invested): 1–5 vote on whether it was worth the time</li>
+                <li>Recap the actions and owners — confirm shared understanding</li>
+              </ul>
+            </div>
+            <div class="col-amber">
+              <div class="col-title">→ Watch for</div>
+              <ul class="item-list">
+                <li>Rushing through closing when time runs short — protect it</li>
+                <li>Skipping appreciation — it matters for team cohesion</li>
+                <li>Not asking for feedback on the facilitation — how else will you improve?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 5. Formats -->
+  <div class="section" id="formats">
+    <span class="section-anchor"></span>
+    <div class="section-label label-green">🎨 Formats</div>
+    <h2>Formats &amp; Techniques</h2>
+    <p>Rotating formats keeps retrospectives fresh and draws out different types of insight. Choose based on the team's current energy, the sprint's character, and what hasn't been done recently. All of these are available as templates in <a href="agile_retro_board_v5.html" style="color:var(--primary);font-weight:500;">PhoenixRetro</a>.</p>
+
+    <div class="techniques-grid">
+      <div class="technique-card">
+        <div class="technique-icon">😊😡😢</div>
+        <div class="technique-name">Happy / Mad / Sad</div>
+        <div class="technique-type" style="background:var(--primary-light);color:var(--primary);">Emotional check</div>
+        <div class="technique-desc">Captures the emotional temperature of the sprint. Good for teams who need to surface feelings alongside facts. Simple and inclusive — anyone can contribute regardless of role.</div>
+      </div>
+      <div class="technique-card">
+        <div class="technique-icon">⭐</div>
+        <div class="technique-name">Starfish</div>
+        <div class="technique-type" style="background:var(--blue-bg);color:var(--blue);">Behaviour change</div>
+        <div class="technique-desc">Five columns: Start, Stop, Continue, More of, Less of. Produces nuanced, action-oriented output. Better than simple "good/bad" formats because it captures gradations of behaviour.</div>
+      </div>
+      <div class="technique-card">
+        <div class="technique-icon">💡📚❌🌟</div>
+        <div class="technique-name">4Ls</div>
+        <div class="technique-type" style="background:var(--green-bg);color:var(--green);">Learning focus</div>
+        <div class="technique-desc">Liked, Learned, Lacked, Longed for. Particularly effective when the team has been through something new — a new process, technology, or team member joining.</div>
+      </div>
+      <div class="technique-card">
+        <div class="technique-icon">▶️ ⏹️ ⏩</div>
+        <div class="technique-name">Start / Stop / Continue</div>
+        <div class="technique-type" style="background:var(--amber-bg);color:var(--amber);">Action-focused</div>
+        <div class="technique-desc">The simplest action-oriented format. Three clear categories that generate immediately actionable output. Good for time-constrained retros or teams new to retrospectives.</div>
+      </div>
+      <div class="technique-card">
+        <div class="technique-icon">🧲</div>
+        <div class="technique-name">KALM</div>
+        <div class="technique-type" style="background:var(--purple-bg);color:var(--purple);">Nuanced change</div>
+        <div class="technique-desc">Keep, Add, Less, More. More nuanced than Start/Stop/Continue because "Less" and "More" acknowledge that things can be good but need calibrating, not eliminating.</div>
+      </div>
+      <div class="technique-card">
+        <div class="technique-icon">🧞</div>
+        <div class="technique-name">Genie in a Bottle</div>
+        <div class="technique-type" style="background:var(--primary-light);color:var(--primary);">Creative energy</div>
+        <div class="technique-desc">What went well, what held us back, and what you'd wish for. The "wish" framing unlocks more ambitious thinking — teams often surface systemic issues that other formats miss.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 6. Actions -->
+  <div class="section" id="actions">
+    <span class="section-anchor"></span>
+    <div class="section-label label-amber">✅ Follow-through</div>
+    <h2>Turning Talk into Action</h2>
+    <p>The retrospective is worthless without follow-through. The most common reason teams stop trusting retros is that action items from previous sessions are never completed. Here's how to break that cycle:</p>
+
+    <div class="two-col">
+      <div class="col-green">
+        <div class="col-title">✓ Making actions stick</div>
+        <ul class="item-list">
+          <li>Add retro actions to the sprint backlog — they get the same visibility as stories</li>
+          <li>Assign a single named owner — not "the team" or "everyone"</li>
+          <li>Make them SMART: "by end of sprint 14, Alex will set up automated linting in the pipeline"</li>
+          <li>Open the next retro by reviewing last sprint's actions — before anything else</li>
+          <li>Limit to 1–3 actions — more than that dilutes focus</li>
+          <li>Celebrate when actions are completed — it reinforces the loop</li>
+        </ul>
+      </div>
+      <div class="col-red">
+        <div class="col-title">✕ Action anti-patterns</div>
+        <ul class="item-list">
+          <li>"Talk to X about Y" — a conversation isn't an outcome</li>
+          <li>"Improve our testing" — not specific enough to be actionable</li>
+          <li>Actions that require someone outside the team to change without their agreement</li>
+          <li>Long lists of actions that overwhelm the team each sprint</li>
+          <li>No follow-up mechanism — actions disappear into notes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <span class="callout-icon">ℹ️</span>
+      <span>If the same issue keeps appearing in retrospectives without resolution, it's likely a systemic problem outside the team's direct control. Escalate it to leadership, your Scrum Master, or the Product Owner rather than continuing to generate actions that the team can't actually deliver on.</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- 7. Remote -->
+  <div class="section" id="remote">
+    <span class="section-anchor"></span>
+    <div class="section-label label-blue">💻 Remote</div>
+    <h2>Remote Retrospectives</h2>
+    <p>Remote retrospectives require more deliberate facilitation than in-person ones. The informal social cues that help a facilitator gauge the room — body language, side conversations, energy levels — are mostly invisible online. You have to compensate with better structure and more explicit check-ins.</p>
+
+    <div class="two-col">
+      <div class="col-blue">
+        <div class="col-title">→ Remote best practices</div>
+        <ul class="item-list">
+          <li>Use a digital board — PhoenixRetro, Miro, or FunRetro — so everyone can contribute simultaneously</li>
+          <li>Cameras on where possible — reading the room still matters</li>
+          <li>Use anonymous digital voting to ensure honest input</li>
+          <li>Build in more silence than you're comfortable with — give people time to write</li>
+          <li>Use breakout rooms for small-group discussions before bringing the full team together</li>
+          <li>Keep it shorter — remote meetings are more draining</li>
+        </ul>
+      </div>
+      <div class="col-amber">
+        <div class="col-title">→ Watch for</div>
+        <ul class="item-list">
+          <li>One person dominating because others are reluctant to interrupt</li>
+          <li>Participants multitasking — a tight agenda and direct questions help</li>
+          <li>Technical issues eating into retro time — test tools beforehand</li>
+          <li>Silence being misread as agreement — explicitly check in</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
+      <span>For distributed teams across time zones, consider asynchronous contribution before the live session — team members add notes to the board at their own time, then the live session focuses on discussion and prioritisation rather than note-writing.</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.querySelectorAll('.phase-header').forEach(h=>{
+  h.addEventListener('click',()=>h.closest('.phase').classList.toggle('open'));
+});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
