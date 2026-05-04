@@ -662,7 +662,6 @@ select.timer-sel{
       <button id="btn-dark" title="Dark mode">☾</button>
     </div>
 </nav>
-</div>
 
 <!-- ── Landing page (history + new retro) ── -->
 <div id="landing-page" class="landing" style="display:none;">
@@ -688,7 +687,7 @@ select.timer-sel{
 </div>
 
 <!-- ── Empty state: board picker ── -->
-<div class="empty-state" id="empty-state">
+<div class="empty-state" id="empty-state" style="display:none;">
   <p class="empty-hint">Choose a template to get started</p>
   <div class="template-grid" id="template-grid">
     <button class="tpl-card" data-t="hms">
@@ -797,7 +796,7 @@ select.timer-sel{
 
 <div class="status-bar" id="status-bar"></div>
 <div class="board" id="board"></div>
-</div>
+</div><!-- end .wrap -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
