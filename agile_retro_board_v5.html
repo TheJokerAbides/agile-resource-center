@@ -82,8 +82,6 @@ body::before{
 
 .wrap{
   position:relative;z-index:1;
-  padding:1.75rem 2rem 3rem;
-  min-height:100vh;
 }
 
 /* ── Logo ── */
@@ -110,10 +108,9 @@ body::before{
   color:var(--text2);
 }
 
-/* ── Nav bar ── */
+/* ── Nav bar (legacy — now site-nav handles top chrome) ── */
 .nav-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;margin-bottom:2rem;
+  display:none; /* replaced by site-nav */
 }
 .nav-right{display:flex;align-items:center;gap:8px;}
 .nav-ghost{
@@ -139,10 +136,145 @@ body::before{
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 
+/* ── Landing page ── */
+.landing{
+  position:relative;z-index:1;
+  padding:1.25rem 1.75rem 2.5rem;
+  animation:fade-in 0.3s ease;
+}
+.landing-hero{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+  margin-bottom:1.5rem;
+  padding-bottom:1.25rem;
+  border-bottom:1px solid var(--border2);
+}
+.landing-headline{
+  font-size:22px;font-weight:600;letter-spacing:-0.6px;color:var(--text);
+  line-height:1.2;
+}
+.landing-headline span{
+  background:linear-gradient(135deg,#f97316 0%,#c026d3 55%,#6c5ce7 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.landing-sub{font-size:12px;color:var(--text2);margin-top:3px;font-weight:300;}
+
+/* History grid */
+.history-section-title{
+  font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:10px;
+}
+.history-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:10px;
+  margin-bottom:1.5rem;
+}
+.history-card{
+  background:var(--glass);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid var(--border2);border-radius:12px;
+  padding:13px 14px 11px;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  text-align:left;
+  display:flex;flex-direction:column;gap:7px;
+  position:relative;
+}
+.history-card:hover{
+  border-color:var(--primary);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-lg);
+}
+.history-card-name{
+  font-size:13px;font-weight:600;color:var(--text);
+  letter-spacing:-0.2px;line-height:1.3;
+  padding-right:20px;
+}
+.history-card-meta{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+}
+.history-card-badge{
+  font-size:9px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;
+  padding:2px 7px;border-radius:20px;
+  background:var(--primary-light);color:var(--primary);
+  border:1px solid rgba(108,92,231,0.2);
+}
+.history-card-date{font-size:10px;color:var(--text3);}
+.history-card-stats{
+  display:flex;gap:10px;
+}
+.history-stat{font-size:10px;color:var(--text2);}
+.history-stat strong{font-weight:600;color:var(--text);}
+.history-card-actions{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:2px;
+  padding-top:8px;
+  border-top:1px solid var(--border);
+}
+.history-card-open{
+  font-size:11px;font-weight:600;color:var(--primary);
+  background:var(--primary-light);border:1px solid rgba(108,92,231,0.2);
+  border-radius:6px;padding:3px 10px;cursor:pointer;
+  height:auto;box-shadow:none;
+  transition:all 0.14s;
+}
+.history-card-open:hover{background:var(--primary);color:#fff;transform:none;box-shadow:none;}
+.history-card-del{
+  background:transparent;border:none;cursor:pointer;
+  font-size:13px;color:var(--text3);
+  height:auto;padding:2px 4px;box-shadow:none;transform:none;
+  transition:color 0.14s;
+}
+.history-card-del:hover{color:var(--danger) !important;transform:none !important;box-shadow:none !important;}
+
+/* View-only banner */
+.view-only-banner{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;
+  background:var(--primary-light);
+  border:1px solid rgba(108,92,231,0.25);
+  border-radius:12px;
+  padding:10px 16px;
+  margin-bottom:1rem;
+  font-size:13px;color:var(--primary);font-weight:500;
+  animation:slide-down 0.22s cubic-bezier(0.34,1.56,0.64,1);
+}
+.retro-dark .view-only-banner{background:var(--primary-light);color:var(--primary);}
+
+/* Empty history */
+.history-empty{
+  display:flex;flex-direction:column;align-items:center;
+  padding:2rem 1rem;text-align:center;
+  background:var(--glass);border:1px dashed var(--border2);
+  border-radius:12px;margin-bottom:1.5rem;
+}
+.history-empty-icon{font-size:28px;margin-bottom:8px;opacity:0.4;}
+.history-empty-text{font-size:12px;color:var(--text3);}
+
+/* New retro CTA button */
+.new-retro-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--primary);color:#fff;
+  border:none;border-radius:10px;
+  padding:0 18px;height:38px;
+  font-size:13px;font-weight:600;letter-spacing:-0.2px;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(108,92,231,0.3);
+  transition:all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.new-retro-btn:hover{
+  background:var(--primary-hover);
+  box-shadow:0 6px 20px rgba(108,92,231,0.4);
+  transform:translateY(-1px);
+}
+.new-retro-btn:active{transform:scale(0.98);}
+
 /* ── Empty state ── */
 .empty-state{
   display:flex;flex-direction:column;align-items:center;
-  padding:2rem 0 3rem;
+  padding:1.25rem 1.5rem 2rem;
   animation:fade-in 0.35s ease;
 }
 @keyframes fade-in{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
@@ -179,6 +311,18 @@ body::before{
 .tpl-desc{font-size:11px;color:var(--text2);font-weight:400;line-height:1.4;}
 
 /* ── Board toolbar (post-creation) ── */
+/* ── Board area (active retro padding) ── */
+.board-toolbar,
+.view-only-banner,
+#status-bar,
+.board{
+  margin-left:1.5rem;
+  margin-right:1.5rem;
+}
+.board-toolbar{margin-top:1rem;}
+#status-bar{margin-top:0;}
+.board{padding-bottom:2.5rem;}
+
 .board-toolbar{
   display:flex;align-items:center;justify-content:space-between;
   gap:8px;flex-wrap:wrap;
@@ -347,7 +491,7 @@ select.timer-sel{
   border:1px solid var(--border2);
   border-radius:16px;
   padding:20px 22px;
-  margin-bottom:1.5rem;
+  margin:1rem 1.5rem 1.5rem;
   display:none;flex-direction:column;gap:16px;
   box-shadow:var(--shadow-lg);
   animation:slide-down 0.22s cubic-bezier(0.34,1.56,0.64,1);
@@ -468,34 +612,30 @@ select.timer-sel{
   border-bottom:1px solid rgba(110,100,180,0.22);
   box-shadow:0 1px 0 rgba(255,255,255,0.6);
 }
-.site-nav-logo{
-  display:flex;align-items:center;gap:9px;
-  text-decoration:none;flex-shrink:0;
+.retro-dark .site-nav{
+  background:rgba(15,14,23,0.92);
+  border-bottom-color:rgba(140,130,220,0.25);
+  box-shadow:none;
 }
-.site-nav-logo img{
-  width:30px;height:30px;object-fit:contain;
-  transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1);
-}
+.site-nav-logo{display:flex;align-items:center;gap:9px;text-decoration:none;flex-shrink:0;}
+.site-nav-logo img{width:30px;height:30px;object-fit:contain;transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1);}
 .site-nav-logo:hover img{transform:scale(1.12) rotate(-4deg);}
-.site-nav-wordmark{
-  font-size:15px;font-weight:600;letter-spacing:-0.4px;
-  color:#1a1826;line-height:1;
-}
+.site-nav-wordmark{font-size:15px;font-weight:600;letter-spacing:-0.4px;color:#1a1826;line-height:1;}
+.retro-dark .site-nav-wordmark{color:#eeeaf8;}
 .site-nav-wordmark span{font-weight:300;color:#6b6880;}
-.site-nav-divider{
-  width:1px;height:20px;background:rgba(110,100,180,0.2);
-  flex-shrink:0;margin:0 2px;
-}
+.retro-dark .site-nav-wordmark span{color:#8c88a8;}
+.site-nav-divider{width:1px;height:20px;background:rgba(110,100,180,0.2);flex-shrink:0;margin:0 2px;}
+.retro-dark .site-nav-divider{background:rgba(140,130,220,0.25);}
 .site-nav-back{
   display:inline-flex;align-items:center;gap:5px;
   font-size:12px;font-weight:500;color:#6b6880;
-  text-decoration:none;
-  padding:4px 10px;border-radius:7px;
+  text-decoration:none;padding:4px 10px;border-radius:7px;
   border:1px solid rgba(110,100,180,0.22);
-  background:rgba(255,255,255,0.65);
-  transition:all 0.14s;flex-shrink:0;
+  background:rgba(255,255,255,0.65);transition:all 0.14s;flex-shrink:0;
 }
+.retro-dark .site-nav-back{color:#8c88a8;border-color:rgba(140,130,220,0.25);background:rgba(30,28,45,0.65);}
 .site-nav-back:hover{color:#6c5ce7;border-color:#6c5ce7;background:#ede9ff;}
+.retro-dark .site-nav-back:hover{color:#8b7ff5;border-color:#8b7ff5;background:#221e40;}
 
 </style>
 </head>
@@ -522,6 +662,29 @@ select.timer-sel{
       <button id="btn-dark" title="Dark mode">☾</button>
     </div>
 </nav>
+</div>
+
+<!-- ── Landing page (history + new retro) ── -->
+<div id="landing-page" class="landing" style="display:none;">
+  <div class="landing-hero">
+    <div>
+      <div class="landing-headline">Your <span>Retrospectives</span></div>
+      <div class="landing-sub">View past boards or start a fresh one with your team.</div>
+    </div>
+    <button class="new-retro-btn" id="landing-new-btn">✦ New Retro</button>
+  </div>
+  <div class="history-section-title">Past retros</div>
+  <div id="history-grid" class="history-grid"></div>
+  <div id="history-empty" class="history-empty" style="display:none;">
+    <div class="history-empty-icon">📋</div>
+    <div class="history-empty-text">No past retros yet — complete your first one to see it here.</div>
+  </div>
+</div>
+
+<!-- ── View-only banner (shown when viewing a past retro) ── -->
+<div id="view-only-banner" class="view-only-banner" style="display:none;">
+  <span>👁 View-only — this is a saved retro snapshot.</span>
+  <button id="view-only-back-btn" class="nav-ghost">← Back to retros</button>
 </div>
 
 <!-- ── Empty state: board picker ── -->
@@ -626,6 +789,8 @@ select.timer-sel{
   <div class="toolbar-right">
     <button id="share-btn">🔗 Share</button>
     <button id="export-btn">Export PDF</button>
+    <button id="archive-btn" title="Save this retro to history and keep working">📥 Archive</button>
+    <button id="cancel-retro-btn" class="danger" title="Discard this retro without saving">✕ Cancel Retro</button>
     <button id="clear-btn" class="danger">Clear notes</button>
   </div>
 </div>
@@ -792,15 +957,8 @@ function loadState(){
       }
     }
   }catch(e){}
-  // Fall back to localStorage
-  try{
-    const s=localStorage.getItem('retro-board-v5');
-    const mv=localStorage.getItem('retro-my-votes-v5');
-    if(s){state=JSON.parse(s);if(!state.myVotes)state.myVotes={};}
-    if(mv){try{state.myVotes=JSON.parse(mv);}catch(e){}}
-    if(state.cols&&state.cols.length>0){render();renderVoteBudget();showBoard();statusBar.textContent="Board loaded.";}
-    else{showEmpty();}
-  }catch(e){showEmpty();}
+  // Default: show landing page
+  showLanding();
 }
 
 function saveState(){
@@ -815,7 +973,132 @@ function saveState(){
   },400);
 }
 
-function render(){
+// ── History management ────────────────────────────────────────────────────────
+function loadHistory(){
+  try{return JSON.parse(localStorage.getItem('retro-history-v1')||'[]');}catch(e){return[];}
+}
+function saveHistory(h){
+  try{localStorage.setItem('retro-history-v1',JSON.stringify(h));}catch(e){}
+}
+function archiveCurrentBoard(){
+  if(!state.cols||state.cols.length===0)return;
+  const h=loadHistory();
+  const noteCount=Object.values(state.notes||{}).reduce((a,b)=>a+(Array.isArray(b)?b.length:0),0);
+  const voteCount=Object.values(state.votes||{}).reduce((a,b)=>a+(b||0),0);
+  const entry={
+    id:Date.now(),
+    name:state.name||'Untitled Retro',
+    template:state.template||'custom',
+    date:new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}),
+    noteCount,voteCount,
+    snapshot:{...state,myVotes:{}}
+  };
+  // Avoid duplicating if same board already exists at top
+  if(h.length>0&&h[0].name===entry.name&&h[0].template===entry.template){h[0]=entry;}
+  else{h.unshift(entry);}
+  if(h.length>20)h.splice(20);
+  saveHistory(h);
+}
+
+// ── Views ─────────────────────────────────────────────────────────────────────
+let viewOnlyMode=false;
+
+function showLanding(){
+  viewOnlyMode=false;
+  document.getElementById('landing-page').style.display='';
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById('setup-modal').classList.remove('open');
+  document.getElementById('board-toolbar').style.display='none';
+  document.getElementById('board-name-pill').style.display='none';
+  document.getElementById('new-board-btn').style.display='none';
+  document.getElementById('end-retro-btn').style.display='none';
+  document.getElementById('view-only-banner').style.display='none';
+  document.getElementById('status-bar').textContent='';
+  board.innerHTML='';
+  renderHistory();
+}
+
+function showTemplatePicker(){
+  document.getElementById('landing-page').style.display='none';
+  document.getElementById('empty-state').style.display='flex';
+  document.getElementById('setup-modal').classList.remove('open');
+  document.getElementById('board-toolbar').style.display='none';
+  document.getElementById('board-name-pill').style.display='none';
+  document.getElementById('new-board-btn').style.display='none';
+  document.getElementById('end-retro-btn').style.display='none';
+  document.getElementById('view-only-banner').style.display='none';
+  board.innerHTML='';
+}
+
+function showBoard(){
+  document.getElementById('landing-page').style.display='none';
+  document.getElementById('empty-state').style.display='none';
+  document.getElementById('setup-modal').classList.remove('open');
+  document.getElementById('board-toolbar').style.display=viewOnlyMode?'none':'flex';
+  document.getElementById('board-name-pill').style.display=viewOnlyMode?'none':'block';
+  if(!viewOnlyMode){document.getElementById('board-name-pill').querySelector('span').textContent=state.name||'';}
+  document.getElementById('new-board-btn').style.display=viewOnlyMode?'none':'';
+  document.getElementById('end-retro-btn').style.display=viewOnlyMode?'none':'';
+  document.getElementById('archive-btn').style.display=viewOnlyMode?'none':'';
+  document.getElementById('cancel-retro-btn').style.display=viewOnlyMode?'none':'';
+  document.getElementById('view-only-banner').style.display=viewOnlyMode?'flex':'none';
+}
+
+function showEmpty(){showLanding();}  // "empty" now shows landing
+
+function renderHistory(){
+  const h=loadHistory();
+  const grid=document.getElementById('history-grid');
+  const empty=document.getElementById('history-empty');
+  grid.innerHTML='';
+  if(h.length===0){empty.style.display='flex';return;}
+  empty.style.display='none';
+  const TEMPLATE_NAMES={hms:'Happy / Mad / Sad',starfish:'Starfish','4ls':'4Ls',ssc:'Start / Stop / Continue',kalm:'KALM',genie:'Genie in a Bottle',custom:'Custom'};
+  h.forEach((entry,idx)=>{
+    const card=document.createElement('div');
+    card.className='history-card';
+    card.innerHTML=`
+      <div class="history-card-name">${entry.name||'Untitled Retro'}</div>
+      <div class="history-card-meta">
+        <span class="history-card-badge">${TEMPLATE_NAMES[entry.template]||entry.template}</span>
+        <span class="history-card-date">${entry.date||''}</span>
+      </div>
+      <div class="history-card-stats">
+        <span class="history-stat"><strong>${entry.noteCount||0}</strong> notes</span>
+        <span class="history-stat"><strong>${entry.voteCount||0}</strong> votes</span>
+        <span class="history-stat"><strong>${(entry.snapshot?.cols||[]).length}</strong> cols</span>
+      </div>
+      <div class="history-card-actions">
+        <button class="history-card-open">▶ View</button>
+        <button class="history-card-del" title="Delete this retro">🗑</button>
+      </div>`;
+    card.querySelector('.history-card-open').addEventListener('click',(e)=>{
+      e.stopPropagation();
+      openViewOnly(entry);
+    });
+    card.querySelector('.history-card-del').addEventListener('click',(e)=>{
+      e.stopPropagation();
+      if(!confirm(`Delete "${entry.name}"?`))return;
+      const h2=loadHistory();h2.splice(idx,1);saveHistory(h2);renderHistory();
+    });
+    grid.appendChild(card);
+  });
+}
+
+function openViewOnly(entry){
+  viewOnlyMode=true;
+  state={...entry.snapshot,myVotes:{}};
+  render();
+  renderVoteBudget();
+  showBoard();
+  statusBar.textContent='';
+}
+
+document.getElementById('landing-new-btn').addEventListener('click',()=>showTemplatePicker());
+document.getElementById('view-only-back-btn').addEventListener('click',()=>{
+  viewOnlyMode=false;state={template:null,cols:[],notes:{},votes:{},myVotes:{},voteLimit:0};
+  showLanding();
+});
   board.innerHTML='';
   if(!state.cols||state.cols.length===0)return;
   document.getElementById('board-title').textContent=state.name||'PhoenixRetro';
@@ -835,13 +1118,14 @@ function render(){
     sorted.forEach(({n,i,v,mv})=>{
       const noteEl=document.createElement('div');noteEl.className='note';
       noteEl.style.background=noteC.bg;noteEl.style.color=noteC.text;
-      const canVote=remaining>0;
-      noteEl.innerHTML=`<div>${n}</div><div class="note-actions"><button class="vote-btn" data-col="${col.label}" data-ni="${i}" ${!canVote?'disabled':''}>${mv>0?`+1 · ${mv}`:`+1`}</button><span class="vote-count">${v>0?v+'v':''}</span><button class="del-btn" data-col="${col.label}" data-ni="${i}">✕</button></div>`;
+      const canVote=!viewOnlyMode&&remaining>0;
+      noteEl.innerHTML=`<div>${n}</div><div class="note-actions"><button class="vote-btn" data-col="${col.label}" data-ni="${i}" ${(!canVote||viewOnlyMode)?'disabled':''}>${mv>0?`+1 · ${mv}`:`+1`}</button><span class="vote-count">${v>0?v+'v':''}</span>${viewOnlyMode?'':'<button class="del-btn" data-col="'+col.label+'" data-ni="'+i+'">✕</button>'}</div>`;
       body.appendChild(noteEl);
     });
     const addRow=document.createElement('div');addRow.className='add-note-row';
     addRow.innerHTML=`<input type="text" placeholder="Add a note…" data-col="${col.label}"/><button data-add="${col.label}">+</button>`;
-    colEl.appendChild(hdr);colEl.appendChild(body);colEl.appendChild(addRow);
+    colEl.appendChild(hdr);colEl.appendChild(body);
+    if(!viewOnlyMode){colEl.appendChild(addRow);}
     board.appendChild(colEl);
   });
 
@@ -877,25 +1161,7 @@ function render(){
   });
 }
 
-function showBoard(){
-  document.getElementById('empty-state').style.display='none';
-  document.getElementById('setup-modal').classList.remove('open');
-  document.getElementById('board-toolbar').style.display='flex';
-  document.getElementById('board-name-pill').style.display='block';
-  document.getElementById('board-name-pill').querySelector('span').textContent=state.name||'';
-  document.getElementById('new-board-btn').style.display='';
-  document.getElementById('end-retro-btn').style.display='';
-}
-
-function showEmpty(){
-  document.getElementById('empty-state').style.display='flex';
-  document.getElementById('board-toolbar').style.display='none';
-  document.getElementById('board-name-pill').style.display='none';
-  document.getElementById('new-board-btn').style.display='none';
-  document.getElementById('end-retro-btn').style.display='none';
-  document.getElementById('setup-modal').classList.remove('open');
-  board.innerHTML='';
-}
+// showBoard and showEmpty are defined above — stubs removed
 
 document.querySelectorAll('.tpl-card').forEach(card=>{
   card.addEventListener('click',()=>{
@@ -913,20 +1179,21 @@ document.getElementById('new-board-btn').addEventListener('click',()=>{
   if(state.cols&&state.cols.length>0){
     if(!confirm('Start a new board? Your current board will be cleared.'))return;
   }
+  archiveCurrentBoard();
   state={template:null,cols:[],notes:{},votes:{},myVotes:{},voteLimit:0};
-  saveState();showEmpty();statusBar.textContent='';
+  saveState();showTemplatePicker();statusBar.textContent='';
 });
 
 document.getElementById('end-retro-btn').addEventListener('click',()=>{
-  if(!confirm('End this retro and return to the template picker? Your board will be cleared.'))return;
+  if(!confirm('End this retro and save it to your history?'))return;
+  archiveCurrentBoard();
   state={template:null,cols:[],notes:{},votes:{},myVotes:{},voteLimit:0};
-  saveState();showEmpty();statusBar.textContent='Retro ended.';
+  saveState();showLanding();statusBar.textContent='Retro saved to history.';
 });
 
 document.getElementById('cancel-setup-btn').addEventListener('click',()=>{
   document.getElementById('setup-modal').classList.remove('open');
-  if(state.cols&&state.cols.length>0){showBoard();}
-  else{document.getElementById('empty-state').style.display='flex';}
+  showLanding();
 });
 
 document.querySelectorAll('.vlb').forEach(btn=>{
@@ -965,6 +1232,23 @@ document.getElementById('confirm-setup-btn').addEventListener('click',()=>{
   const limitLabel=pendingVoteLimit===0?'unlimited votes':`${pendingVoteLimit} vote${pendingVoteLimit!==1?'s':''} per person`;
   saveState();render();renderVoteBudget();showBoard();
   statusBar.textContent=`"${state.name}" · ${limitLabel}.`;
+});
+
+document.getElementById('archive-btn').addEventListener('click',()=>{
+  if(!state.cols||state.cols.length===0){statusBar.textContent="Nothing to archive yet.";return;}
+  archiveCurrentBoard();
+  statusBar.textContent=`"${state.name}" archived to history.`;
+  const btn=document.getElementById('archive-btn');
+  const orig=btn.textContent;
+  btn.textContent='✓ Archived!';
+  btn.style.background='var(--primary)';btn.style.color='#fff';btn.style.borderColor='var(--primary)';
+  setTimeout(()=>{btn.textContent=orig;btn.style.background='';btn.style.color='';btn.style.borderColor='';},2000);
+});
+
+document.getElementById('cancel-retro-btn').addEventListener('click',()=>{
+  if(!confirm('Cancel this retro? All notes and votes will be discarded and not saved.'))return;
+  state={template:null,cols:[],notes:{},votes:{},myVotes:{},voteLimit:0};
+  saveState();showLanding();statusBar.textContent='';
 });
 
 document.getElementById('clear-btn').addEventListener('click',()=>{
