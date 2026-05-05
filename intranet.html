@@ -10,7 +10,6 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-
 :root{
   --bg:#f2f1f8; --bg2:#e8e7f2; --surface:#fff;
   --glass:rgba(255,255,255,0.82); --glass2:rgba(255,255,255,0.55);
@@ -25,13 +24,12 @@ html{scroll-behavior:smooth;}
   --shadow-lg:0 8px 32px rgba(80,60,160,0.10),0 2px 8px rgba(80,60,160,0.06);
   --page-w:1240px; --r:14px;
 }
-
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");}
 
-/* ── NAV ── */
-.nav{position:sticky;top:0;z-index:200;height:62px;display:flex;align-items:center;
+/* NAV */
+.nav{position:sticky;top:0;z-index:200;height:60px;display:flex;align-items:center;
   background:rgba(242,241,248,0.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border2);box-shadow:0 1px 0 rgba(255,255,255,0.7);}
 .nav-inner{width:100%;max-width:var(--page-w);margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:12px;}
@@ -42,7 +40,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .nav-tagline{font-size:10px;color:var(--text3);letter-spacing:0.04em;text-transform:uppercase;margin-top:1px;}
 .nav-sep{width:1px;height:22px;background:var(--border2);margin:0 4px;flex-shrink:0;}
 .nav-links{display:flex;align-items:center;gap:2px;flex:1;}
-.nav-links a{font-size:13px;font-weight:400;color:var(--text2);text-decoration:none;padding:6px 11px;border-radius:9px;transition:all 0.14s;white-space:nowrap;}
+.nav-links a{font-size:13px;color:var(--text2);text-decoration:none;padding:5px 11px;border-radius:9px;transition:all 0.14s;white-space:nowrap;}
 .nav-links a:hover{background:rgba(108,92,231,0.08);color:var(--primary);}
 .nav-links a.active{color:var(--primary);font-weight:600;background:var(--primary-lt);}
 .nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
@@ -51,111 +49,92 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;
   cursor:pointer;flex-shrink:0;box-shadow:0 2px 8px rgba(201,38,211,0.3);}
 
-/* ── PAGE ── */
-.page{position:relative;z-index:1;max-width:var(--page-w);margin:0 auto;padding:2rem 2rem 4rem;}
+/* PAGE */
+.page{position:relative;z-index:1;max-width:var(--page-w);margin:0 auto;padding:1.75rem 2rem 4rem;}
 
-/* ── HERO (no clock widget) ── */
-.hero{padding-bottom:1.75rem;margin-bottom:2rem;border-bottom:1px solid var(--border2);}
-.hero-greeting{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);margin-bottom:6px;}
-.hero-title{font-size:34px;font-weight:700;letter-spacing:-1px;line-height:1.15;color:var(--text);}
+/* HERO — compact, no clock widget */
+.hero{padding-bottom:1.5rem;margin-bottom:1.75rem;border-bottom:1px solid var(--border2);}
+.hero-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--primary);margin-bottom:5px;}
+.hero-title{font-size:30px;font-weight:700;letter-spacing:-0.8px;line-height:1.15;color:var(--text);}
 .hero-title em{font-style:italic;font-weight:300;
   background:linear-gradient(135deg,var(--accent1) 0%,var(--accent2) 50%,var(--primary) 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-.hero-sub{font-size:14px;color:var(--text2);margin-top:8px;font-weight:300;line-height:1.7;}
+.hero-sub{font-size:13px;color:var(--text2);margin-top:6px;font-weight:300;line-height:1.7;}
 
-/* ── GRID ── */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:1.5rem;}
-.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-bottom:1.5rem;}
-.grid-wide{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:1.5rem;}
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:0.75rem;gap:10px;}
+.sec-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);}
+.sec-title{font-size:17px;font-weight:700;letter-spacing:-0.4px;color:var(--text);margin-top:2px;}
+.sec-badge{font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;
+  background:var(--primary-lt);color:var(--primary);border:1px solid rgba(108,92,231,0.2);white-space:nowrap;flex-shrink:0;}
 
-/* ── CARD SHELL ── */
+/* CARD */
 .card{background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border:1px solid var(--border2);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;}
+.card-head{padding:11px 14px 8px;border-bottom:1px solid var(--border);}
+.card-label-sm{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);}
+.card-title-sm{font-size:13px;font-weight:700;letter-spacing:-0.3px;color:var(--text);margin-top:1px;}
 
-/* ── CARD HEADER ── */
-.card-head{padding:14px 16px 10px;border-bottom:1px solid var(--border);}
-.card-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:2px;}
-.card-title{font-size:15px;font-weight:700;letter-spacing:-0.4px;color:var(--text);}
-
-/* ── LINK ROW (the shared style) ── */
-.link-list{display:flex;flex-direction:column;gap:1px;padding:6px;}
-.link-row{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:10px;
-  text-decoration:none;color:var(--text);transition:all 0.15s;border:1px solid transparent;cursor:pointer;}
+/* LINK ROW */
+.link-list{display:flex;flex-direction:column;gap:1px;padding:5px;}
+.link-row{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:9px;
+  text-decoration:none;color:var(--text);transition:all 0.15s;border:1px solid transparent;}
 .link-row:hover{background:var(--primary-lt);border-color:rgba(108,92,231,0.2);transform:translateX(3px);}
-.link-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.link-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
 .link-body{flex:1;min-width:0;}
-.link-name{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-0.2px;line-height:1.2;}
-.link-desc{font-size:10px;color:var(--text3);margin-top:1px;line-height:1.3;}
-.link-arr{font-size:13px;color:var(--text3);opacity:0;margin-left:auto;flex-shrink:0;transition:opacity 0.14s,transform 0.14s;}
+.link-name{font-size:12px;font-weight:600;color:var(--text);letter-spacing:-0.2px;line-height:1.2;}
+.link-desc{font-size:10px;color:var(--text3);margin-top:1px;line-height:1.2;}
+.link-arr{font-size:12px;color:var(--text3);opacity:0;margin-left:auto;flex-shrink:0;transition:opacity 0.14s,transform 0.14s;}
 .link-row:hover .link-arr{opacity:1;transform:translateX(2px);}
+.link-div{height:1px;background:var(--border);margin:3px 9px;}
 
-/* Sub-heading within card */
-.link-subhead{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--text3);padding:10px 12px 3px;}
-.link-div{height:1px;background:var(--border);margin:4px 10px;}
-
-/* News rows */
-.news-row{display:flex;align-items:flex-start;gap:11px;padding:12px 16px;border-bottom:1px solid var(--border);}
+/* NEWS */
+.news-row{display:flex;align-items:flex-start;gap:11px;padding:11px 14px;border-bottom:1px solid var(--border);}
 .news-row:last-child{border-bottom:none;}
 .news-row:hover{background:rgba(108,92,231,0.025);}
-.news-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:1px;}
+.news-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;margin-top:1px;}
 .news-body{flex:1;min-width:0;}
-.news-meta{display:flex;align-items:center;gap:7px;margin-bottom:3px;flex-wrap:wrap;}
+.news-meta{display:flex;align-items:center;gap:7px;margin-bottom:2px;flex-wrap:wrap;}
 .tag{font-size:9px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:1px 7px;border-radius:20px;}
 .ta{background:var(--primary-lt);color:var(--primary);}
 .te{background:var(--amber-lt);color:var(--amber);}
 .tu{background:var(--green-lt);color:var(--green);}
-.tr{background:var(--red-lt);color:var(--red);}
 .news-date{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace;}
-.news-title{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-0.2px;line-height:1.35;margin-bottom:3px;}
+.news-title{font-size:12px;font-weight:600;color:var(--text);letter-spacing:-0.2px;line-height:1.35;margin-bottom:2px;}
 .news-text{font-size:11px;color:var(--text2);line-height:1.55;}
 
-/* Important */
+/* GRIDS — tighter gap */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;}
+.mb{margin-bottom:1.5rem;}
+
+/* IMPORTANT */
 .imp-box{background:linear-gradient(135deg,rgba(220,38,38,0.05),rgba(220,38,38,0.02));
   border:1.5px solid rgba(220,38,38,0.22);border-radius:var(--r);overflow:hidden;}
-.imp-head{padding:14px 16px 10px;border-bottom:1px solid rgba(220,38,38,0.15);
+.imp-head{padding:11px 14px 9px;border-bottom:1px solid rgba(220,38,38,0.14);
   display:flex;align-items:center;gap:10px;}
-.imp-head-icon{width:34px;height:34px;background:var(--red-lt);border-radius:9px;
-  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.imp-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:2px;}
-.imp-title{font-size:15px;font-weight:700;letter-spacing:-0.4px;color:var(--red);}
-.imp-body{padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
-.imp-row{display:flex;align-items:flex-start;gap:11px;padding:12px 14px;
-  background:rgba(255,255,255,0.75);border:1px solid rgba(220,38,38,0.15);border-radius:10px;}
-.imp-ico{width:34px;height:34px;border-radius:9px;background:var(--red-lt);
-  display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.imp-content{flex:1;}
-.imp-name{font-size:13px;font-weight:700;color:var(--red);letter-spacing:-0.2px;margin-bottom:5px;}
+.imp-head-ico{width:32px;height:32px;background:var(--red-lt);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.imp-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:1px;}
+.imp-title{font-size:14px;font-weight:700;letter-spacing:-0.3px;color:var(--red);}
+.imp-body{padding:12px 14px;display:flex;flex-direction:column;gap:10px;}
+.imp-row{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;
+  background:rgba(255,255,255,0.75);border:1px solid rgba(220,38,38,0.14);border-radius:10px;}
+.imp-ico{width:32px;height:32px;border-radius:8px;background:var(--red-lt);
+  display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.imp-name{font-size:13px;font-weight:700;color:var(--red);letter-spacing:-0.2px;margin-bottom:4px;}
 .imp-detail{font-size:12px;color:var(--text);line-height:1.7;}
 .imp-detail a{color:var(--primary);text-decoration:none;font-weight:500;}
 .imp-detail a:hover{text-decoration:underline;}
 .imp-phone{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--text);display:block;margin:2px 0 4px;}
 
-/* Upcoming */
-.up-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);}
-.up-row:last-child{border-bottom:none;}
-.up-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.up-time{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);min-width:56px;}
-.up-event{font-size:12px;color:var(--text);font-weight:500;}
-
-/* Section label above multi-card rows */
-.sec{margin-bottom:0.4rem;}
-.sec-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);}
-.sec-title{font-size:19px;font-weight:700;letter-spacing:-0.5px;color:var(--text);margin-top:2px;}
-.sec-hdr{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:0.9rem;gap:10px;}
-.sec-badge{font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;
-  background:var(--primary-lt);color:var(--primary);border:1px solid rgba(108,92,231,0.2);white-space:nowrap;}
-
-/* Utilities */
-.mb{margin-bottom:2rem;}
-.card-pad{padding:14px 16px;}
-
 /* FOOTER */
 .site-footer{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:12px;padding:1.25rem 2rem;
+  flex-wrap:wrap;gap:12px;padding:1rem 2rem;
   border-top:1px solid var(--border2);background:rgba(255,255,255,0.5);backdrop-filter:blur(10px);}
 .footer-logo{display:flex;align-items:center;gap:8px;text-decoration:none;}
-.footer-logo img{width:24px;height:24px;object-fit:contain;}
+.footer-logo img{width:22px;height:22px;object-fit:contain;}
 .footer-wm{font-size:12px;font-weight:600;color:var(--text2);letter-spacing:-0.2px;}
 .footer-wm span{font-weight:300;}
 .footer-links{display:flex;gap:1.25rem;flex-wrap:wrap;}
@@ -163,19 +142,16 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .footer-links a:hover{color:var(--primary);}
 .footer-copy{font-size:11px;color:var(--text3);}
 
-/* Animations */
-@keyframes fade-up{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-.fu{animation:fade-up 0.45s ease both;}
-.d1{animation-delay:0.05s;}.d2{animation-delay:0.10s;}.d3{animation-delay:0.15s;}.d4{animation-delay:0.20s;}.d5{animation-delay:0.25s;}
+@keyframes fade-up{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fade-up 0.4s ease both;}
+.d1{animation-delay:0.05s;}.d2{animation-delay:0.1s;}.d3{animation-delay:0.15s;}.d4{animation-delay:0.2s;}
 
-/* Responsive */
-@media(max-width:960px){.grid,.grid-2,.grid-wide{grid-template-columns:1fr 1fr;}.nav-links{display:none;}}
-@media(max-width:600px){.page{padding:1.25rem 1rem 3rem;}.hero-title{font-size:26px;}.grid,.grid-2,.grid-wide{grid-template-columns:1fr;}}
+@media(max-width:960px){.g3,.g4{grid-template-columns:1fr 1fr;}.nav-links{display:none;}}
+@media(max-width:600px){.page{padding:1.25rem 1rem 3rem;}.hero-title{font-size:24px;}.g2,.g3,.g4{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-brand">
@@ -200,26 +176,30 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   </div>
 </nav>
 
-<!-- PAGE -->
 <div class="page">
 
   <!-- HERO -->
   <div class="hero fu">
-    <div class="hero-greeting">Welcome back</div>
+    <div class="hero-label">Welcome back</div>
     <h1 class="hero-title">Good <em id="time-greeting">morning</em>, Phoenix Team.</h1>
     <p class="hero-sub">Stay up to date with company news, access your tools, and find everything you need — all in one place.</p>
   </div>
 
-  <!-- ── NEWS & ANNOUNCEMENTS ── -->
+  <!-- NEWS -->
   <div class="mb">
     <div class="sec-hdr fu d1">
-      <div class="sec">
-        <div class="sec-label" id="news">Company News &amp; Announcements</div>
-        <div class="sec-title">What&#8217;s happening at Phoenix</div>
-      </div>
+      <div><div class="sec-label" id="news">Company News &amp; Announcements</div><div class="sec-title">What&#8217;s happening at Phoenix</div></div>
       <span class="sec-badge">✦ Updated regularly</span>
     </div>
     <div class="card fu d2">
+      <div class="news-row">
+        <div class="news-ico" style="background:#ede9ff;">🏆</div>
+        <div class="news-body">
+          <div class="news-meta"><span class="tag ta">Announcement</span><span class="news-date">29 Jan 2026</span></div>
+          <div class="news-title"><a href="https://themortgagepoint.com/2026/01/29/phoenixteam-names-laura-macintyre-as-partner-expanding-leadership-for-the-next-chapter-of-growth/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;">PhoenixTeam Names Laura MacIntyre as Partner ↗</a></div>
+          <div class="news-text">Laura MacIntyre has been named Partner at PhoenixTeam, expanding leadership for the next chapter of growth. Read the full announcement on The Mortgage Point.</div>
+        </div>
+      </div>
       <div class="news-row">
         <div class="news-ico" style="background:#ede9ff;">📣</div>
         <div class="news-body">
@@ -233,7 +213,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <div class="news-body">
           <div class="news-meta"><span class="tag tu">Update</span><span class="news-date">2 May 2026</span></div>
           <div class="news-title">New Employee Spotlight — Welcome to the team!</div>
-          <div class="news-text">We&#8217;re excited to welcome three new team members this month. Head to the team directory to say hello and learn more about our newest Phoenix colleagues.</div>
+          <div class="news-text">We&#8217;re excited to welcome three new team members this month. Head to the team directory to say hello.</div>
         </div>
       </div>
       <div class="news-row">
@@ -241,7 +221,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <div class="news-body">
           <div class="news-meta"><span class="tag te">Event</span><span class="news-date">Every 3rd Thursday</span></div>
           <div class="news-title">Agile Community of Practice — 3rd Thursday Monthly</div>
-          <div class="news-text">Our recurring Agile CoP session is open to all. Share learnings, discuss challenges, and explore agile practices together.</div>
+          <div class="news-text">Our recurring Agile CoP is open to all. Share learnings, discuss challenges, and explore agile practices together.</div>
         </div>
       </div>
       <div class="news-row">
@@ -249,7 +229,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <div class="news-body">
           <div class="news-meta"><span class="tag tu">Update</span><span class="news-date">28 Apr 2026</span></div>
           <div class="news-title">Unanet Timesheet Reminder — All timesheets due Friday EOD</div>
-          <div class="news-text">Please ensure your Unanet timesheets are submitted by end of day Friday. Reach out to your project manager with any questions.</div>
+          <div class="news-text">Please ensure your Unanet timesheets are submitted by end of day Friday. Reach out to your project manager with questions.</div>
         </div>
       </div>
       <div class="news-row">
@@ -257,27 +237,22 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         <div class="news-body">
           <div class="news-meta"><span class="tag ta">Announcement</span><span class="news-date">22 Apr 2026</span></div>
           <div class="news-title">Updated PTO Policy — Effective 1 June 2026</div>
-          <div class="news-text">HR has published updates to the PTO accrual policy. Please review the updated Employee Handbook and reach out to HR with any questions.</div>
+          <div class="news-text">HR has published updates to the PTO accrual policy. Please review the updated Employee Handbook and reach out to HR with questions.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── COMPANY LINKS (3-col) ── -->
+  <!-- COMPANY LINKS — 3 columns -->
   <div class="mb">
     <div class="sec-hdr fu d2">
-      <div class="sec">
-        <div class="sec-label" id="links">Company Links</div>
-        <div class="sec-title">Your tools</div>
-      </div>
+      <div><div class="sec-label" id="links">Company Links</div><div class="sec-title">Your tools</div></div>
     </div>
-    <div class="grid fu d3">
+    <div class="g3 fu d3">
 
-      <!-- Col 1: Work -->
+      <!-- Time Reporting & Recognition -->
       <div class="card">
-        <div class="card-head">
-          <div class="card-label">Work &amp; Projects</div>
-        </div>
+        <div class="card-head"><div class="card-label-sm">Project Time &amp; Recognition</div></div>
         <div class="link-list">
           <a href="https://app.ruddr.io" target="_blank" rel="noopener" class="link-row">
             <div class="link-ico" style="background:linear-gradient(135deg,#6c5ce7,#8b7ff5);">⏱</div>
@@ -289,14 +264,23 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
             <div class="link-body"><div class="link-name">Unanet</div><div class="link-desc">ERP &amp; timesheets</div></div>
             <span class="link-arr">→</span>
           </a>
+          <div class="link-div"></div>
+          <a href="https://bonus.ly" target="_blank" rel="noopener" class="link-row">
+            <div class="link-ico" style="background:linear-gradient(135deg,#f59e0b,#fcd34d);">⭐</div>
+            <div class="link-body"><div class="link-name">Bonusly</div><div class="link-desc">Peer recognition &amp; rewards</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="#" class="link-row">
+            <div class="link-ico" style="background:linear-gradient(135deg,#ec4899,#f9a8d4);">🛍</div>
+            <div class="link-body"><div class="link-name">Phoenix Swag Store</div><div class="link-desc">Company merchandise</div></div>
+            <span class="link-arr">→</span>
+          </a>
         </div>
       </div>
 
-      <!-- Col 2: People & HR -->
+      <!-- People & HR -->
       <div class="card">
-        <div class="card-head">
-          <div class="card-label">People &amp; HR</div>
-        </div>
+        <div class="card-head"><div class="card-label-sm">People &amp; HR</div></div>
         <div class="link-list">
           <a href="https://www.charthop.com" target="_blank" rel="noopener" class="link-row">
             <div class="link-ico" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);">🏢</div>
@@ -326,20 +310,23 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         </div>
       </div>
 
-      <!-- Col 3: Perks -->
+      <!-- Agile Tools -->
       <div class="card">
-        <div class="card-head">
-          <div class="card-label">Perks &amp; Recognition</div>
-        </div>
+        <div class="card-head"><div class="card-label-sm">Agile Tools</div></div>
         <div class="link-list">
-          <a href="https://bonus.ly" target="_blank" rel="noopener" class="link-row">
-            <div class="link-ico" style="background:linear-gradient(135deg,#f59e0b,#fcd34d);">⭐</div>
-            <div class="link-body"><div class="link-name">Bonusly</div><div class="link-desc">Peer recognition &amp; rewards</div></div>
+          <a href="agile-hub.html" class="link-row">
+            <div class="link-ico" style="background:var(--primary-lt);">🚀</div>
+            <div class="link-body"><div class="link-name">Agile Resource Center</div><div class="link-desc">Tools, templates &amp; frameworks</div></div>
             <span class="link-arr">→</span>
           </a>
-          <a href="#" class="link-row">
-            <div class="link-ico" style="background:linear-gradient(135deg,#ec4899,#f9a8d4);">🛍</div>
-            <div class="link-body"><div class="link-name">Phoenix Swag Store</div><div class="link-desc">Company merchandise</div></div>
+          <a href="agile_retro_board_v5.html" class="link-row">
+            <div class="link-ico" style="background:#fef3c7;">🔄</div>
+            <div class="link-body"><div class="link-name">PhoenixRetro</div><div class="link-desc">Retrospectives with 7 templates</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="phoenixpoker.html" class="link-row">
+            <div class="link-ico" style="background:#dcfce7;">🃏</div>
+            <div class="link-body"><div class="link-name">PhoenixPoker</div><div class="link-desc">Multiplayer planning poker</div></div>
             <span class="link-arr">→</span>
           </a>
         </div>
@@ -348,46 +335,23 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
   </div>
 
-  <!-- ── RESOURCES (3-col, 2 rows) ── -->
+  <!-- RESOURCES — 4-col -->
   <div class="mb">
     <div class="sec-hdr fu d3">
-      <div class="sec">
-        <div class="sec-label" id="resources">Resources</div>
-        <div class="sec-title">Team knowledge &amp; tools</div>
-      </div>
+      <div><div class="sec-label" id="resources">Resources</div><div class="sec-title">Team knowledge &amp; tools</div></div>
     </div>
-    <div class="grid fu d4">
+    <div class="g4 fu d4">
       <div class="card">
-        <div class="card-head"><div class="card-label">Agile</div></div>
+        <div class="card-head"><div class="card-label-sm">Growth &amp; Learning</div></div>
         <div class="link-list">
-          <a href="agile-hub.html" class="link-row">
-            <div class="link-ico" style="background:var(--primary-lt);">🚀</div>
-            <div class="link-body"><div class="link-name">Agile Resource Center</div><div class="link-desc">Hub for tools, templates &amp; frameworks</div></div>
-            <span class="link-arr">→</span>
-          </a>
-          <a href="agile-hub.html" class="link-row">
-            <div class="link-ico" style="background:#fef3c7;">🔧</div>
-            <div class="link-body"><div class="link-name">Tools &amp; Templates</div><div class="link-desc">PhoenixRetro, PhoenixPoker &amp; more</div></div>
-            <span class="link-arr">→</span>
-          </a>
-          <a href="#" class="link-row">
-            <div class="link-ico" style="background:#dcfce7;">🤖</div>
-            <div class="link-body"><div class="link-name">AI Exchange</div><div class="link-desc">AI tools, prompts &amp; resources</div></div>
-            <span class="link-arr">→</span>
-          </a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-head"><div class="card-label">Growth &amp; People</div></div>
-        <div class="link-list">
-          <a href="#" class="link-row">
+          <a href="professional-development.html" class="link-row">
             <div class="link-ico" style="background:var(--primary-lt);">📈</div>
             <div class="link-body"><div class="link-name">Professional Development</div><div class="link-desc">Learning paths &amp; certifications</div></div>
             <span class="link-arr">→</span>
           </a>
-          <a href="#" class="link-row">
+          <a href="hr-info.html" class="link-row">
             <div class="link-ico" style="background:#fee2e2;">❤️</div>
-            <div class="link-body"><div class="link-name">HR Info</div><div class="link-desc">Policies, benefits, PTO &amp; onboarding</div></div>
+            <div class="link-body"><div class="link-name">HR Info</div><div class="link-desc">Policies, benefits &amp; onboarding</div></div>
             <span class="link-arr">→</span>
           </a>
           <a href="#" class="link-row">
@@ -398,66 +362,75 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
         </div>
       </div>
       <div class="card">
-        <div class="card-head"><div class="card-label">Company</div></div>
+        <div class="card-head"><div class="card-label-sm">Company</div></div>
         <div class="link-list">
           <a href="#" class="link-row">
             <div class="link-ico" style="background:#fce7f3;">💼</div>
-            <div class="link-body"><div class="link-name">Business Development</div><div class="link-desc">BD resources &amp; opportunity pipeline</div></div>
+            <div class="link-body"><div class="link-name">Business Development</div><div class="link-desc">BD resources &amp; pipeline</div></div>
             <span class="link-arr">→</span>
           </a>
-          <a href="#" class="link-row">
+          <a href="marketing.html" class="link-row">
             <div class="link-ico" style="background:var(--primary-lt);">🎨</div>
             <div class="link-body"><div class="link-name">Marketing</div><div class="link-desc">Brand assets &amp; messaging guides</div></div>
             <span class="link-arr">→</span>
           </a>
-          <a href="#" class="link-row">
+          <a href="handbooks.html" class="link-row">
             <div class="link-ico" style="background:#fef3c7;">📖</div>
-            <div class="link-body"><div class="link-name">Process Handbooks</div><div class="link-desc">SOPs &amp; process documentation</div></div>
+            <div class="link-body"><div class="link-name">Handbooks</div><div class="link-desc">Process &amp; policy documentation</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="#" class="link-row">
+            <div class="link-ico" style="background:#dcfce7;">🤖</div>
+            <div class="link-body"><div class="link-name">AI Exchange</div><div class="link-desc">AI tools &amp; prompts</div></div>
             <span class="link-arr">→</span>
           </a>
         </div>
       </div>
-    </div>
-    <!-- row 2 -->
-    <div class="grid-2 fu d4" style="margin-top:0;">
       <div class="card">
-        <div class="card-head"><div class="card-label">Community</div></div>
+        <div class="card-head"><div class="card-label-sm">Community</div></div>
         <div class="link-list">
-          <a href="#" class="link-row">
+          <a href="cops-ergs.html" class="link-row">
             <div class="link-ico" style="background:#f0fdf4;">🤝</div>
-            <div class="link-body"><div class="link-name">CoPs &amp; ERGs</div><div class="link-desc">Communities of Practice &amp; Employee Resource Groups</div></div>
+            <div class="link-body"><div class="link-name">CoPs &amp; ERGs</div><div class="link-desc">Communities of Practice &amp; ERGs</div></div>
             <span class="link-arr">→</span>
           </a>
-          <a href="#" class="link-row">
+          <a href="connect-with-us.html" class="link-row">
             <div class="link-ico" style="background:#fce7f3;">🌐</div>
             <div class="link-body"><div class="link-name">Connect With Us</div><div class="link-desc">Social media &amp; charity initiatives</div></div>
             <span class="link-arr">→</span>
           </a>
         </div>
       </div>
-      <div class="card card-pad">
-        <div class="card-head" style="padding:0 0 10px;border-bottom:1px solid var(--border);margin-bottom:10px;">
-          <div class="card-label">Today</div>
-          <div class="card-title" style="font-size:14px;">Upcoming</div>
+      <div class="card">
+        <div class="card-head"><div class="card-label-sm">Quick Links</div></div>
+        <div class="link-list">
+          <a href="#" class="link-row">
+            <div class="link-ico" style="background:#fef3c7;">📋</div>
+            <div class="link-body"><div class="link-name">Employee Handbook</div><div class="link-desc">Company policies &amp; expectations</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="#" class="link-row">
+            <div class="link-ico" style="background:#fce7f3;">💼</div>
+            <div class="link-body"><div class="link-name">Refer a Colleague</div><div class="link-desc">Referral bonus programme</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="#" class="link-row">
+            <div class="link-ico" style="background:var(--primary-lt);">🔗</div>
+            <div class="link-body"><div class="link-name">IT Self-Service</div><div class="link-desc">Submit an IT support request</div></div>
+            <span class="link-arr">→</span>
+          </a>
         </div>
-        <div class="up-row"><div class="up-dot" style="background:#6c5ce7;"></div><div class="up-time">10:00 AM</div><div class="up-event">Sprint Planning · Team Phoenix</div></div>
-        <div class="up-row"><div class="up-dot" style="background:#f97316;"></div><div class="up-time">12:00 PM</div><div class="up-event">Lunch &amp; Learn — Agile at Scale</div></div>
-        <div class="up-row"><div class="up-dot" style="background:#16a34a;"></div><div class="up-time">2:00 PM</div><div class="up-event">1:1 with Project Manager</div></div>
-        <div class="up-row"><div class="up-dot" style="background:#c026d3;"></div><div class="up-time">4:00 PM</div><div class="up-event">Agile CoP — Open to all</div></div>
       </div>
     </div>
   </div>
 
-  <!-- ── PHOENIX VILLAGE ── -->
+  <!-- PHOENIX VILLAGE -->
   <div class="mb">
     <div class="sec-hdr fu d3">
-      <div class="sec">
-        <div class="sec-label" id="village">Phoenix Village</div>
-        <div class="sec-title">Our family of brands</div>
-      </div>
+      <div><div class="sec-label" id="village">Phoenix Village</div><div class="sec-title">Our family of brands</div></div>
     </div>
     <div class="card fu d4">
-      <div class="link-list">
+      <div class="link-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1px;padding:5px;">
         <a href="https://phoenixteam.com" target="_blank" rel="noopener" class="link-row">
           <div class="link-ico" style="background:linear-gradient(135deg,#f97316,#c026d3);">🐦</div>
           <div class="link-body"><div class="link-name">PhoenixTeam</div><div class="link-desc">phoenixteam.com</div></div>
@@ -487,39 +460,38 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
   </div>
 
-  <!-- ── IMPORTANT ── -->
+  <!-- IMPORTANT -->
   <div class="mb fu d4">
     <div class="sec-hdr">
-      <div class="sec">
-        <div class="sec-label" id="important">⚠ Important</div>
-        <div class="sec-title">Critical contacts &amp; security</div>
-      </div>
+      <div><div class="sec-label" id="important">⚠ Important</div><div class="sec-title">Critical contacts &amp; security</div></div>
     </div>
     <div class="imp-box">
       <div class="imp-head">
-        <div class="imp-head-icon">🚨</div>
+        <div class="imp-head-ico">🚨</div>
         <div><div class="imp-label">Action Required</div><div class="imp-title">Know who to call</div></div>
       </div>
       <div class="imp-body">
-        <div class="imp-row">
-          <div class="imp-ico">🖥️</div>
-          <div class="imp-content">
-            <div class="imp-name">IT Support — Integrated Axis</div>
-            <div class="imp-detail">
-              Your IT service provider for all technical issues, hardware, software &amp; access requests.
-              <span class="imp-phone">📞 520-877-3033</span>
-              <a href="mailto:helpdesk@iatechgroup.com">helpdesk@iatechgroup.com</a>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div class="imp-row">
+            <div class="imp-ico">🖥️</div>
+            <div>
+              <div class="imp-name">IT Support — Integrated Axis</div>
+              <div class="imp-detail">
+                All technical issues, hardware, software &amp; access requests.
+                <span class="imp-phone">📞 520-877-3033</span>
+                <a href="mailto:helpdesk@iatechgroup.com">helpdesk@iatechgroup.com</a>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="imp-row">
-          <div class="imp-ico">🔒</div>
-          <div class="imp-content">
-            <div class="imp-name">Report Security Incidents</div>
-            <div class="imp-detail">
-              If you notice a data breach, phishing attempt, or any security concern — report it immediately. Do not delay.
-              <br/><a href="mailto:dataprotection@phoenixoutcomes.com">dataprotection@phoenixoutcomes.com</a>
-              <span style="font-size:10px;color:var(--text3);display:block;margin-top:4px;">Response within 1 business hour for critical incidents</span>
+          <div class="imp-row">
+            <div class="imp-ico">🔒</div>
+            <div>
+              <div class="imp-name">Report Security Incidents</div>
+              <div class="imp-detail">
+                Data breach, phishing, or any security concern — report immediately.<br/>
+                <a href="mailto:dataprotection@phoenixoutcomes.com">dataprotection@phoenixoutcomes.com</a>
+                <span style="font-size:10px;color:var(--text3);display:block;margin-top:3px;">Response within 1 business hour for critical incidents</span>
+              </div>
             </div>
           </div>
         </div>
@@ -527,7 +499,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
   </div>
 
-</div><!-- end .page -->
+</div>
 
 <footer class="site-footer">
   <a href="index.html" class="footer-logo">
@@ -553,18 +525,15 @@ function updateClock(){
   const ampm=h24>=12?'PM':'AM',h12=h24%12||12,ms=m.toString().padStart(2,'0');
   let tz='';
   try{tz=new Intl.DateTimeFormat('en-US',{timeZoneName:'short'}).formatToParts(now).find(p=>p.type==='timeZoneName')?.value||'';}catch(e){}
-  const g=h24<12?'morning':h24<17?'afternoon':'evening';
-  document.getElementById('time-greeting').textContent=g;
+  document.getElementById('time-greeting').textContent=h24<12?'morning':h24<17?'afternoon':'evening';
   document.getElementById('nav-clock').textContent=
     DAYS[now.getDay()]+' '+now.getDate()+' '+MONTHS[now.getMonth()]+
     ' · '+h12+':'+ms+' '+ampm+(tz?' '+tz:'');
 }
-updateClock();
-setInterval(updateClock,30000);
+updateClock();setInterval(updateClock,30000);
 const secs=['news','links','resources','village','important'];
 window.addEventListener('scroll',()=>{
-  const y=window.scrollY+80;
-  let cur=secs[0];
+  const y=window.scrollY+80;let cur=secs[0];
   secs.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top+window.scrollY<=y)cur=id;});
   document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
 });
