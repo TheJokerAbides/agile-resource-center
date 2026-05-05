@@ -393,11 +393,10 @@ button:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shado
   background: var(--glass); backdrop-filter: blur(16px);
   border: 1px solid var(--border2); border-radius: 16px;
   padding: 20px 22px; margin: 1rem 1.5rem 1.5rem;
-  display: none; flex-direction: column; gap: 16px;
+  flex-direction: column; gap: 16px;
   box-shadow: var(--shadow-lg);
   animation: slide-down 0.22s cubic-bezier(0.34,1.56,0.64,1);
 }
-.setup.open { display: flex; }
 .setup-title { font-size: 14px; font-weight: 600; color: var(--text); }
 .setup-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
 
@@ -655,7 +654,7 @@ select.timer-sel {
 </div>
 
 <!-- SETUP PANEL ─────────────────────────── -->
-<div class="setup" id="setup">
+<div class="setup" id="setup" style="display:none;">
   <div class="setup-title" id="setup-title">Board setup</div>
   <div class="setup-row" id="setup-custom" style="display:none;">
     <div>
@@ -900,7 +899,6 @@ function hideAllViews() {
   hide($('btn-end'));
   hide($('btn-newboard'));
   $('setup').style.display = 'none';
-  $('setup').classList.remove('open');
   board.innerHTML = '';
 }
 
@@ -1138,8 +1136,7 @@ function openSetup(mode) {
     ? 'Custom board setup'
     : `Set up "${TEMPLATES[mode]?.name || 'board'}"`;
   document.querySelectorAll('.vlb').forEach(b => b.classList.toggle('active', parseInt(b.dataset.v) === 0));
-  $('setup').style.display = '';
-  $('setup').classList.add('open');
+  $('setup').style.display = 'flex';
 }
 
 function renderTags() {
