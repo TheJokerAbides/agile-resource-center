@@ -961,7 +961,7 @@ function renderHistory() {
       e.stopPropagation();
       viewOnly = true;
       state = { ...entry.snapshot, myVotes: {} };
-      render(); renderVoteBudget(); showBoard();
+      showBoard(); render(); renderVoteBudget();
     });
 
     card.querySelector('.btn-del').addEventListener('click', e => {
@@ -1184,7 +1184,7 @@ $('btn-confirm-setup').addEventListener('click', () => {
     t.cols.forEach(c => { state.notes[c.label] = []; });
   }
   const limitLabel = pendingLimit === 0 ? 'unlimited votes' : `${pendingLimit} vote${pendingLimit !== 1 ? 's' : ''} per person`;
-  saveState(); render(); renderVoteBudget(); showBoard();
+  saveState(); showBoard(); render(); renderVoteBudget();
   statusBar.textContent = `"${state.name}" · ${limitLabel}.`;
 });
 
@@ -1298,7 +1298,7 @@ function init() {
       const decoded = decodeState(hash.slice(7));
       if (decoded?.cols?.length) {
         state = { ...decoded, myVotes: {} };
-        render(); renderVoteBudget(); showBoard();
+        showBoard(); render(); renderVoteBudget();
         statusBar.textContent = 'Board loaded from shared link!';
         saveState();
         history.replaceState(null, '', location.pathname);
