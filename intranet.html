@@ -110,18 +110,18 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .mb{margin-bottom:1.5rem;}
 
 /* IMPORTANT */
-.imp-box{background:linear-gradient(135deg,rgba(220,38,38,0.05),rgba(220,38,38,0.02));
-  border:1.5px solid rgba(220,38,38,0.22);border-radius:var(--r);overflow:hidden;}
-.imp-head{padding:11px 14px 9px;border-bottom:1px solid rgba(220,38,38,0.14);
+.imp-box{background:linear-gradient(135deg,rgba(110,100,180,0.04),rgba(110,100,180,0.02));
+  border:1px solid var(--border2);border-radius:var(--r);overflow:hidden;}
+.imp-head{padding:11px 14px 9px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;gap:10px;}
-.imp-head-ico{width:32px;height:32px;background:var(--red-lt);border-radius:8px;
+.imp-head-ico{width:32px;height:32px;background:var(--primary-lt);border-radius:8px;
   display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-.imp-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:1px;}
+.imp-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:1px;}
 .imp-title{font-size:14px;font-weight:700;letter-spacing:-0.3px;color:var(--red);}
 .imp-body{padding:12px 14px;display:flex;flex-direction:column;gap:10px;}
 .imp-row{display:flex;align-items:flex-start;gap:10px;padding:11px 13px;
-  background:rgba(255,255,255,0.75);border:1px solid rgba(220,38,38,0.14);border-radius:10px;}
-.imp-ico{width:32px;height:32px;border-radius:8px;background:var(--red-lt);
+  background:rgba(255,255,255,0.75);border:1px solid var(--border2);border-radius:10px;}
+.imp-ico{width:32px;height:32px;border-radius:8px;background:var(--primary-lt);
   display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
 .imp-name{font-size:13px;font-weight:700;color:var(--red);letter-spacing:-0.2px;margin-bottom:4px;}
 .imp-detail{font-size:12px;color:var(--text);line-height:1.7;}
@@ -348,7 +348,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
     <div class="g4 fu d4">
       <div class="card">
-        <div class="card-head"><div class="card-label-sm">Growth &amp; Learning</div></div>
+        <div class="card-head"><div class="card-label-sm">Growth, Learning &amp; Community</div></div>
         <div class="link-list">
           <a href="professional-development.html" class="link-row">
             <div class="link-ico" style="background:var(--primary-lt);">📈</div>
@@ -358,6 +358,16 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
           <a href="hr-info.html" class="link-row">
             <div class="link-ico" style="background:#fee2e2;">❤️</div>
             <div class="link-body"><div class="link-name">HR Info</div><div class="link-desc">Policies, benefits &amp; onboarding</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="cops-ergs.html" class="link-row">
+            <div class="link-ico" style="background:#f0fdf4;">🤝</div>
+            <div class="link-body"><div class="link-name">CoPs &amp; ERGs</div><div class="link-desc">Communities of Practice &amp; ERGs</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="connect-with-us.html" class="link-row">
+            <div class="link-ico" style="background:#fce7f3;">🌐</div>
+            <div class="link-body"><div class="link-name">Connect With Us</div><div class="link-desc">Social media &amp; charity initiatives</div></div>
             <span class="link-arr">→</span>
           </a>
         </div>
@@ -380,59 +390,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
             <div class="link-body"><div class="link-name">Handbooks</div><div class="link-desc">Process &amp; policy documentation</div></div>
             <span class="link-arr">→</span>
           </a>
-          <a href="#" class="link-row">
+          <a href="ai-exchange.html" class="link-row">
             <div class="link-ico" style="background:#dcfce7;">🤖</div>
             <div class="link-body"><div class="link-name">AI Exchange</div><div class="link-desc">AI tools &amp; prompts</div></div>
             <span class="link-arr">→</span>
           </a>
         </div>
       </div>
-      <div class="card">
-        <div class="card-head"><div class="card-label-sm">Community</div></div>
-        <div class="link-list">
-          <a href="cops-ergs.html" class="link-row">
-            <div class="link-ico" style="background:#f0fdf4;">🤝</div>
-            <div class="link-body"><div class="link-name">CoPs &amp; ERGs</div><div class="link-desc">Communities of Practice &amp; ERGs</div></div>
-            <span class="link-arr">→</span>
-          </a>
-          <a href="connect-with-us.html" class="link-row">
-            <div class="link-ico" style="background:#fce7f3;">🌐</div>
-            <div class="link-body"><div class="link-name">Connect With Us</div><div class="link-desc">Social media &amp; charity initiatives</div></div>
-            <span class="link-arr">→</span>
-          </a>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-head"><div class="card-label-sm">Quick Links</div></div>
-        <div class="link-list">
-          <a href="#" class="link-row">
-            <div class="link-ico" style="background:#fef3c7;">📋</div>
-            <div class="link-body"><div class="link-name">Employee Handbook</div><div class="link-desc">Company policies &amp; expectations</div></div>
-            <span class="link-arr">→</span>
-          </a>
-          <button onclick="document.getElementById('modal-holidays').classList.add('open')" class="link-row" style="width:100%;text-align:left;border:none;cursor:pointer;background:transparent;">
-            <div class="link-ico" style="background:#dcfce7;">🎉</div>
-            <div class="link-body"><div class="link-name">Holiday Schedule 2026</div><div class="link-desc">Company observed holidays</div></div>
-            <span class="link-arr">→</span>
-          </button>
-          <button onclick="document.getElementById('modal-payroll').classList.add('open')" class="link-row" style="width:100%;text-align:left;border:none;cursor:pointer;background:transparent;">
-            <div class="link-ico" style="background:var(--primary-lt);">💰</div>
-            <div class="link-body"><div class="link-name">Payroll Calendar 2026</div><div class="link-desc">Semi-monthly pay schedule</div></div>
-            <span class="link-arr">→</span>
-          </button>
-          <button onclick="document.getElementById('modal-referral').classList.add('open')" class="link-row" style="width:100%;text-align:left;border:none;cursor:pointer;background:transparent;">
-            <div class="link-ico" style="background:#fce7f3;">💼</div>
-            <div class="link-body"><div class="link-name">Refer a Friend</div><div class="link-desc">Employee referral policy &amp; bonus</div></div>
-            <span class="link-arr">→</span>
-          </button>
-          <a href="#" class="link-row">
-            <div class="link-ico" style="background:var(--primary-lt);">🔗</div>
-            <div class="link-body"><div class="link-name">IT Self-Service</div><div class="link-desc">Submit an IT support request</div></div>
-            <span class="link-arr">→</span>
-          </a>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- PHOENIX VILLAGE -->
@@ -474,12 +438,12 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <!-- IMPORTANT -->
   <div class="mb fu d4">
     <div class="sec-hdr">
-      <div><div class="sec-label" id="important">⚠ Important</div><div class="sec-title">Critical contacts &amp; security</div></div>
+      <div><div class="sec-label" id="important">Important</div><div class="sec-title">Key contacts &amp; security</div></div>
     </div>
     <div class="imp-box">
       <div class="imp-head">
-        <div class="imp-head-ico">🚨</div>
-        <div><div class="imp-label">Action Required</div><div class="imp-title">Know who to call</div></div>
+        <div class="imp-head-ico">📞</div>
+        <div><div class="imp-label">Contacts</div><div class="imp-title">Know who to call</div></div>
       </div>
       <div class="imp-body">
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
