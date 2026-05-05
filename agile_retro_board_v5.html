@@ -894,12 +894,12 @@ function decodeState(b64) {
 function hideAllViews() {
   hide($('view-landing'));
   hide($('view-picker'));
-  hide($('setup'));
   hide($('view-banner'));
   hide($('toolbar'));
   hide($('nav-pill'));
   hide($('btn-end'));
   hide($('btn-newboard'));
+  $('setup').style.display = 'none';
   $('setup').classList.remove('open');
   board.innerHTML = '';
 }
@@ -1138,6 +1138,7 @@ function openSetup(mode) {
     ? 'Custom board setup'
     : `Set up "${TEMPLATES[mode]?.name || 'board'}"`;
   document.querySelectorAll('.vlb').forEach(b => b.classList.toggle('active', parseInt(b.dataset.v) === 0));
+  $('setup').style.display = '';
   $('setup').classList.add('open');
 }
 
@@ -1191,7 +1192,9 @@ $('btn-confirm-setup').addEventListener('click', () => {
 });
 
 $('btn-cancel-setup').addEventListener('click', () => {
-  $('setup').classList.remove('open'); showLanding();
+  $('setup').style.display = 'none';
+  $('setup').classList.remove('open');
+  showLanding();
 });
 
 /* ─── TOOLBAR ACTIONS ───────────────────────────────────────────────── */
