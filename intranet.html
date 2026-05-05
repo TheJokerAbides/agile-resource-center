@@ -252,11 +252,33 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
       <!-- Time Reporting & Recognition -->
       <div class="card">
-        <div class="card-head"><div class="card-label-sm">Project Time &amp; Recognition</div></div>
+        <div class="card-head"><div class="card-label-sm">Projects, Time, &amp; Recognition</div></div>
         <div class="link-list">
           <a href="https://app.ruddr.io" target="_blank" rel="noopener" class="link-row">
             <div class="link-ico" style="background:linear-gradient(135deg,#6c5ce7,#8b7ff5);">⏱</div>
             <div class="link-body"><div class="link-name">Ruddr</div><div class="link-desc">Project &amp; time tracking</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="https://www.unanet.com" target="_blank" rel="noopener" class="link-row">
+            <div class="link-ico" style="background:linear-gradient(135deg,#f97316,#fb923c);">📋</div>
+            <div class="link-body"><div class="link-name">Unanet</div><div class="link-desc">ERP &amp; timesheets</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <div class="link-div"></div>
+          <a href="clients.html" class="link-row">
+            <div class="link-ico" style="background:linear-gradient(135deg,#1d4ed8,#60a5fa);">🤝</div>
+            <div class="link-body"><div class="link-name">Clients</div><div class="link-desc">HUD Catalyst, HUD S3R, VA LGY</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <div class="link-div"></div>
+          <a href="https://bonus.ly" target="_blank" rel="noopener" class="link-row">
+            <div class="link-ico" style="background:linear-gradient(135deg,#f59e0b,#fcd34d);">⭐</div>
+            <div class="link-body"><div class="link-name">Bonusly</div><div class="link-desc">Peer recognition &amp; rewards</div></div>
+            <span class="link-arr">→</span>
+          </a>
+          <a href="#" class="link-row">
+            <div class="link-ico" style="background:linear-gradient(135deg,#ec4899,#f9a8d4);">🛍</div>
+            <div class="link-body"><div class="link-name">Phoenix Swag Store</div><div class="link-desc">Company merchandise</div></div>
             <span class="link-arr">→</span>
           </a>
           <a href="https://www.unanet.com" target="_blank" rel="noopener" class="link-row">
@@ -409,11 +431,21 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
             <div class="link-body"><div class="link-name">Employee Handbook</div><div class="link-desc">Company policies &amp; expectations</div></div>
             <span class="link-arr">→</span>
           </a>
-          <a href="#" class="link-row">
-            <div class="link-ico" style="background:#fce7f3;">💼</div>
-            <div class="link-body"><div class="link-name">Refer a Colleague</div><div class="link-desc">Referral bonus programme</div></div>
+          <button onclick="document.getElementById('modal-holidays').classList.add('open')" class="link-row" style="width:100%;text-align:left;border:none;cursor:pointer;background:transparent;">
+            <div class="link-ico" style="background:#dcfce7;">🎉</div>
+            <div class="link-body"><div class="link-name">Holiday Schedule 2026</div><div class="link-desc">Company observed holidays</div></div>
             <span class="link-arr">→</span>
-          </a>
+          </button>
+          <button onclick="document.getElementById('modal-payroll').classList.add('open')" class="link-row" style="width:100%;text-align:left;border:none;cursor:pointer;background:transparent;">
+            <div class="link-ico" style="background:var(--primary-lt);">💰</div>
+            <div class="link-body"><div class="link-name">Payroll Calendar 2026</div><div class="link-desc">Semi-monthly pay schedule</div></div>
+            <span class="link-arr">→</span>
+          </button>
+          <button onclick="document.getElementById('modal-referral').classList.add('open')" class="link-row" style="width:100%;text-align:left;border:none;cursor:pointer;background:transparent;">
+            <div class="link-ico" style="background:#fce7f3;">💼</div>
+            <div class="link-body"><div class="link-name">Refer a Colleague</div><div class="link-desc">Employee referral policy &amp; bonus</div></div>
+            <span class="link-arr">→</span>
+          </button>
           <a href="#" class="link-row">
             <div class="link-ico" style="background:var(--primary-lt);">🔗</div>
             <div class="link-body"><div class="link-name">IT Self-Service</div><div class="link-desc">Submit an IT support request</div></div>
@@ -538,5 +570,216 @@ window.addEventListener('scroll',()=>{
   document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+cur);});
 });
 </script>
+<!-- ── MODALS ── -->
+<style>
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:1000;
+  background:rgba(20,16,40,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;padding:1.5rem;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--border2);border-radius:18px;
+  box-shadow:0 24px 60px rgba(0,0,0,0.25),0 4px 16px rgba(0,0,0,0.12);
+  width:100%;max-width:520px;max-height:85vh;
+  display:flex;flex-direction:column;
+  animation:modal-in 0.22s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes modal-in{from{opacity:0;transform:scale(0.92) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.modal-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 20px 14px;border-bottom:1px solid var(--border2);
+  flex-shrink:0;
+}
+.modal-head-left{display:flex;align-items:center;gap:12px;}
+.modal-icon{
+  width:40px;height:40px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+}
+.modal-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);}
+.modal-title{font-size:16px;font-weight:700;letter-spacing:-0.4px;color:var(--text);margin-top:2px;}
+.modal-close{
+  width:32px;height:32px;border-radius:50%;border:1px solid var(--border2);
+  background:var(--glass2);color:var(--text2);font-size:16px;line-height:1;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all 0.14s;
+}
+.modal-close:hover{background:var(--primary-lt);color:var(--primary);border-color:rgba(108,92,231,0.3);}
+.modal-body{overflow-y:auto;padding:16px 20px 20px;flex:1;}
+/* Holiday list */
+.holiday-list{display:flex;flex-direction:column;gap:2px;}
+.holiday-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:10px;border:1px solid transparent;
+  transition:background 0.12s;
+}
+.holiday-row:hover{background:rgba(108,92,231,0.04);border-color:var(--border);}
+.holiday-dot{width:8px;height:8px;border-radius:50%;background:var(--primary);flex-shrink:0;}
+.holiday-name{font-size:13px;font-weight:600;color:var(--text);flex:1;}
+.holiday-date{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;white-space:nowrap;}
+/* Payroll table */
+.payroll-table{width:100%;border-collapse:collapse;font-size:12px;}
+.payroll-table thead th{
+  font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text3);padding:0 10px 10px;text-align:left;
+  border-bottom:1px solid var(--border2);
+}
+.payroll-table tbody tr{border-bottom:1px solid var(--border);}
+.payroll-table tbody tr:last-child{border-bottom:none;}
+.payroll-table tbody tr:hover td{background:rgba(108,92,231,0.04);}
+.payroll-table tbody td{
+  padding:8px 10px;font-family:'DM Mono',monospace;color:var(--text2);
+  font-size:12px;
+}
+.payroll-table tbody td:last-child{font-weight:600;color:var(--primary);}
+</style>
+
+<!-- Holiday Modal -->
+<div id="modal-holidays" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon" style="background:#dcfce7;">🎉</div>
+        <div>
+          <div class="modal-label">Company</div>
+          <div class="modal-title">Holiday Schedule 2026</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('modal-holidays').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="holiday-list">
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">New Year's Day</div><div class="holiday-date">Thu, Jan 1</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Martin Luther King, Jr. Day</div><div class="holiday-date">Mon, Jan 19</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Memorial Day</div><div class="holiday-date">Mon, May 25</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Juneteenth Day</div><div class="holiday-date">Fri, Jun 19</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Independence Day</div><div class="holiday-date">Fri, Jul 3</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Labor Day</div><div class="holiday-date">Mon, Sep 7</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Veterans Day</div><div class="holiday-date">Wed, Nov 11</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Thanksgiving</div><div class="holiday-date">Thu, Nov 26</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Thanksgiving (Day After)</div><div class="holiday-date">Fri, Nov 27</div></div>
+        <div class="holiday-row"><div class="holiday-dot"></div><div class="holiday-name">Christmas Day</div><div class="holiday-date">Fri, Dec 25</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payroll Modal -->
+<div id="modal-payroll" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon" style="background:var(--primary-lt);">💰</div>
+        <div>
+          <div class="modal-label">HR &amp; Finance</div>
+          <div class="modal-title">Semi-Monthly Payroll Calendar 2026</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('modal-payroll').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <table class="payroll-table">
+        <thead><tr><th>Period Begin</th><th>Period End</th><th>Pay Date</th></tr></thead>
+        <tbody>
+          <tr><td>12/24/2025</td><td>01/08/2026</td><td>01/13/2026</td></tr>
+          <tr><td>01/09/2026</td><td>01/23/2026</td><td>01/30/2026</td></tr>
+          <tr><td>01/24/2026</td><td>02/08/2026</td><td>02/13/2026</td></tr>
+          <tr><td>02/09/2026</td><td>02/23/2026</td><td>02/27/2026</td></tr>
+          <tr><td>02/24/2026</td><td>03/08/2026</td><td>03/13/2026</td></tr>
+          <tr><td>03/09/2026</td><td>03/23/2026</td><td>03/30/2026</td></tr>
+          <tr><td>03/24/2026</td><td>04/08/2026</td><td>04/13/2026</td></tr>
+          <tr><td>04/09/2026</td><td>04/23/2026</td><td>04/29/2026</td></tr>
+          <tr><td>04/24/2026</td><td>05/08/2026</td><td>05/13/2026</td></tr>
+          <tr><td>05/09/2026</td><td>05/23/2026</td><td>05/29/2026</td></tr>
+          <tr><td>05/24/2026</td><td>06/08/2026</td><td>06/12/2026</td></tr>
+          <tr><td>06/09/2026</td><td>06/23/2026</td><td>06/30/2026</td></tr>
+          <tr><td>06/24/2026</td><td>07/08/2026</td><td>07/13/2026</td></tr>
+          <tr><td>07/09/2026</td><td>07/23/2026</td><td>07/30/2026</td></tr>
+          <tr><td>07/24/2026</td><td>08/08/2026</td><td>08/13/2026</td></tr>
+          <tr><td>08/09/2026</td><td>08/23/2026</td><td>08/28/2026</td></tr>
+          <tr><td>08/24/2026</td><td>09/08/2026</td><td>09/11/2026</td></tr>
+          <tr><td>09/09/2026</td><td>09/23/2026</td><td>09/30/2026</td></tr>
+          <tr><td>09/24/2026</td><td>10/08/2026</td><td>10/13/2026</td></tr>
+          <tr><td>10/09/2026</td><td>10/23/2026</td><td>10/30/2026</td></tr>
+          <tr><td>10/24/2026</td><td>11/08/2026</td><td>11/13/2026</td></tr>
+          <tr><td>11/09/2026</td><td>11/23/2026</td><td>11/30/2026</td></tr>
+          <tr><td>11/24/2026</td><td>12/08/2026</td><td>12/11/2026</td></tr>
+          <tr><td>12/09/2026</td><td>12/23/2026</td><td>12/30/2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Referral Modal -->
+<div id="modal-referral" class="modal-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:620px;">
+    <div class="modal-head">
+      <div class="modal-head-left">
+        <div class="modal-icon" style="background:#fce7f3;">💼</div>
+        <div>
+          <div class="modal-label">HR Policy</div>
+          <div class="modal-title">Employee Referral Policy</div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="document.getElementById('modal-referral').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body" style="font-size:13px;color:var(--text2);line-height:1.7;">
+
+      <div style="background:var(--primary-lt);border:1px solid rgba(108,92,231,0.2);border-radius:10px;padding:12px 14px;margin-bottom:16px;">
+        <p style="color:var(--primary);font-weight:600;font-size:12px;">Refer great people to Phoenix and earn a bonus when they're hired.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+
+        <div><p style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">1. Purpose</p>
+        <p>This policy encourages employees to refer qualified candidates for open positions. Referrals help attract high-quality talent, reduce hiring time, and strengthen our workplace culture.</p></div>
+
+        <div><p style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">2. Scope</p>
+        <p>Applies to all regular full-time and part-time employees. Temporary employees, contractors, interns, and members of the HR and Executive Leadership teams are excluded unless otherwise approved.</p></div>
+
+        <div><p style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">3. Eligibility</p>
+        <p><strong style="color:var(--text);">Eligible Referrers</strong> must be actively employed, in good standing, and remain employed through the bonus payout date.</p>
+        <p style="margin-top:6px;"><strong style="color:var(--text);">Eligible Candidates</strong> must meet minimum qualifications, not have applied within the past six months, and not be current employees, temporary workers, or contractors.</p>
+        <p style="margin-top:6px;"><strong style="color:var(--text);">Exclusions:</strong> Employees referring within their direct reporting line, involved in the hiring decision, or where the candidate was already identified by HR or a recruiter.</p></div>
+
+        <div><p style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">4. Referral Process</p>
+        <p>Submit referrals via email to <strong style="color:var(--text);">HR and your Team Lead</strong> before the candidate applies. Include: candidate's full name, contact information, resume, and a brief explanation of why they're a good fit.</p></div>
+
+        <div><p style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;">5. Bonus Structure</p>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead><tr style="border-bottom:1px solid var(--border2);">
+            <th style="text-align:left;padding:6px 10px;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);">Position Level</th>
+            <th style="text-align:right;padding:6px 10px;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text3);">Bonus</th>
+          </tr></thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 10px;color:var(--text2);">Entry-Level / Associate</td><td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;">$500</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 10px;color:var(--text2);">Mid-Level / Professional</td><td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;">$1,000</td></tr>
+            <tr style="border-bottom:1px solid var(--border);"><td style="padding:8px 10px;color:var(--text2);">Senior-Level / Manager</td><td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--green);font-family:'DM Mono',monospace;">$2,000</td></tr>
+            <tr><td style="padding:8px 10px;color:var(--text2);">Executive / Specialized Roles</td><td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--amber);font-family:'DM Mono',monospace;">Case-by-case</td></tr>
+          </tbody>
+        </table></div>
+
+        <div><p style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">6. Payment Terms</p>
+        <p>Bonus paid after the referred employee completes <strong style="color:var(--text);">90 days of continuous employment</strong> in good standing. Subject to applicable taxes. No bonus if the referred employee leaves before 90 days.</p></div>
+
+        <div><p style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">7. Administration & EEO</p>
+        <p>The Partners reserve the right to modify, suspend, or terminate the referral programme at any time. All referrals are considered in accordance with the Company's Equal Employment Opportunity policy. Employment decisions are based on qualifications, merit, and business needs.</p></div>
+
+        <div><p style="font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px;">8. Confidentiality</p>
+        <p>Ensure candidates have given consent before submitting their information. All recruitment processes remain confidential.</p></div>
+
+        <div style="background:var(--primary-lt);border:1px solid rgba(108,92,231,0.2);border-radius:10px;padding:12px 14px;margin-top:4px;">
+          <p style="font-size:11px;font-weight:700;color:var(--primary);margin-bottom:4px;">Acknowledgment</p>
+          <p style="color:var(--text2);">Employees participating in the referral programme agree to abide by the terms and conditions outlined in this policy.</p>
+          <p style="margin-top:8px;">Submit referrals to: <a href="mailto:hr@phoenixoutcomes.com" style="color:var(--primary);font-weight:600;">hr@phoenixoutcomes.com</a></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
